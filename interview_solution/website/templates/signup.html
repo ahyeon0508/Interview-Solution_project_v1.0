@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>회원가입</title>
+        <link href = "/캡스톤/static/css/signup.css" rel="stylesheet">
+        <link href = "/캡스톤/static/js/signup.js" rel="stylesheet">
+    </head>
+    <body>
+        <div class="signup-page">
+            <div class="form">
+                <h1>회원가입</h1>
+                <form class="signup-form" method="post">
+                    <input type="text" id="username" placeholder="이름을 입력해주세요">
+                    <input type="text" id="id" placeholder="아이디를 입력해주세요">
+                    <input type="password" id="password" onchange="fn_pw_check()" placeholder="비밀번호를 입력해주세요">
+                    <input type="password" id="passwordChk" onchange="fn_pw_check()" placeholder="다시 한 번 더 입력해주세요">
+                    <input type="text" onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)' id="phone" placeholder="핸드폰 번호를 입력해주세요">
+                    <p class="message" style="text-align: left;" >단, 숫자만 입력해주세요. ex) 01011112222</p>
+                    <input type="button" id="cancle" onClick="location.href=''" value="취소">
+                    <input type="submit" id="complete" value="완료">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
