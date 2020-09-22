@@ -3,13 +3,13 @@
 h1{
     color: #9CC1D9;
     font-family: 'Nanum Gothic', sans-serif;
-    padding-top: 70px;
+    padding-top: 50px;
     padding-bottom: 20px;
     font-size: 40px;
     text-align: center;
 }
 
-.signup-page{
+.find-page{
     width: 450px;
     padding-top: 50px;
     padding-bottom: 50px;
@@ -57,24 +57,4 @@ h1{
     margin-top: -5px;
     margin-bottom: 25px;
     padding-left: 15px;
-}
-
-.form p.pwMessage{
-    font-family: 'Nanum Gothic', sans-serif;
-    color: gray;
-    font-size: 9px;
-    margin-top: -5px;
-    padding-left: 15px;
-}
-
-select{
-    font-family: 'Nanum Gothic', sans-serif;
-    width: 95%; 
-    margin-bottom: 10px;
-    border-width: 0;
-    color:gray
-}
-
-.schoolname{
-    display:inline-block;
 }
