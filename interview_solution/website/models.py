@@ -5,18 +5,14 @@ from django.db import models
 # Create your models here.
 class TeacherManager(BaseUserManager):
     def create_teacher(self, userID, username, password, phone, school, grade, sClass):
-        teacher = self.model(userID=userID, username=username, password=password, phone=phone, school=school, grade=grade, sClass=sClass)
+        teacher = self.model(userID=userID, username=username, phone=phone, school=school, grade=grade, sClass=sClass)
+
+        teacher.set_password(password)
         teacher.save(using=self._db)
         return teacher
 
 class Teacher(models.Model):
-    id = models.AutoField(
-        primary_key=True,
-        unique=True,
-        editable=False,
-        verbose_name='pk'
-    )
-    userID = models.CharField(unique=True, max_length=10, verbose_name = '아이디') #아이디
+    userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name = '아이디') #아이디
     username = models.CharField(max_length=10, null=True, blank=True, verbose_name='유저이름')
     password = models.CharField(max_length=20, verbose_name = '비밀번호')
     phone = models.CharField(max_length=11, blank=True, null=True, verbose_name = '연락처')
@@ -50,21 +46,15 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.AutoField(
-        primary_key=True,
-        unique=True,
-        editable=False,
-        verbose_name='pk'
-    )
-    userID = models.CharField(unique=True, max_length=10, verbose_name = '아이디') #아이디
+    userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name = '아이디') #아이디
     username = models.CharField(max_length=10, null=True, blank=True, verbose_name='유저이름')
     password = models.CharField(max_length=20, verbose_name = '비밀번호')
     phone = models.CharField(max_length=11, blank=True, null=True, verbose_name = '연락처')
     school = models.CharField(max_length=10, null=True, blank=True, verbose_name='학교')
-    grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')
-    sClass = models.CharField(max_length=10, null=True, blank=True, verbose_name='반')
-    year = models.CharField(auto_now_add=True, null=True, blank=True, verbose_name='연도') # 년도만 빼내기
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='teacher')
+    grade = models.IntegerField(null=True, blank=True, verbose_name='학년')
+    sClass = models.IntegerField(null=True, blank=True, verbose_name='반')
+    year = models.CharField(max_length=4, null=True, blank=True, verbose_name='연도') # 년도만 빼내기
+    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE, verbose_name='teacher')
     is_activate = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'userID'
@@ -97,8 +87,8 @@ class StudentQuestion(models.Model):
         editable=False,
         verbose_name='pk'
     )
-    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student')
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='question')
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
 class Report(models.Model): # 수정필요
     id = models.AutoField(
@@ -107,7 +97,10 @@ class Report(models.Model): # 수정필요
         editable=False,
         verbose_name='pk'
     )
-    video = models.URLField(blank=True, null=True, verbose_name='영상 url')
+    video1 = models.URLField(blank=True, null=True, verbose_name='영상1 url')
+    video2 = models.URLField(blank=True, null=True, verbose_name='영상2 url')
+    video3 = models.URLField(blank=True, null=True, verbose_name='영상3 url')
+    script1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
 
     def __str__(self):
@@ -121,6 +114,6 @@ class Comment(models.Model):
         verbose_name='pk'
     )
     comment = models.CharField(max_length=200, null=True, blank=True, verbose_name='댓글')
-    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student')
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='teacher')
-    report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='report')
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    report = models.ForeignKey(Report, on_delete=models.CASCADE)

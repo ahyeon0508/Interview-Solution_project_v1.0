@@ -37,9 +37,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'restframework',
+    'rest_framework',
+    'rest_framework_jwt',
+    'rest_auth',
+    'knox',
     'website',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+       'rest_framework.authentication.SessionAuthentication',
+   ),
+    'PAGINATE_BY': 10,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
