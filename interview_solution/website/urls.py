@@ -1,9 +1,9 @@
 from django.urls import path
-from capstone import views
+from . import views, apis
 
 app_name = 'website'
 
 urlpatterns = [
-    path('signup/', views.SignupUserAPI.as_view(), name='signup'),
-    path('signin/', views.SigninUserAPI.as_view(), name='signin'),
+    path('signin/', views.signin, name='signin')
+    # path('signin/', apis.SigninUserAPI.as_view(), name='signin'),
 ]

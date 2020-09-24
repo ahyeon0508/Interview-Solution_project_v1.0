@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from capstone.models import User, Teacher, Question, StudentQuestion, Report, Comment
+from .models import User, Teacher, Question, StudentQuestion, Report, Comment
 from django.contrib.auth import authenticate
 
 class SignupUserSerializer(serializers.ModelSerializer):
