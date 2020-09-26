@@ -10,7 +10,7 @@ h1{
 
 .find-page{
     width: 450px;
-    padding-top: 50px;
+    padding-top: 100px;
     padding-bottom: 50px;
     margin: auto;
 }
@@ -41,11 +41,19 @@ h1{
 
 .form #cancle{
     font-family: 'Nanum Gothic', sans-serif;
-    background-color:#cbd6e5;
+    background-color:#e6e9ee;
 }
 
 .form #signin{
     font-family: 'Nanum Gothic', sans-serif;
     background-color: #cbd6e5;
     margin-top: 15px;
+}
+
+.form p.pwMessage{
+    font-family: 'Nanum Gothic', sans-serif;
+    color: gray;
+    font-size: 9px;
+    margin-top: -5px;
+    padding-left: 15px;
 }

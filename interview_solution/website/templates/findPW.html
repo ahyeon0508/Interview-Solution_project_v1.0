@@ -2,21 +2,24 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8">
-        <title>아이디/비밀번호 찾기</title>
+        <title>비밀번호 찾기</title>
         <link href = "/캡스톤/Interview-Solution_project/interview_solution/website/static/css/findIDPW.css" rel="stylesheet">
         <script type="text/javascript" src="/캡스톤/Interview-Solution_project/interview_solution/website/static/js/util.js"></script>
     </head>
     <body>
         <div class="find-page">
-            <h1>아이디/비밀번호 찾기</h1>
+            <h1>비밀번호 찾기</h1>
             <div class="form">
                 <form class="IDPW-form" method="post" action="">
-                    <input type="text" name="userID" placeholder="이름을 입력하세요">
+                    <input type="text" name="username" placeholder="이름을 입력하세요">
+                    <input type="text" name="username" placeholder="아이디를 입력하세요">
                     <input type="text" name="phone" onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'
                         placeholder="핸드폰 번호를 입력하세요">
                     <p class="message" style="text-align: left;">단, 숫자만 입력해주세요. ex) 01011112222</p>
                     <div class="button">
-                        <input type="submit" id="complete" value="아이디/비밀번호 찾기">
+                        <!-- 해당회원 존재시 : 비밀번호 찾기 누르면 resulPW 페이지 이동해서 비밀번호 변경할 수 있도록 하기-->
+                        <!-- 해당회원 존재하지 않을시 : 비밀번호 찾기 누르면 에러발생-->
+                        <input type="submit" id="complete" value="비밀번호 찾기">
                         <!-- href 뒤에 홈url 삽입 -->
                         <input type="button" id="cancle" onClick="location.href=''" value="홈으로">
                     </div>

@@ -2,22 +2,23 @@
 <html lang="ko">
     <head>
         <meta charset="utf-8">
-        <title>아이디/비밀번호 찾기</title>
+        <title>아이디 찾기</title>
         <link href = "/캡스톤/Interview-Solution_project/interview_solution/website/static/css/resultIDPW.css" rel="stylesheet">
     </head>
     <body>
         <div class="find-page">
-            <h1>아이디/비밀번호 찾기</h1>
+            <h1>아이디 찾기</h1>
             <div class="form">
                 <form class="IDPW-form" method="post" action="">
                     <div class="result">
-                        <!-- 해당하는 회원의 아이디와 비밀번호 출력 -->
-                        <p id="id">아이디 : {{userID}}</p>
-                        <p id="password">비밀번호 : {{password}}</p>
+                        <!-- 해당하는 회원의 아이디 출력 -->
+                        <p id="id">아이디 : </p>
                     </div>
                     <div class="button">
                         <!-- href 뒤에 로그인url 삽입 -->
                         <input type="submit" id="signin" onClick="location.href=''" value="로그인">
+                        <!-- href 뒤에 비밀번호찾기url 삽입 -->
+                        <input type="submit" id="signin" onClick="location.href=''" value="비밀번호 찾기">
                         <!-- href 뒤에 홈url 삽입 -->
                         <input type="button" id="cancle" onClick="location.href=''" value="홈으로">
                     </div>
