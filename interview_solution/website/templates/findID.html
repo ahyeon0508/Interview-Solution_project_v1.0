@@ -18,6 +18,7 @@
                     <div class="button">
                         <!-- 해당회원 존재시 : 아이디 찾기 누르면 resultID 페이지로 이동해서 아이디 출력-->
                         <!-- 해당회원 존재하지 않을시 : 아이디 찾기 누르면 에러발생-->
+                        {{ error }}
                         <input type="submit" id="complete" value="아이디 찾기">
                         <!-- href 뒤에 홈url 삽입 -->
                         <input type="button" id="cancle" onClick="location.href=''" value="홈으로">
