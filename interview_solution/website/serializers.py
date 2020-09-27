@@ -40,6 +40,15 @@ class SigninUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('userID', 'password')
 
+class CheckToChangePasswordSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    userID = serializers.CharField(required=True)
+    phone = serializers.CharField(required=True)
+
+class ChangePasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(required=True)
+    passwordChk = serializers.CharField(required=True)
+
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
