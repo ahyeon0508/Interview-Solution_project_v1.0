@@ -21,18 +21,53 @@ def signin(request):
     else:
         return render(request,'signin.html')
 
-def findIDPW(request):
+def findID(request):
     if request.method == "POST":
+        username = request.POST.get('username', '')
+        phone = request.POST.get('phone', '')
+
+        try:
+            user = User.objects.filter(username=username, phone=phone)
+            if user is not None:
+                return render(request, 'resultID.html', {'userID':user.username})
+            else:
+                return render(request, 'findID.html', {'error': 'username or phone is incorrect'})
+        except:
+            return render(request, 'findID.html', {'error': 'username or phone is incorrect'})
+    else:
+        return render(request, 'findID.html')
+
+def findPW(request):
+    if request.method == "POST":
+        username = request.POST.get('username', '')
         userID = request.POST.get('userID', '')
         phone = request.POST.get('phone', '')
 
         try:
-            user = User.objects.filter(userID=userID, phone=phone)
+            user = User.objects.filter(username=username, userID=userID, phone=phone)
             if user is not None:
-                return render(request, 'resultIDPW.html', {'userID':user.userID, 'password':user.password})
+                return redirect(reverse('website:resultPW', args=[str(userID)]))
             else:
-                return render(request, 'findIDPW.html', {'error': 'username or password is incorrect'})
+                return render(request, 'findPW.html', {'error': 'username or userID or phone is incorrect'})
         except:
-            return render(request, 'findIDPW.html', {'error': 'username or password is incorrect'})
+            return render(request, 'findPW.html', {'error': 'username or userID or phone is incorrect'})
     else:
-        return render(request, 'findIDPW.html')
+        return render(request, 'findPW.html')
+
+def resultPW(request, userID):
+    if request.method == "POST":
+        password = request.POST.get('password', '')
+        passwordChk = request.POST.get('passwordChk', '')
+
+        try:
+            if password == passwordChk:
+                user = User.objects.get(userID=userID)
+                user.set_password(password)
+                user.save()
+                return redirect(reverse('website:signin'))
+            else:
+                return render(request, 'resultPW.html', {'error': 'password incorrect'})
+        except:
+            return render(request, 'resultPW.html', {'error': 'password incorrect'})
+    else:
+        return render(request, 'resultPW.html')
