@@ -27,6 +27,7 @@
             <div class="form">
                 <h1>회원가입</h1>
                 <form class="signup-form" method="post" action="">
+                    {% csrf_token %}
                     <input type="text" id="username" placeholder="이름을 입력해주세요">
                     <input type="text" id="id" placeholder="아이디를 입력해주세요">
                     <input type="password" id="password" onchange="fn_pw_lenCheck()" placeholder="비밀번호를 입력해주세요">
