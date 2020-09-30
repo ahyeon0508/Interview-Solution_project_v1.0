@@ -38,14 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-    'restframework',
-=======
     'rest_framework',
     'rest_framework_jwt',
     'rest_auth',
     'knox',
->>>>>>> b980a489352d40603aef40585dcf40e1bcb18854
     'website',
 ]
 
