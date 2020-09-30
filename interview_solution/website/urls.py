@@ -4,6 +4,7 @@ from . import views, apis
 app_name = 'website'
 
 urlpatterns = [
-    path('signin/', views.signin, name='signin')
+    path('student/signin/', views.studentSignin, name='signin'),
     # path('signin/', apis.SigninUserAPI.as_view(), name='signin'),
+    path('teacher/signin/', views.teacherSignin, name='signin')
 ]
