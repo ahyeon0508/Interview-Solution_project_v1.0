@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import User
@@ -24,7 +24,7 @@ def signup(request):
 
         else:
             User.objects.create_user(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass, year= year)
-            return render(request,'signup.html')
+            return redirect('/')
     else:
         return render(request, 'signup.html',{'error':'wrong'})
     

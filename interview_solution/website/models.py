@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 # Create your models here.
@@ -38,7 +39,11 @@ class UserManager(BaseUserManager):
             raise ValueError('ID Required')
 
         user = self.model(userID=userID, phone=phone, username=username, school=school, grade=grade, sClass=sClass, year=year)
-
+        try:
+            teacher = Teacher.objects.get(school=school, grade=grade, sClass=sClass)
+            user.teacher = teacher
+        except ObjectDoesNotExist:
+            pass
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -64,7 +69,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')
     sClass = models.CharField(max_length=10, null=True, blank=True, verbose_name='반')
     year = models.DateField(auto_now_add=True, null=True, blank=True, verbose_name='연도') # 년도만 빼내기
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='teacher')
+    teacher = models.ForeignKey(Teacher, null=True, on_delete= models.SET_NULL, related_name='teacher')
     is_activate = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'userID'

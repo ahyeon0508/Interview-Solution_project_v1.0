@@ -28,25 +28,25 @@
                 <h1>회원가입</h1>
                 <form class="signup-form" method="post" action="">
                     {% csrf_token %}
-                    <input type="text" id="username" placeholder="이름을 입력해주세요">
-                    <input type="text" id="id" placeholder="아이디를 입력해주세요">
-                    <input type="password" id="password" onchange="fn_pw_lenCheck()" placeholder="비밀번호를 입력해주세요">
+                    <input type="text" id="username" name="username" placeholder="이름을 입력해주세요">
+                    <input type="text" id="userID" name="userID" placeholder="아이디를 입력해주세요">
+                    <input type="password" id="password" name="password" onchange="fn_pw_lenCheck()" placeholder="비밀번호를 입력해주세요">
                     <p class="pwMessage" style="text-align: left;" >비밀번호는 최소 8자 이상, 최대 20자 이하로 구성해주세요.</p>
-                    <input type="password" id="passwordChk" onchange="fn_pw_check()" placeholder="다시 한 번 더 입력해주세요">
-                    <input type="text" onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)' id="phone" placeholder="핸드폰 번호를 입력해주세요">
+                    <input type="password" id="passwordChk" name="passwordChk" onchange="fn_pw_check()" placeholder="다시 한 번 더 입력해주세요">
+                    <input type="text" onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)' id="phone" name="phone" placeholder="핸드폰 번호를 입력해주세요">
                     <p class="message" style="text-align: left;" >단, 숫자만 입력해주세요. ex) 01011112222</p>
                     <div class="schoolInfo">
                     <hr>
                     <p class="schoolMessage" style="text-align: left;" >▶ 학교정보 입력(교사일 경우, 담당 학급 입력)</p>
-                    <input type="text" id="schoolName" placeholder="학교명을 검색하세요">
+                    <input type="text" id="schoolName" name="school" placeholder="학교명을 검색하세요">
                     <select name="grade">
                         <option id="grade" name="grade" selected="selected" onchange="alert(this.options[this.selectedIndex].text)">학년</option>
-                        <option value="1학년">1학년</option>
-                        <option value="2학년">2학년</option>
-                        <option value="3학년">3학년</option>
-                        <option value="졸업생">졸업생</option>
+                        <option value="1">1학년</option>
+                        <option value="2">2학년</option>
+                        <option value="3">3학년</option>
+                        <option value="0">졸업생</option>
                     </select>
-                    <input type="text" id="class" placeholder="반을 입력하세요">
+                    <input type="text" id="class" name="sClass" placeholder="반을 입력하세요">
                     <hr>
                     </div>
                     <input type="button" id="cancle" onClick="location.href=''" value="취소">
