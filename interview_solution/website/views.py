@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User
+from .models import User, SchoolInfo
+import json
 
 
 # Create your views here.
@@ -28,3 +29,17 @@ def signup(request):
     else:
         return render(request, 'signup.html',{'error':'wrong'})
     
+def ajax_schoolInfo_autocomplete(request):
+    if request.GET.has_key('term'):
+        tags = SchoolInfo.objects.filter(name__istartswith=request.GET['term'][:20])
+        results = []
+        for tag in tags:
+            tag_json = {}
+            tag_json['id'] = tag.id
+            tag_json['label'] = tag.name
+            tag_json['value'] = tag.name 
+            results.append(tag_json)
+        data = json.dumps(results)
+        mimetype = 'application/json'
+        return HttpResponse(data, mimetype)
+    return HttpResponse()

@@ -129,3 +129,8 @@ class Comment(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='comment')
     report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='comment')
+
+class SchoolInfo(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    def __unicode__(self):
+        return self.name
