@@ -16,6 +16,7 @@ function removeChar(event) {
     else
         event.target.value = event.target.value.replace(/[^0-9]/g, "");
 }
+<<<<<<< HEAD
 
 function cancleForm(){
     if(confirm("이 페이지를 벗어나면 마지막 저장 후 수정된 내용은 저장되지 않습니다.")){
@@ -27,3 +28,5 @@ function cancleForm(){
     }
   
   }
+=======
+>>>>>>> b980a489352d40603aef40585dcf40e1bcb18854
