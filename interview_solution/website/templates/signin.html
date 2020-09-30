@@ -13,15 +13,15 @@
             </div>
             <div class="form">
                 <form class="signin-form" method="post">
-                    <input type="text" id="userID" name="userID" placeholder="아이디">
+                    <input type="text" id="username" name="username" placeholder="아이디">
                     <input type="password" id="password" name="password" placeholder="비밀번호">
-                    {{error}} <!-- 로그인 실패시 error 발생 -->
+                    <!-- 로그인 실패시 error 발생 -->
                     <input type="submit" value="로그인" id = "signin">
                 </form>
                     <!-- a태그에 회원가입 url 넣기 -->
                     <a href=""><input type="submit" value="회원가입" id = "signup"></a>
-                    <!-- a태그에 아이디/비밀번호 찾기 url 넣기 -->
-                    <p class="message">아이디/비밀번호를 잊으셨나요? <a href="">아이디/비밀번호 찾기</a></p>
+                    <!-- a태그에 아이디(findId), 비밀번호(findPW) 찾기 url 넣기 -->
+                    <p class="message">아이디/비밀번호를 잊으셨나요? <a href="">아이디</a>/<a herf=""></a>비밀번호 찾기</a></p>
             </div>
         </div>
     </body>
