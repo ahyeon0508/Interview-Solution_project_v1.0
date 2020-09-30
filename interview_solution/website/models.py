@@ -55,17 +55,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=20, verbose_name='비밀번호')
     phone = models.CharField(max_length=11, blank=True, null=True, verbose_name='연락처')
     school = models.CharField(max_length=10, null=True, blank=True, verbose_name='학교')
-<<<<<<< HEAD
-    grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')
-    sClass = models.CharField(max_length=10, null=True, blank=True, verbose_name='반')
-    year = models.CharField(auto_now_add=True, null=True, blank=True, verbose_name='연도') # 년도만 빼내기
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-=======
     grade = models.IntegerField(null=True, blank=True, verbose_name='학년')
     sClass = models.IntegerField(null=True, blank=True, verbose_name='반')
     year = models.CharField(max_length=4, null=True, blank=True, verbose_name='연도')  # 년도만 빼내기
     teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE, verbose_name='teacher')
->>>>>>> b980a489352d40603aef40585dcf40e1bcb18854
     is_activate = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'userID'
@@ -102,10 +95,6 @@ class StudentQuestion(models.Model):
     )
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-<<<<<<< HEAD
-=======
-
->>>>>>> b980a489352d40603aef40585dcf40e1bcb18854
 
 class Report(models.Model):  # 수정필요
     id = models.AutoField(
@@ -135,8 +124,4 @@ class Comment(models.Model):
     comment = models.CharField(max_length=200, null=True, blank=True, verbose_name='댓글')
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-<<<<<<< HEAD
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
-=======
-    report = models.ForeignKey(Report, on_delete=models.CASCADE)
->>>>>>> b980a489352d40603aef40585dcf40e1bcb18854

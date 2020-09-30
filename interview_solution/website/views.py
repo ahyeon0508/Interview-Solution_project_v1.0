@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -22,4 +21,11 @@ def signin(request):
             return render(request, 'signin.html', {'error': 'username or password is incorrect'})
     else:
         return render(request,'signin.html')
->>>>>>> b980a489352d40603aef40585dcf40e1bcb18854
+
+@login_required
+def mypage(request):
+    user = request.user
+    if user:
+        return render(request,'mypage.html',{'user': user})
+    else:
+        return render(request,'login.html')
