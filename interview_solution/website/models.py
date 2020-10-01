@@ -32,11 +32,11 @@ class Teacher(models.Model):
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, userID, password, username=None, phone=None, school=None, grade=None, sClass=None, year=2020):
+    def create_user(self, userID, password, username=None, phone=None, school=None, grade=None, sClass=None):
         if not userID:
             raise ValueError('ID Required')
 
-        user = self.model(userID=userID, phone=phone, username=username, school=school, grade=grade, sClass=sClass, year=year)
+        user = self.model(userID=userID, phone=phone, username=username, school=school, grade=grade, sClass=sClass)
         try:
             teacher = Teacher.objects.get(school=school, grade=grade, sClass=sClass)
             user.teacher = teacher
@@ -62,8 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     school = models.CharField(max_length=10, null=True, blank=True, verbose_name='학교')
     grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')
     sClass = models.CharField(max_length=10, null=True, blank=True, verbose_name='반')
-    year = models.CharField(auto_now_add=True, null=True, blank=True, on_delete=models.CASCADE, verbose_name='연도') # 년도만 빼내기
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
     is_activate = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'userID'
@@ -112,6 +111,8 @@ class Report(models.Model):  # 수정필요
     video2 = models.URLField(blank=True, null=True, verbose_name='영상2 url')
     video3 = models.URLField(blank=True, null=True, verbose_name='영상3 url')
     script1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
+    script2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
+    script3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
 
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
 

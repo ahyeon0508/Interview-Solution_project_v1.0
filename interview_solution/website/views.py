@@ -19,14 +19,13 @@ def signup(request):
         school = request.POST.get('school','')
         grade = request.POST.get('grade', '')
         sClass = request.POST.get('sClass', '')
-        year = request.POST.get('year', '')
 
         if password != passwordChk:
             return render(request, 'signup.html',{'error':'wrong'})
 
         else:
-            User.objects.create_user(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass, year= year)
-            return redirect('/')
+            User.objects.create_user(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass)
+            return redirect(reverse('website:studentSignin'))
     else:
         return render(request, 'signup.html',{'error':'wrong'})
     
