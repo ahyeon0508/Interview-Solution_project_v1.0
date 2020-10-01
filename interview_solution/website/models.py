@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 # Create your models here.
@@ -38,7 +39,11 @@ class UserManager(BaseUserManager):
             raise ValueError('ID Required')
 
         user = self.model(userID=userID, phone=phone, username=username, school=school, grade=grade, sClass=sClass, year=year)
-
+        try:
+            teacher = Teacher.objects.get(school=school, grade=grade, sClass=sClass)
+            user.teacher = teacher
+        except ObjectDoesNotExist:
+            pass
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -124,3 +129,8 @@ class Comment(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
+
+class SchoolInfo(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    def __unicode__(self):
+        return self.name
