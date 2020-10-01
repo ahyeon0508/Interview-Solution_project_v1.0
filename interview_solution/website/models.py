@@ -3,24 +3,21 @@ from django.contrib.auth.models import PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
+
 # Create your models here.
 class TeacherManager(BaseUserManager):
     def create_teacher(self, userID, username, password, phone, school, grade, sClass):
-        teacher = self.model(userID=userID, username=username, password=password, phone=phone, school=school, grade=grade, sClass=sClass)
+        teacher = self.model(userID=userID, username=username, password=password, phone=phone, school=school,
+                             grade=grade, sClass=sClass)
         teacher.save(using=self._db)
         return teacher
 
+
 class Teacher(models.Model):
-    id = models.AutoField(
-        primary_key=True,
-        unique=True,
-        editable=False,
-        verbose_name='pk'
-    )
-    userID = models.CharField(unique=True, max_length=10, verbose_name = '아이디') #아이디
+    userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name='아이디')  # 아이디
     username = models.CharField(max_length=10, null=True, blank=True, verbose_name='유저이름')
-    password = models.CharField(max_length=20, verbose_name = '비밀번호')
-    phone = models.CharField(max_length=11, blank=True, null=True, verbose_name = '연락처')
+    password = models.CharField(max_length=20, verbose_name='비밀번호')
+    phone = models.CharField(max_length=11, blank=True, null=True, verbose_name='연락처')
     school = models.CharField(max_length=15, null=True, blank=True, verbose_name='학교')
     grade = models.IntegerField(null=True, blank=True, verbose_name='학년')
     sClass = models.IntegerField(null=True, blank=True, verbose_name='반')
@@ -28,10 +25,11 @@ class Teacher(models.Model):
 
     USERNAME_FIELD = 'userID'
 
-    objects=TeacherManager()
+    objects = TeacherManager()
 
     def __str__(self):
         return self.userID
+
 
 class UserManager(BaseUserManager):
     def create_user(self, userID, password, username=None, phone=None, school=None, grade=None, sClass=None, year=2020):
@@ -44,6 +42,7 @@ class UserManager(BaseUserManager):
             user.teacher = teacher
         except ObjectDoesNotExist:
             pass
+
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -54,27 +53,22 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.AutoField(
-        primary_key=True,
-        unique=True,
-        editable=False,
-        verbose_name='pk'
-    )
-    userID = models.CharField(unique=True, max_length=10, verbose_name = '아이디') #아이디
+    userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name='아이디')  # 아이디
     username = models.CharField(max_length=10, null=True, blank=True, verbose_name='유저이름')
-    password = models.CharField(max_length=20, verbose_name = '비밀번호')
-    phone = models.CharField(max_length=11, blank=True, null=True, verbose_name = '연락처')
+    password = models.CharField(max_length=20, verbose_name='비밀번호')
+    phone = models.CharField(max_length=11, blank=True, null=True, verbose_name='연락처')
     school = models.CharField(max_length=10, null=True, blank=True, verbose_name='학교')
     grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')
     sClass = models.CharField(max_length=10, null=True, blank=True, verbose_name='반')
-    year = models.CharField(auto_now_add=True, null=True, blank=True, verbose_name='연도') # 년도만 빼내기
+    year = models.CharField(auto_now_add=True, null=True, blank=True, on_delete=models.CASCADE, verbose_name='연도') # 년도만 빼내기
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     is_activate = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'userID'
 
-    objects=UserManager()
+    objects = UserManager()
 
     def __str__(self):
         return self.userID
@@ -82,6 +76,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         "Is the user a memeber of staff?"
         return self.is_superuser
+
 
 class Question(models.Model):
     id = models.AutoField(
@@ -95,6 +90,7 @@ class Question(models.Model):
     def __str__(self):
         return self.id
 
+
 class StudentQuestion(models.Model):
     id = models.AutoField(
         primary_key=True,
@@ -105,19 +101,24 @@ class StudentQuestion(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
-class Report(models.Model): # 수정필요
+class Report(models.Model):  # 수정필요
     id = models.AutoField(
         primary_key=True,
         unique=True,
         editable=False,
         verbose_name='pk'
     )
-    video = models.URLField(blank=True, null=True, verbose_name='영상 url')
+    video1 = models.URLField(blank=True, null=True, verbose_name='영상1 url')
+    video2 = models.URLField(blank=True, null=True, verbose_name='영상2 url')
+    video3 = models.URLField(blank=True, null=True, verbose_name='영상3 url')
+    script1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
+
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
 
     def __str__(self):
         return self.id
-    
+
+
 class Comment(models.Model):
     id = models.AutoField(
         primary_key=True,
@@ -134,3 +135,4 @@ class SchoolInfo(models.Model):
     name = models.CharField(max_length=20, unique=True)
     def __unicode__(self):
         return self.name
+    report = models.ForeignKey(Report, on_delete=models.CASCADE)

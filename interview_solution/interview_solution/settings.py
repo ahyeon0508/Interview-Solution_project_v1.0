@@ -1,3 +1,4 @@
+
 """
 Django settings for interview_solution project.
 
@@ -38,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_jwt',
     'rest_auth',
+    'knox',
     'website',
 ]
 
@@ -97,6 +100,8 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+AUTH_USER_MODEL = 'website.User'
+
 AUTH_USER_MODEL = 'website.User'
 
 AUTH_USER_MODEL = 'website.User'
