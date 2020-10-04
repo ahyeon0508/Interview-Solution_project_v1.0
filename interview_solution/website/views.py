@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, SchoolInfo
 import json
+import logging
 
 
 # Create your views here.
@@ -30,8 +31,10 @@ def signup(request):
         return render(request, 'signup.html',{'error':'wrong'})
     
 def ajax_schoolInfo_autocomplete(request):
-    if request.GET.has_key('term'):
-        tags = SchoolInfo.objects.filter(name__istartswith=request.GET['term'][:20])
+    if 'term' in request.GET:
+        search_name = request.GET.get('term','')
+        tags = SchoolInfo.objects.filter(name__icontains=search_name)
+        print(tags)
         results = []
         for tag in tags:
             tag_json = {}

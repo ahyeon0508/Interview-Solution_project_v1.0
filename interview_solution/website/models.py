@@ -131,6 +131,12 @@ class Comment(models.Model):
     report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='comment')
 
 class SchoolInfo(models.Model):
-    name = models.CharField(max_length=20, unique=True)
+    id = models.AutoField(
+        primary_key=True,
+        unique=True,
+        editable=False,
+        verbose_name='pk'
+    )
+    name = models.CharField(blank=True, null=True, max_length=100)
     def __unicode__(self):
         return self.name

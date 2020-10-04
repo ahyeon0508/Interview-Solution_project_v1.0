@@ -17,7 +17,10 @@
                 "전주근영여자고등학교", "전일고등학교"
 	            ];
 	            $("#schoolName").autocomplete({
-		        source: name
+                source: 'search/',
+                select: function(event, ui){
+                    var selectedObj = ui.item
+                }
 	        });
         });
         </script>
