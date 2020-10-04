@@ -54,13 +54,13 @@ def studentSignin(request):
             user = User.objects.get(userID=userID)
             if user.check_password(password):
                 request.session['user'] = user.userID
-                return render(request, 'signin.html', {'error' : '성공'})
+                return redirect(reverse('website:studentHome'))
             else:
                 return render(request,'signin.html',{'error':'username or password is incorrect'})
         except:
             return render(request, 'signin.html', {'error': 'username or password is incorrect'})
     else:
-        return redirect(reverse('website:intro'))
+        return render(request, 'signin.html')
 
 @csrf_exempt
 def studentSignoff(request):
