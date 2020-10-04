@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 from .models import User, Teacher, SchoolInfo
 import json
@@ -22,13 +23,12 @@ def studentSignup(request):
         sClass = request.POST.get('sClass', '')
 
         if password != passwordChk:
-            return render(request, 'signup.html',{'error':'wrong'})
-
+            return render(request, 'signup.html',{'message':'입력한 비밀번호가 일치하지 않습니다.'})
         else:
             User.objects.create_user(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass)
             return redirect(reverse('website:studentSignin'))
     else:
-        return render(request, 'signup.html',{'error':'wrong'})
+        return render(request, 'signup.html',{'message':'회원가입 실패'})
 
 def teacherSignup(request):
     if request.method == "POST":
@@ -42,14 +42,36 @@ def teacherSignup(request):
         sClass = request.POST.get('sClass', '')
 
         if password != passwordChk:
-            return render(request, 'signup.html',{'error':'wrong'})
+            return render(request, 'signup.html',{'message':'입력한 비밀번호가 일치하지 않습니다.'})
 
         else:
             Teacher.objects.create_teacher(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass)
             return redirect(reverse('website:teacherSignin'))
     else:
-        return render(request, 'signup.html',{'error':'wrong'})
-    
+        return render(request, 'signup.html',{'message':'회원가입 실패'})
+
+def studentcheckID(request):
+    try:
+        user= User.objects.get(userID=request.GET['userID'])
+    except Exception as e:
+        user = None
+    result = {
+        'result':'success',
+        'data':"not exist" if user is None else "exist"
+    }
+    return JsonResponse(result)
+
+def teachercheckID(request):
+    try:
+        user= Teacher.objects.get(userID=request.GET['userID'])
+    except Exception as e:
+        user = None
+    result = {
+        'result':'success',
+        'data':"not exist" if user is None else "exist"
+    }
+    return JsonResponse(result)
+
 def ajax_schoolInfo_autocomplete(request):
     if 'term' in request.GET:
         search_name = request.GET.get('term','')
