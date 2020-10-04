@@ -10,7 +10,7 @@ import json
 import logging
 
 @csrf_exempt
-def signup(request):
+def studentSignup(request):
     if request.method == "POST":
         userID = request.POST['userID']
         username = request.POST.get('username','')
@@ -27,6 +27,26 @@ def signup(request):
         else:
             User.objects.create_user(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass)
             return redirect(reverse('website:studentSignin'))
+    else:
+        return render(request, 'signup.html',{'error':'wrong'})
+
+def teacherSignup(request):
+    if request.method == "POST":
+        userID = request.POST['userID']
+        username = request.POST.get('username','')
+        password = request.POST.get('password', '')
+        passwordChk = request.POST.get('passwordChk', '')
+        phone = request.POST.get('phone', '')
+        school = request.POST.get('school','')
+        grade = request.POST.get('grade', '')
+        sClass = request.POST.get('sClass', '')
+
+        if password != passwordChk:
+            return render(request, 'signup.html',{'error':'wrong'})
+
+        else:
+            Teacher.objects.create_teacher(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass)
+            return redirect(reverse('website:teacherSignin'))
     else:
         return render(request, 'signup.html',{'error':'wrong'})
     
