@@ -60,7 +60,13 @@ def studentSignin(request):
         except:
             return render(request, 'signin.html', {'error': 'username or password is incorrect'})
     else:
-        return render(request,'signin.html')
+        return redirect(reverse('website:intro'))
+
+@csrf_exempt
+def studentSignoff(request):
+    if request.session['user']:
+        del(request.session['user'])
+    return redirect(reverse('website:intro'))
 
 @csrf_exempt
 def teacherSignin(request):
@@ -79,6 +85,12 @@ def teacherSignin(request):
             return render(request, 'signin.html', {'error': 'username or password is incorrect'})
     else:
         return render(request,'signin.html')
+
+@csrf_exempt
+def teacherSignoff(request):
+    if request.session['user']:
+        del(request.session['user'])
+    return redirect(reverse('website:intro'))
 
 @csrf_exempt
 def findID(request):
@@ -129,3 +141,12 @@ def resultPW(request, userID):
             return render(request, 'resultPW.html', {'error': 'password incorrect'})
     else:
         return render(request, 'resultPW.html')
+
+def intro(request):
+    return render(request, 'index.html')
+
+def studentHome(request):
+    return render(request, 'stuhome.html')
+
+# def teacherHome(request):
+#     return render(request, 'teachHome.html')

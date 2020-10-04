@@ -21,7 +21,7 @@
                     <div class="row">
                         <div class="col-xl-3 col-lg-2">
                             <div class="header__logo">
-                                <a href="./index.html"><img src="../static/img/logo.png" alt=""></a>
+                                <a href="{% url 'website:intro' %}"><img src="../static/img/logo.png" alt=""></a>
                             </div>
                         </div>
                     </div>
@@ -43,34 +43,31 @@
                 <div class="col-lg-3">
                     <div class="row">
                         <div class="col-lg-12 col-md-6 col-sm-6 p-0">
-                            <div class="categories__item set-bg" data-setbg="../static/img/분홍.png">
-                                <!-- herf에 학생홈페이지 url 넣기 -->
-                                <a herf="./stuhome.html">
-                                    <div class="categories__text">
-                                        <h4>학생</h4>
-                                        <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
-                                            edolore magna aliquapendisse ultrices gravida.</p>
-                                    </div>
-                                </a>
-                            </div>
+                            <!-- herf에 학생홈페이지 url 넣기 -->
+                            <a class="categories__item set-bg" data-setbg="../static/img/분홍.png" href="{% url 'website:studentHome' %}">
+                                <div class="categories__text">
+                                    <h4>학생</h4>
+                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
+                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                </div>
+                            </a>
                         </div>
                         <div class="col-lg-12 col-md-6 col-sm-6 p-0">
-                            <div class="categories__item set-bg" data-setbg="../static/img/파랑.png">
-                                <!-- herf에 교사홈페이지 url 넣기 -->
-                                <a herf="./teahome.html">
-                                    <div class="categories__text">
-                                        <h4>교사</h4>
-                                        <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
-                                            edolore magna aliquapendisse ultrices gravida.</p>
-                                    </div>
-                                </a>
-                            </div>
+                            <!-- herf에 교사홈페이지 url 넣기 : 아직 teahome 없음! -->
+                            <a class="categories__item set-bg" data-setbg="../static/img/파랑.png" herf="teahome.html">
+                                <div class="categories__text">
+                                    <h4>교사</h4>
+                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
+                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- 내용 끝 -->
 
     <!-- 기능 소개 시작 -->
