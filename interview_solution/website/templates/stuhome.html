@@ -5,29 +5,23 @@
     <meta charset="utf-8">
     <title>학생홈</title>
 
-    <!-- Google Font -->
+    <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <!-- Css Styles -->
+    <!-- Css -->
     <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/home.css" type="text/css">
     <link rel="stylesheet" href="../static/css/intro.css" type="text/css">
     
-<!--    차트... 흠...-->
-   
-    <!-- DEMO CHARTS -->
+<!-- 리포트 차트 관련 -->
     <link rel="stylesheet" href="../static/css/chartist.css">
     <link rel="stylesheet" href="../static/css/chartist-plugin-tooltip.css">
-
-    <!-- Template -->
     <link rel="stylesheet" href="../static/css/graindashboard.css">
     
-    
-    
-
 </head>
 
 <body>
 
+   <!-- 상단 바 시작 -->
     <nav id="Topbar" class="navbar navbar-expand navbar-light topbar static-top">
         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <img id="menuicon" src="../static/img/menu.png" width="20px" height="20px" alt="menu">
@@ -38,15 +32,15 @@
                 <!--{% if user.is_authenticated %}-->
                 <!--로그인한 경우 href 유저정보 관리 페이지로!-->
                 <a class="nav-link dropdown-toggle" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <!--유저 ID 표기!-->
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ user.userID }} </span>
+                    <!--USERID 부분에 유저 ID 표기!-->
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> USERID </span>
 
-                    <!--                    {% if user.image %}-->
-                    <!--유저 이미지 표기!-->
-                    <img class="img-profile rounded-circle" src="{{ user.image.url }}">
-                    <!--                    {% else %}-->
+                    <!--{% if user.image %}-->
+                    <!--src 유저 이미지 표기!-->
+                    <img class="img-profile rounded-circle" src="#">
+                    <!--{% else %}-->
                     <img class="img-profile rounded-circle" src="../static/img/user.svg">
-                    <!--                    {% endif %}-->
+                    <!--{% endif %}-->
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                     <!-- herf 유저정보 관리 페이지로!-->
@@ -61,19 +55,20 @@
                         Logout
                     </a>
                 </div>
-                <!--                {% else %}-->
-                <!--로그인 페이지로!-->
+                <!--{% else %}-->
+                <!--herf 로그인 페이지로!-->
                 <a class="nav-link" href="#" id="user" role="button">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
                     <img class="img-profile rounded-circle" src="../static/img/user.svg">
                 </a>
-                <!--                {% endif %}-->
+                <!--{% endif %}-->
 
             </li>
         </ul>
     </nav>
+    <!-- 상단 바 끝 -->
 
-    <!-- Categories Section Begin -->
+    <!-- 내용 시작 -->
     <section class="categories">
         <div class="container-fluid">
             <header class="headerintro">
@@ -140,8 +135,10 @@
             </div>
         </div>
     </section>
-    <!-- Categories Section End -->
+    <!-- 내용 끝 -->
 
+    <!-- 분석 리포트 시작 -->
+    <!-- 코드 맞게 정리 필요! -->
     <section class="banner">
         <section class="shop-cart spad">
             <div class="container">
@@ -1133,6 +1130,7 @@
             </div>
         </section>
     </section>
+    <!-- 분석 리포트 끝 -->
 
     <!-- Bootstrap core JavaScript-->
     <script src="../static/vendor/jquery/jquery.min.js"></script>
