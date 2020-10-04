@@ -1,20 +1,3 @@
-function fn_pw_check() {
-    var pw = document.getElementById("pw").value; //비밀번호
-    var pw2 = document.getElementById("pwChk").value; // 확인 비밀번호
-
-    if(pw != pw2) {
-        alert("비밀번호가 일치하지 않습니다.");
-        return false;
-    }
-
-   if(pw.length<8||pw.length>20){
-        alert("비밀번호는 8자리 이상 20자 이하로 구성하여야 합니다.");
-        return false;
-    }          
-
-    return true;
-}
-
 // 참고 : https://tonhnegod.tistory.com/7
 function onlyNumber(event){
     event = event || window.event;
@@ -33,3 +16,14 @@ function removeChar(event) {
     else
         event.target.value = event.target.value.replace(/[^0-9]/g, "");
 }
+
+function cancleForm(){
+    if(confirm("이 페이지를 벗어나면 마지막 저장 후 수정된 내용은 저장되지 않습니다.")){
+        // 메인 홈페이지 주소 입력하기
+      window.location.href = "";
+    }
+    else {
+        return false;
+    }
+  
+  }
