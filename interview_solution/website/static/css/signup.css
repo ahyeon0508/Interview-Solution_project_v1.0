@@ -99,3 +99,15 @@ select{
     display:inline-block;
     width: 50%; 
 }
+
+.form #userID{
+    font-family: 'Nanum Gothic', sans-serif;
+    display:inline-block;
+    width: 70%; 
+}
+
+.form #userIDChk{
+    font-family: 'Nanum Gothic', sans-serif;
+    display:inline-block;
+    width: 20%; 
+}
