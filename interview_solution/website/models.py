@@ -113,7 +113,6 @@ class Report(models.Model):  # 수정필요
     script1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
     script2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
     script3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
-
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
 
     def __str__(self):
@@ -133,7 +132,12 @@ class Comment(models.Model):
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
 
 class SchoolInfo(models.Model):
-    name = models.CharField(max_length=20, unique=True)
+    id = models.AutoField(
+        primary_key=True,
+        unique=True,
+        editable=False,
+        verbose_name='pk'
+    )
+    name = models.CharField(blank=True, null=True, max_length=100)
     def __unicode__(self):
         return self.name
-    report = models.ForeignKey(Report, on_delete=models.CASCADE)
