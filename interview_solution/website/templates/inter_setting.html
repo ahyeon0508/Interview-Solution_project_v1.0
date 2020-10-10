@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>면접 세팅</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/inter_setting.css" type="text/css">
+</head>
+
+<body>
+    <div id="container">
+        <video autoplay="true" id="videoElement"></video>
+    </div>
+    <script>
+        var video = document.querySelector("#videoElement");
+
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function(err0r) {
+                    console.log("Something wrong!");
+                });
+        }
+    </script>
+</body>
+</html>
