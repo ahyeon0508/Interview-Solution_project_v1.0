@@ -54,11 +54,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=10, null=True, blank=True, verbose_name='유저이름')
     password = models.CharField(max_length=20, verbose_name='비밀번호')
     phone = models.CharField(max_length=11, blank=True, null=True, verbose_name='연락처')
-    school = models.CharField(max_length=10, null=True, blank=True, verbose_name='학교')
-    grade = models.CharField(null=True, blank=True, verbose_name='학년')
-    sClass = models.CharField(null=True, blank=True, verbose_name='반')
-    year = models.CharField(max_length=4, null=True, blank=True, verbose_name='연도')  # 년도만 빼내기
-    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE, verbose_name='teacher')
+    school = models.CharField(max_length=20, null=True, blank=True, verbose_name='학교')
+    grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')
+    sClass = models.CharField(max_length=10, null=True, blank=True, verbose_name='반')
+    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
     is_activate = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'userID'
