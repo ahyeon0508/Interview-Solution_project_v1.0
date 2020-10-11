@@ -97,8 +97,8 @@
                 <hr>
             </div>
             {{message}}
-            {% if teacher == 0 %}
-                <input type="button" id="cancle" onClick="location.href='{% url 'website:studentSignin' %}'" value="취소">
+            {% if student == 0 %}
+                <input type="button" id="cancle" onClick="location.href='{% url 'website:teacherSignin' %}'" value="취소">
             {% else %}
                 <input type="button" id="cancle" onClick="location.href='{% url 'website:studentSignin' %}'" value="취소">
             {% endif %}

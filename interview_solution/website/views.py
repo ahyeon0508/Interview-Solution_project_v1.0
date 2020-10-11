@@ -23,12 +23,12 @@ def studentSignup(request):
         sClass = request.POST.get('sClass', '')
 
         if password != passwordChk:
-            return render(request, 'signup.html',{'teacher':1, 'message':'입력한 비밀번호가 일치하지 않습니다.'})
+            return render(request, 'signup.html',{'student':1, 'message':'입력한 비밀번호가 일치하지 않습니다.'})
         else:
             User.objects.create_user(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass)
             return redirect(reverse('website:studentSignin'))
     else:
-        return render(request, 'signup.html', {'teacher':1})
+        return render(request, 'signup.html', {'student':1})
 
 def teacherSignup(request):
     if request.method == "POST":
@@ -42,13 +42,13 @@ def teacherSignup(request):
         sClass = request.POST.get('sClass', '')
 
         if password != passwordChk:
-            return render(request, 'signup.html',{'teacher':0, 'message':'입력한 비밀번호가 일치하지 않습니다.'})
+            return render(request, 'signup.html',{'student':0, 'message':'입력한 비밀번호가 일치하지 않습니다.'})
 
         else:
             Teacher.objects.create_teacher(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass)
             return redirect(reverse('website:teacherSignin'))
     else:
-        return render(request, 'signup.html', {'teacher':0})
+        return render(request, 'signup.html', {'student':0})
 
 def studentcheckID(request):
     try:
@@ -99,13 +99,13 @@ def studentSignin(request):
             user = User.objects.get(userID=userID)
             if user.check_password(password):
                 request.session['user'] = user.userID
-                return render(request, 'signin.html', {'teacher':1, 'error' : '성공'})
+                return render(request, 'signin.html', {'student':1, 'error' : '성공'})
             else:
-                return render(request,'signin.html',{'teacher':1, 'error':'username or password is incorrect'})
+                return render(request,'signin.html',{'student':1, 'error':'username or password is incorrect'})
         except:
-            return render(request, 'signin.html', {'teacher':1, 'error': 'username or password is incorrect'})
+            return render(request, 'signin.html', {'student':1, 'error': 'username or password is incorrect'})
     else:
-        return render(request,'signin.html', {'teacher':1})
+        return render(request,'signin.html', {'student':1})
 
 @csrf_exempt
 def teacherSignin(request):
@@ -117,22 +117,22 @@ def teacherSignin(request):
             user = Teacher.objects.get(userID=userID)
             if check_password(password, user.password):
                 request.session['user'] = user.userID
-                return render(request, 'signin.html', {'teacher':0, 'error' : '성공'})
+                return render(request, 'signin.html', {'student':0, 'error' : '성공'})
             else:
-                return render(request,'signin.html',{'teacher':0, 'error':'username or password is incorrect'})
+                return render(request,'signin.html',{'student':0, 'error':'username or password is incorrect'})
         except:
-            return render(request, 'signin.html', {'teacher':0, 'error': 'username or password is incorrect'})
+            return render(request, 'signin.html', {'student':0, 'error': 'username or password is incorrect'})
     else:
-        return render(request,'signin.html', {'teacher':0})
+        return render(request,'signin.html', {'student':0})
 
 @csrf_exempt
-def findID(request, teacher):
+def findID(request, student):
     if request.method == "POST":
         username = request.POST.get('username', '')
         phone = request.POST.get('phone', '')
 
         try:
-            if teacher == 0:
+            if student == 0:
                 user = Teacher.objects.get(username=username, phone=phone)
             else:
                 user = User.objects.get(username=username, phone=phone)
@@ -143,14 +143,14 @@ def findID(request, teacher):
         return render(request, 'findID.html')
 
 @csrf_exempt
-def findPW(request, teacher):
+def findPW(request, student):
     if request.method == "POST":
         username = request.POST.get('username', '')
         userID = request.POST.get('userID', '')
         phone = request.POST.get('phone', '')
 
         try:
-            if teacher == 0:
+            if student == 0:
                 Teacher.objects.get(username=username, userID=userID, phone=phone)
             else:
                 User.objects.get(username=username, userID=userID, phone=phone)
@@ -161,14 +161,14 @@ def findPW(request, teacher):
         return render(request, 'findPW.html')
 
 @csrf_exempt
-def resultPW(request, teacher, userID):
+def resultPW(request, student, userID):
     if request.method == "POST":
         password = request.POST.get('password', '')
         passwordChk = request.POST.get('passwordChk', '')
 
         try:
             if password == passwordChk:
-                if teacher == 0:
+                if student == 0:
                     user = Teacher.objects.get(userID=userID)
                 else:
                     user = User.objects.get(userID=userID)
