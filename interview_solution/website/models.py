@@ -9,9 +9,9 @@ class TeacherManager(BaseUserManager):
     def create_teacher(self, userID, username, password, phone, school, grade, sClass):
         teacher = self.model(userID=userID, username=username, password=password, phone=phone, school=school,
                              grade=grade, sClass=sClass)
+        teacher.set_password(password)
         teacher.save(using=self._db)
         return teacher
-
 
 class Teacher(models.Model):
     userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name='아이디')  # 아이디

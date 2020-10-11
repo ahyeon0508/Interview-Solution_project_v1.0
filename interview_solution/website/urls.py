@@ -15,7 +15,7 @@ urlpatterns = [
     path('student/signin/', views.studentSignin, name='studentSignin'),
     # path('signin/', apis.SigninUserAPI.as_view(), name='signin'),
     path('teacher/signin/', views.teacherSignin, name='teacherSignin'),
-    path('findID/', views.findID, name='findID'),
-    path('findPW/', views.findPW, name='findPW'),
-    path('resultPW/<userID>/', views.resultPW, name='resultPW'),
+    path('findID/<int:teacher>', views.findID, name='findID'),
+    path('findPW/<int:teacher>', views.findPW, name='findPW'),
+    path('resultPW/<int:teacher>/<userID>/', views.resultPW, name='resultPW'),
 ]
