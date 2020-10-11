@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>db</title>
+</head>
+<body>
+    <h2>DB success</h2>
+    <ul>
+        {% for question in question_list %}
+            <li>
+                {{question.question}}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

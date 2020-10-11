@@ -84,7 +84,7 @@ class Question(models.Model):
         editable=False,
         verbose_name='pk'
     )
-    question = models.CharField(max_length=100, null=True, blank=True, verbose_name='질문')
+    question = models.CharField(max_length=100,unique=True, null=True, blank=True, verbose_name='질문')
 
     def __str__(self):
         return self.id
@@ -136,4 +136,3 @@ class SchoolInfo(models.Model):
     name = models.CharField(max_length=20, unique=True)
     def __unicode__(self):
         return self.name
-    report = models.ForeignKey(Report, on_delete=models.CASCADE)
