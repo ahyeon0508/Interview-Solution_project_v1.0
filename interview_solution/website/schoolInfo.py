@@ -34,8 +34,8 @@ def collect_info():
 
     print(schoolName)
     for i in schoolName:
-        name = SchoolInfo(name=i)
-        name.save()
+        SchoolInfo.objects.filter(name=i).delete()
+        SchoolInfo(name=i).save()
 
 # main
 def schoolInfo_db(request):
