@@ -29,9 +29,10 @@ def create_questionDB():
                 '마지막으로 하고 싶은 말은 무엇인가요?',
                 '입학 후의 희망 세부 전공분야를 말하고, 그 분야의 기술현황을 설명하세요']
     for question in question_list:
+        Question.objects.filter(question=question).delete()
         Question(question=question).save()
     
 def db(request):
     create_questionDB()
-    question_list = Question.objects.order_by('-question')
-    return render(request, 'questionDB.html',{'question_list':question_list})
+    q_list = Question.objects.order_by('-question')
+    return render(request, 'questionDB.html',{'q_list':q_list})
