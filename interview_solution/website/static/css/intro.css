@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /******************************************************************
   Template Name: Ashion
   Description: Ashion ecommerce template
@@ -26,12 +27,18 @@
 10.  Footer Style
 -------------------------------------------------------------------*/
 
+=======
+>>>>>>> cb5195591566723db54cfc312433fc8d04b1d30e
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 
 /*----------------------------------------*/
 
 /* Template default CSS
 /*----------------------------------------*/
+<<<<<<< HEAD
+=======
+
+>>>>>>> cb5195591566723db54cfc312433fc8d04b1d30e
 html,
 body {
     height: 100%;
@@ -1047,7 +1054,11 @@ ol {
     z-index: 1;
     min-height: 900px;
     position: relative;
+<<<<<<< HEAD
     background: url(../img/11.jpg) no-repeat center;
+=======
+    background: url(../img/연회색.png) no-repeat center;
+>>>>>>> cb5195591566723db54cfc312433fc8d04b1d30e
     background-size: cover;
 }
 

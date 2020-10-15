@@ -3,41 +3,145 @@
 
 <head>
     <meta charset="utf-8">
-    <title>인트로</title>
+    <title>학생홈</title>
 
-    <!-- Google Font -->
+    <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <!-- Css Styles -->
+    <!-- Css -->
     <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/home.css" type="text/css">
     <link rel="stylesheet" href="../static/css/intro.css" type="text/css">
 </head>
 
 <body>
-    
-    <!-- Footer Section Begin -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-7">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="./index.html"><img src="../static/img/logo.png" alt=""></a>
+
+    <!-- 상단 바 시작 -->
+    <nav id="Topbar" class="navbar navbar-expand navbar-light topbar static-top">
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <img id="menuicon" src="../static/img/menu.png" width="20px" height="20px" alt="menu">
+        </button>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+
+                {% if user.is_authenticated %}
+                <!--로그인한 경우 href 유저정보 관리 페이지로!-->
+                <a class="nav-link dropdown-toggle" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!--USERID 부분에 유저 ID 표기!-->
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> USERID </span>
+
+                    {% if user.image %}
+                    <!--src 유저 이미지 표기!-->
+                    <img class="img-profile rounded-circle" src="#">
+                    {% else %}
+                    <img class="img-profile rounded-circle" src="../static/img/user.svg">
+                    {% endif %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    <!-- herf 유저정보 관리 페이지로!-->
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        MyPage
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <!--href 로그아웃으로!-->
+                    <a class="dropdown-item" href="{% url 'website:studentSignoff' %}">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Logout
+                    </a>
+                </div>
+                {% else %}
+                <!--herf 로그인 페이지로!-->
+                <a class="nav-link" href="{% url 'website:studentSignin' %}" id="user" role="button">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
+                    <img class="img-profile rounded-circle" src="../static/img/user.svg">
+                </a>
+                {% endif %}
+
+            </li>
+        </ul>
+    </nav>
+    <!-- 상단 바 끝 -->
+
+    <!-- 내용 시작 -->
+    <section class="categories">
+        <div class="container-fluid">
+            <header class="headerintro">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-2">
+
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            cilisis.</p>
                     </div>
                 </div>
-            </div>
+            </header>
+            <!-- Header Section End -->
+
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer__copyright__text">
-                        <p>Copyright</p>
+                <div class="col-lg-6 p-0">
+                    <div class="categories__item categories__large__item">
+                        <div class="categories__text">
+                            <h1>새내기로(로)</h1>
+                            <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
+                                edolore magna aliquapendisse ultrices gravida.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                            <div class="categories__item set-bg" data-setbg="../static/img/분홍.png">
+                                <div class="categories__text">
+                                    <h4>내 영상</h4>
+                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
+                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                            <div class="categories__item set-bg" data-setbg="../static/img/연파랑.png">
+                                <div class="categories__text">
+                                    <h4>내 질문</h4>
+                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
+                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                            <div class="categories__item set-bg" data-setbg="../static/img/파랑.png">
+                                <div class="categories__text">
+                                    <h4>접근 유저</h4>
+                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
+                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                            <div class="categories__item set-bg" data-setbg="../static/img/연분홍.png">
+                                <div class="categories__text">
+                                    <h4>질문 리스트</h4>
+                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
+                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </footer>
-    <!-- Footer Section End -->
+    </section>
+    <!-- 내용 끝 -->
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../static/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../static/js/home.min.js"></script>
 
     <!-- Js Plugins -->
     <script src="../static/js/jquery-3.3.1.min.js"></script>

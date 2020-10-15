@@ -2,11 +2,9 @@
     margin: 0px auto;
     width: 500px;
     height: 375px;
-    border: 5px #aaa solid;
 }
 
 #videoElement {
     width: 500px;
     height: 375px;
-    background-color: #666;
 }

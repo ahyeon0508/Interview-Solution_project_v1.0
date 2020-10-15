@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="utf-8">
-        <title>로그인</title>
-        <link href = "/캡스톤/Interview-Solution_project/interview_solution/website/static/css/signin.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="signin-page">
-            <div class="intro">
-                <h1>새내기路(로)</h1>
-                <p>AI기반 대입 모의 면접 솔루션</p>
-            </div>
-            <div class="form">
-                <form class="signin-form" method="post">
-                    <input type="text" id="username" name="username" placeholder="아이디">
-                    <input type="password" id="password" name="password" placeholder="비밀번호">
-                    <!-- 로그인 실패시 error 발생 -->
-                    <input type="submit" value="로그인" id = "signin">
-                </form>
-                    <!-- a태그에 회원가입 url 넣기 -->
-                    <a href=""><input type="submit" value="회원가입" id = "signup"></a>
-                    <!-- a태그에 아이디(findId), 비밀번호(findPW) 찾기 url 넣기 -->
-                    <p class="message">아이디/비밀번호를 잊으셨나요? <a href="">아이디</a>/<a herf=""></a>비밀번호 찾기</a></p>
-            </div>
+
+<head>
+    <meta charset="utf-8">
+    <title>로그인</title>
+    <link href="/캡스톤/Interview-Solution_project/interview_solution/website/static/css/signin.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="signin-page">
+        <div class="intro">
+            <h1>새내기路(로)</h1>
+            <p>AI기반 대입 모의 면접 솔루션</p>
         </div>
-    </body>
+        <div class="form">
+            <form class="signin-form" method="post">
+                <input type="text" id="username" name="username" placeholder="아이디">
+                <input type="password" id="password" name="password" placeholder="비밀번호">
+                <!-- 로그인 실패시 error 발생 -->
+                <input type="submit" value="로그인" id="signin">
+            </form>
+            <!-- a태그에 회원가입 url 넣기 -->
+            <a href=""><input type="submit" value="회원가입" id="signup"></a>
+            <!-- a태그에 아이디(findId), 비밀번호(findPW) 찾기 url 넣기 -->
+            <p class="message">아이디/비밀번호를 잊으셨나요? <a href="">아이디</a>/<a herf=""></a>비밀번호 찾기</a></p>
+        </div>
+    </div>
+</body>
+
 </html>
+=======
+{% extends 'menu_template.html' %}
+{% load static %}
+{% block content %}
+
+<link href="{% static 'css/siginin.css' %}" rel="stylesheet">
+
+<div class="signin-page">
+    <div class="intro">
+        <h1>새내기路(로)</h1>
+        <p>AI기반 대입 모의 면접 솔루션</p>
+    </div>
+    <div class="form">
+        <form class="signin-form" method="post">
+            <input type="text" id="userID" name="userID" placeholder="아이디">
+            <input type="password" id="password" name="password" placeholder="비밀번호">
+            <!-- 로그인 실패시 error 발생 -->
+            {{ error }}
+            <input type="submit" value="로그인" id="signin">
+        </form>
+        <!-- a태그에 회원가입 url 넣기 -->
+        <a href="{% url 'website:signup' %}"><input type="submit" value="회원가입" id="signup"></a>
+        <!-- a태그에 아이디(findId), 비밀번호(findPW) 찾기 url 넣기 -->
+        <p class="message">아이디/비밀번호를 잊으셨나요? <a href="{% url 'website:findID' %}">아이디</a>/<a href="{% url 'website:findPW' %}">비밀번호 찾기</a></p>
+    </div>
+</div>
+
+{% endblock %}
