@@ -3,7 +3,6 @@ from django.contrib.auth.models import PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
-
 # Create your models here.
 class TeacherManager(BaseUserManager):
     def create_teacher(self, userID, username, password, phone, school, grade, sClass):
@@ -11,7 +10,6 @@ class TeacherManager(BaseUserManager):
                              grade=grade, sClass=sClass)
         teacher.save(using=self._db)
         return teacher
-
 
 class Teacher(models.Model):
     userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name='아이디')  # 아이디
@@ -84,11 +82,13 @@ class Question(models.Model):
         editable=False,
         verbose_name='pk'
     )
-    question = models.CharField(max_length=100, null=True, blank=True, verbose_name='질문')
+    question = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문')
+    department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문
+    student = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.id
-
 
 class StudentQuestion(models.Model):
     id = models.AutoField(
@@ -113,12 +113,10 @@ class Report(models.Model):  # 수정필요
     script1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
     script2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
     script3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
-
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
 
     def __str__(self):
         return self.id
-
 
 class Comment(models.Model):
     id = models.AutoField(
@@ -133,7 +131,12 @@ class Comment(models.Model):
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
 
 class SchoolInfo(models.Model):
-    name = models.CharField(max_length=20, unique=True)
+    id = models.AutoField(
+        primary_key=True,
+        unique=True,
+        editable=False,
+        verbose_name='pk'
+    )
+    name = models.CharField(blank=True, null=True, max_length=100)
     def __unicode__(self):
         return self.name
-    report = models.ForeignKey(Report, on_delete=models.CASCADE)
