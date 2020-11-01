@@ -181,3 +181,6 @@ def resultPW(request, student, userID):
             return render(request, 'resultPW.html', {'error': 'password incorrect'})
     else:
         return render(request, 'resultPW.html')
+
+def report(request):
+    return render(request, 'report.html')
