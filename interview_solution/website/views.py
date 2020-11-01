@@ -18,6 +18,30 @@ import wave
 from moviepy.editor import *
 import time
 from django.core.files.storage import default_storage
+import requests
+import json
+import re
+
+def readNumber(num):
+    units = [''] + list('십백천')
+    nums = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구']
+    result = []
+    i = 0
+    n = int(num)
+    while n > 0:
+        n, r = divmod(n, 10)
+        if r > 0:
+            result.append(nums[r-1] + units[i])
+        i += 1
+    return ''.join(result[::-1])
+
+def isEng(value):
+    count = 0
+    for c in value:
+        if ord('a') <= ord(c.lower()) <= ord('z'):
+            count += 1
+    if len(value) == count:
+        return True
 
 @csrf_exempt
 def studentSignup(request):
@@ -205,7 +229,8 @@ def interview_q1(request):
         
         return render(request,'inter_q1.html',{'interview_question':interview_list[0]})
     else:
-        return render(request,'inter_q1.html',{'interview_question':interview_list[0]}) 
+        return render(request,'inter_q1.html',{'interview_question':interview_list[0]})
+
 @csrf_exempt
 def recordVideo(request):
     userID = request.POST['userID']
@@ -219,10 +244,19 @@ def recordVideo(request):
         #PyAudio
         CHUNK = 1024
         RATE = 16000 # 음성 데이터의 Sampling Rate: 16000Hz
-        
+        FORMAT = pyaudio.paInt16
+        CHANNELS = 1
+        RECORD_SECONDS = 90
+        WAVE_OUTPUT_FILENAME = "record1.wav"
+
         start = time.time()
         i=0
-        while True:
+        p = pyaudio.PyAudio()
+
+        print("* recording")
+
+        for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)): # wav는 녹음시 한계가 필요하기 때문에 수정함
+
             ret, frame = capture.read()
             cv2.imshow('Camera Window', frame)
             key = cv2.waitKey(33)
@@ -233,7 +267,11 @@ def recordVideo(request):
                 audio_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_audio.wav')
                 video = cv2.VideoWriter(video_url, fourcc, 20.0, (frame.shape[1], frame.shape[0]))
                 p_audio = pyaudio.PyAudio()
-                audio_stream = p_audio.open(format=pyaudio.paInt16, channels=1, rate=RATE, input=True, frames_per_buffer=CHUNK)
+                audio_stream = p_audio.open(format=FORMAT,
+                        channels=CHANNELS,
+                        rate=RATE,
+                        input=True,
+                        frames_per_buffer=CHUNK)
                 i=1
             video.write(frame)
             data = audio_stream.read(CHUNK)
@@ -241,28 +279,36 @@ def recordVideo(request):
             print("녹화 중..")
             if key==27:
                 print("kk")
+
+        print("* done recording")
+
         video.release()
         audio_stream.stop_stream()
         audio_stream.close()
         p_audio.terminate()
-        
-        wf = wave.open(audio_url, 'wb')
-        wf.setnchannels(1)
-        wf.setsampwidth(p_audio.get_sample_size(pyaudio.paInt16))
+
+        wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+        wf.setnchannels(CHANNELS)
+        wf.setsampwidth(p.get_sample_size(FORMAT))
         wf.setframerate(RATE)
         wf.writeframes(b''.join(frames))
         wf.close()
+
         capture.release()
         cv2.destroyAllWindows()   
         video_clip = VideoFileClip(video_url)
         audio_clip = AudioFileClip(audio_url)
         video_clip.audio = audio_clip
-        final_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_final_video.mp4')
+        audio_url = os.path.join(settings.MEDIA_ROOT, '/audio/'+userID+'_'+question_num+'_audio.wav')
+        final_url = os.path.join(settings.MEDIA_ROOT, '/video/'+userID+'_'+question_num+'_final_video.mp4')
         video_clip.write_videofile(final_url,codec="mpeg4")
         result = {
             'result':'success'
         }
+
+        stt(audio_url, userID, question_num)
         return JsonResponse(result)
+
     if request.POST.get('finish',True):
         video.release()
         audio_stream.stop_stream()
@@ -281,7 +327,7 @@ def recordVideo(request):
         video_clip.audio = audio_clip
         final_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_final_video.mp4')
         video_clip.write_videofile(final_url,codec="mpeg4")
-    
+
 def interview_q2(request):
     if request.method == "POST":
         return render(request,'inter_q2.html',{'interview_question':interview_list[1]})
@@ -292,3 +338,130 @@ def interview_q3(request):
         
         return render(request,'inter_setting.html',{'interview_question':interview_list[2]})
     return render(request,'inter_setting.html')
+
+def stt(request, audio_url, userID, question_num):
+    kakao_speech_url = "https://kakaoi-newtone-openapi.kakao.com/v1/recognize"
+
+    rest_api_key = 'c17a0f75ae3281b6259b56cae43a8f9b'
+
+    headers = {
+        "Content-Type": "application/octet-stream",
+        "X-DSS-Service": "DICTATION",
+        "Authorization": "KakaoAK " + rest_api_key,
+    }
+
+    with open(audio_url, 'rb') as fp:
+        audio = fp.read()
+
+    response = requests.post(kakao_speech_url, headers=headers, data=audio)
+
+    result_json_string = response.text[response.text.index('{"type":"finalResult"'):response.text.rindex('}') + 1]
+    result = json.loads(result_json_string)
+
+    # 기록
+    value = ''
+
+    # 영어
+    for i in range(len(result['nBest'])):
+        if any(chr.isdigit() for chr in result['nBest'][i]['value'].replace(" ", "")):  # 숫자+영어
+            if isEng(result['nBest'][i]['value'].replace(" ", "")):
+                value = result['nBest'][i]['value']
+        elif isEng(result['nBest'][i]['value'].replace(" ", "")):  # 영어
+            value = result['nBest'][i]['value']
+
+    # 한국어
+    if value == '':
+        value = result['value']
+
+    # 음성파일 시간
+    speech_Length = response.text[response.text.index('Speech-Length'):response.text.rindex('{"type"')]
+    speech_Length = re.findall("\d+", speech_Length)[0]
+
+    # 말하기 속도
+    text_count = 0
+    numList = []
+    speech_speed = False
+    # 영어-단어수, 한글-음절수
+    if isEng(value.replace(" ", "")):
+        text_count = len(value.split(" "))
+        if 1.83 <= text_count / speech_Length <= 2.67:
+            speech_speed = True
+
+    elif any(chr.isdigit() for chr in value.replace(" ", "")):
+        text_count = len(value.replace(" ", ""))
+        numList = re.findall("\d+", value)
+        for num in numList:
+            text_count -= len(num)
+            text_count += len(readNumber(num))
+        if 4.5 <= text_count / speech_Length <= 5.5:
+            speech_speed = True
+
+    else:
+        text_count = len(value.replace(" ", ""))
+        if 4.5 <= text_count / speech_Length <= 5.5:
+            speech_speed = True
+
+    # 결과 txt 파일에 저장
+    script = os.path.join(settings.MEDIA_ROOT, '/script/'+userID + '_' + question_num + '_script.txt')
+    f = open(script, 'w', encoding='utf-8')
+    f.write(value)
+    f.close
+
+def korBert(request, script): # 모든 script 파일 합쳐서 진행
+    import urllib3
+    import json
+    from collections import Counter
+    from ast import literal_eval
+    from konlpy.tag import Okt
+
+    openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU_spoken"
+
+    accessKey = "1a2937a3-caef-42ee-9b2d-4eadaf9c78c9"
+    analysisCode = "morp"
+
+    f = open(script, 'r', encoding='utf-8')
+    text = f.read()
+
+    requestJson = {
+        "access_key": accessKey,
+        "argument": {
+            "text": text,
+            "analysis_code": analysisCode
+        }
+    }
+
+    http = urllib3.PoolManager()
+    response = http.request(
+        "POST",
+        openApiURL,
+        headers={"Content-Type": "application/json; charset=UTF-8"},
+        body=json.dumps(requestJson)
+    )
+
+    data = str(response.data, "utf-8")
+    dict_data = literal_eval(data)
+    sentence = dict_data['return_object']['sentence']
+
+    # 감탄사 추출
+    IC = []
+    SL = []
+    for i in range(len(sentence)):
+        for j in range(len(sentence[i]['morp'])):
+            if sentence[i]['morp'][j]['type'] == 'IC':
+                IC.append(sentence[i]['morp'][j]['lemma'])
+            elif sentence[i]['morp'][j]['type'] == 'SL':
+                SL.append(sentence[i]['morp'][j]['lemma'])
+
+    IC_counts = Counter(IC)
+    print(IC_counts.most_common(5))
+
+    print(SL)
+
+    # 명사 추출
+    okt = Okt()
+    okt_noun = okt.nouns(text)
+    noun = [x for x in okt_noun if x not in IC]
+    noun += SL
+    print(noun)
+    noun_counts = Counter(noun)
+    print(noun_counts.most_common(10))
