@@ -18,4 +18,5 @@ urlpatterns = [
     path('findID/<int:student>', views.findID, name='findID'),
     path('findPW/<int:student>', views.findPW, name='findPW'),
     path('resultPW/<int:student>/<userID>/', views.resultPW, name='resultPW'),
+    path('myVideo', views.myVideo, name='myVideo'),
 ]

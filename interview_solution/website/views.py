@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
-from .models import User, Teacher, SchoolInfo
+from .models import User, Teacher, SchoolInfo, Report
 import json
 import logging
 
@@ -181,3 +181,17 @@ def resultPW(request, student, userID):
             return render(request, 'resultPW.html', {'error': 'password incorrect'})
     else:
         return render(request, 'resultPW.html')
+
+@csrf_exempt
+def myVideo(request):
+    if request.is_ajax():
+        id = request.POST.get('result')
+        one_Report = Report.objects.get(id=id)
+        one_Report.share = not(one_Report.share)
+        one_Report.save()
+        report = Report.objects.all(student=request.user)
+        return render(request, 'myVideo.html', {'report' : report})
+
+    report = Report.objects.all(student=request.user)
+    return render(request, 'myVideo.html', {'report' : report})
+

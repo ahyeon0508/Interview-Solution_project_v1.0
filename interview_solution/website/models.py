@@ -110,12 +110,16 @@ class Report(models.Model):  # 수정필요
         editable=False,
         verbose_name='pk'
     )
+    title = models.CharField(max_length=100, default='제목', verbose_name='제목')
     video1 = models.URLField(blank=True, null=True, verbose_name='영상1 url')
     video2 = models.URLField(blank=True, null=True, verbose_name='영상2 url')
     video3 = models.URLField(blank=True, null=True, verbose_name='영상3 url')
     script1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
     script2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
     script3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
+    pub_date = models.DateField(auto_now_add=True, verbose_name='날짜')
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    share = models.BooleanField(default=True, verbose_name='공유')
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
 
     def __str__(self):
