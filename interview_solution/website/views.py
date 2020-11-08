@@ -195,3 +195,26 @@ def myVideo(request):
     report = Report.objects.all(student=request.user)
     return render(request, 'myVideo.html', {'report' : report})
 
+@csrf_exempt
+def myVideoDetail(request, reportID):
+    report = Report.objects.get(id=reportID)
+    return render(request, 'myVideoDetail.html', {'report':report})
+
+@csrf_exempt
+def classVideo(request):
+    report = Report.objects.all(teacher=request.user.teacher)
+    return render(request, 'classVideo.html', {'report' : report})
+
+@csrf_exempt
+def classVideoDetail(request, reportID):
+    report = Report.objects.get(id=reportID)
+
+    if request.method == "POST":
+        report.comment1 = request.POST['comment1']
+        report.comment2 = request.POST['comment2']
+        report.comment3 = request.POST['comment3']
+        report.save()
+        return render(request, 'classVideoDetail.html', {'report': report})
+
+    return render(request, 'classVideoDetail.html', {'report':report})
+
