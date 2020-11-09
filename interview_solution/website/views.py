@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
-from .models import User, Teacher, SchoolInfo
+from .models import User, Teacher, SchoolInfo, Report
 import json
 import logging
 
@@ -182,5 +182,38 @@ def resultPW(request, student, userID):
     else:
         return render(request, 'resultPW.html')
 
-def report(request):
-    return render(request, 'report.html')
+@csrf_exempt
+def myVideo(request):
+    if request.is_ajax():
+        id = request.POST.get('result')
+        one_Report = Report.objects.get(id=id)
+        one_Report.share = not(one_Report.share)
+        one_Report.save()
+        report = Report.objects.filter(user=request.user)
+        return render(request, 'myVideo.html', {'report' : report})
+
+    report = Report.objects.filter(user=request.user)
+    return render(request, 'myVideo.html', {'report' : report})
+
+@csrf_exempt
+def myVideoDetail(request, reportID):
+    report = Report.objects.get(id=reportID)
+    return render(request, 'report.html', {'report':report})
+
+@csrf_exempt
+def classVideo(request):
+    report = Report.objects.filter(teacher=request.user.teacher)
+    return render(request, 'classVideo.html', {'report' : report})
+
+@csrf_exempt
+def classVideoDetail(request, reportID):
+    report = Report.objects.get(id=reportID)
+
+    if request.method == "POST":
+        report.comment1 = request.POST['comment1']
+        report.comment2 = request.POST['comment2']
+        report.comment3 = request.POST['comment3']
+        report.save()
+        return render(request, 'classVideoDetail.html', {'report': report})
+
+    return render(request, 'classVideoDetail.html', {'report':report})

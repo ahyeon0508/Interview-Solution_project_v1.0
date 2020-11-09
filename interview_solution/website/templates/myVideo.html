@@ -1,0 +1,29 @@
+{% load static %}
+<link href="{% static 'css/myVideo.css' %}" rel="stylesheet">
+<script>
+    $.ajax({
+        url: href,
+        type: 'POST',
+        success: function (data) {
+            // 만약 .toggle-btn.active 되면??
+        }
+    });
+</script>
+
+<div class="myVideo-page">
+    <h1>내 영상</h1>
+    <div class="form">
+        <div class="info">
+            <!-- 존재하는 면접 갯수만큼 반복문으로 -->
+            <!-- 제목(사용자가 생성할 수 있음) default: 제목 -->
+            <!-- 생성일자 : yyyy.MM.dd aaa hh.mm.ss -->
+            <!-- 장고에서 넘겨주면 : {{report.pub_date | date:'m-d,H:i' }} 이런식으로 사용하면 됨 -->
+            <div class="content">
+                <p>제목 / 생성일자 : 2020.11.04 수 12:54:02</p>
+                <div class="toggle-btn" onclick="this.classList.toggle('active')">
+                    <div class="inner-circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
