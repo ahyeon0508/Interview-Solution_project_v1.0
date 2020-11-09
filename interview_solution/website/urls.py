@@ -18,8 +18,8 @@ urlpatterns = [
     path('findID/<int:student>', views.findID, name='findID'),
     path('findPW/<int:student>', views.findPW, name='findPW'),
     path('resultPW/<int:student>/<userID>/', views.resultPW, name='resultPW'),
-    path('myVideo', views.myVideo, name='myVideo'),
+    path('myVideo/', views.myVideo, name='myVideo'),
     path('myVideo/detail/<int:reportID>', views.myVideoDetail, name='myVideoDetail'),
-    path('classVideo', views.classVideo, name='classVideo'),
+    path('classVideo/', views.classVideo, name='classVideo'),
     path('classVideo/detail/<int:reportID>', views.classVideoDetail, name='classVideoDetail'),
 ]

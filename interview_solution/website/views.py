@@ -189,10 +189,10 @@ def myVideo(request):
         one_Report = Report.objects.get(id=id)
         one_Report.share = not(one_Report.share)
         one_Report.save()
-        report = Report.objects.all(student=request.user)
+        report = Report.objects.filter(user=request.user)
         return render(request, 'myVideo.html', {'report' : report})
 
-    report = Report.objects.all(student=request.user)
+    report = Report.objects.filter(user=request.user)
     return render(request, 'myVideo.html', {'report' : report})
 
 @csrf_exempt
@@ -202,7 +202,7 @@ def myVideoDetail(request, reportID):
 
 @csrf_exempt
 def classVideo(request):
-    report = Report.objects.all(teacher=request.user.teacher)
+    report = Report.objects.filter(teacher=request.user.teacher)
     return render(request, 'classVideo.html', {'report' : report})
 
 @csrf_exempt
