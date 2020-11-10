@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
@@ -6,7 +7,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
-from .models import User, Teacher, SchoolInfo
+from .models import User, Teacher, SchoolInfo, Question, StudentQuestion
 import json
 import logging
 
@@ -181,3 +182,30 @@ def resultPW(request, student, userID):
             return render(request, 'resultPW.html', {'error': 'password incorrect'})
     else:
         return render(request, 'resultPW.html')
+
+@csrf_exempt
+def questionList(request):
+    if request.user:
+        if request.method == "POST":
+            question = request.POST.get('id', '')
+            myQuestion = Question.objects.get(id=question)
+            try :
+                myQ = StudentQuestion.objects.get(student=request.user, question=myQuestion)
+                if myQ:
+                    myQ.delete()
+            except:
+                StudentQuestion.objects.create(question=myQuestion, student=request.user, teacher=request.user.teacher)
+            return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
+        else:
+            question = Question.objects.all()
+            myQuestion = StudentQuestion.objects.filter(student=request.user)
+            return render(request, 'questionList.html', {'question': question, 'myQuestion':myQuestion})
+    else:
+        question = Question.objects.all()
+        return render(request, 'questionList.html', {'question':question})
+
+
+@login_required
+def myQuestion(request):
+    question = StudentQuestion.objects.filter(student=request.user)
+    return render(request, 'myQuestion.html', {'question':question})
