@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.contrib.postgres.fields import JSONField
+import jsonfield
 
 # Create your models here.
 class TeacherManager(BaseUserManager):
@@ -109,21 +109,27 @@ class Report(models.Model):  # 수정필요
         verbose_name='pk'
     )
     title = models.CharField(max_length=100, default='제목', verbose_name='제목')
-    video1 = models.URLField(blank=True, null=True, verbose_name='영상1 url')
-    video2 = models.URLField(blank=True, null=True, verbose_name='영상2 url')
-    video3 = models.URLField(blank=True, null=True, verbose_name='영상3 url')
-    audio1 = models.URLField(blank=True, null=True, verbose_name='음성1 url')
-    audio2 = models.URLField(blank=True, null=True, verbose_name='음성2 url')
-    audio3 = models.URLField(blank=True, null=True, verbose_name='음성3 url')
+    video_url1 = models.URLField(blank=True, null=True, verbose_name='영상1 url')
+    video_url2 = models.URLField(blank=True, null=True, verbose_name='영상2 url')
+    video_url3 = models.URLField(blank=True, null=True, verbose_name='영상3 url')
+    video1 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상1')
+    video2 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상2')
+    video3 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상3')
+    audio1_url1 = models.URLField(blank=True, null=True, verbose_name='음성1 url')
+    audio2_url2 = models.URLField(blank=True, null=True, verbose_name='음성2 url')
+    audio3_url3 = models.URLField(blank=True, null=True, verbose_name='음성3 url')
+    audio1 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='음성1')
+    audio2 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='음성2')
+    audio3 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='음성3')
     script1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
     script2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
     script3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
-    adverb1 = JSONField()
-    adverb2 = JSONField()
-    adverb3 = JSONField()
-    repetition1 = JSONField()
-    repetition2 = JSONField()
-    repetition3 = JSONField()
+    adverb1 = jsonfield.JSONField()
+    adverb2 = jsonfield.JSONField()
+    adverb3 = jsonfield.JSONField()
+    repetition1 = jsonfield.JSONField()
+    repetition2 = jsonfield.JSONField()
+    repetition3 = jsonfield.JSONField()
     speed1 = models.FloatField(blank=True, null=True, verbose_name='말하기 속도1')
     speed2 = models.FloatField(blank=True, null=True, verbose_name='말하기 속도2')
     speed3 = models.FloatField(blank=True, null=True, verbose_name='말하기 속도3')
@@ -134,21 +140,11 @@ class Report(models.Model):  # 수정필요
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     share = models.BooleanField(default=True, verbose_name='공유')
+    # 리포트 어떤 거 저장할 것인지 이야기해야함.
 
     def __str__(self):
         return self.id
 
-# class Comment(models.Model):
-#     id = models.AutoField(
-#         primary_key=True,
-#         unique=True,
-#         editable=False,
-#         verbose_name='pk'
-#     )
-#     comment = models.CharField(max_length=200, null=True, blank=True, verbose_name='댓글')
-#     student = models.ForeignKey(User, on_delete=models.CASCADE)
-#     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-#     report = models.ForeignKey(Report, on_delete=models.CASCADE)
 
 class SchoolInfo(models.Model):
     id = models.AutoField(
