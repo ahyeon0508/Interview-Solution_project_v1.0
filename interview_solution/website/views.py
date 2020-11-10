@@ -222,111 +222,98 @@ def inter_setting(request):
             interview_list.append(user_question[random_n[i]])
     return render(request,'inter_setting.html')
 
-frames =[]
 def interview_q1(request):
-    if request.method == "POST":
-        print('a')
-        
+    if request.method == "POST":        
         return render(request,'inter_q1.html',{'interview_question':interview_list[0]})
     else:
         return render(request,'inter_q1.html',{'interview_question':interview_list[0]})
 
+stop_button = 0
+@csrf_exempt
+def stop_button_q1(request):
+    if request.POST.get('finish',True):
+        global stop_button
+        stop_button = 1
+        print("press the button")
+        result = {
+            'result':'success'
+        }
+        return JsonResponse(result)
+
+frames =[]
 @csrf_exempt
 def recordVideo(request):
+    global stop_button
     userID = request.POST['userID']
     question_num = request.POST['question']
     if request.POST.get('start',True):
         del frames[:]
         # OPENCV
         capture = cv2.VideoCapture(0)
-         # 코덱 정보(인코딩 방식)
+        # 코덱 정보(인코딩 방식)
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         #PyAudio
         CHUNK = 1024
         RATE = 16000 # 음성 데이터의 Sampling Rate: 16000Hz
         FORMAT = pyaudio.paInt16
         CHANNELS = 1
-        RECORD_SECONDS = 90
-        WAVE_OUTPUT_FILENAME = "record1.wav"
+        RECORD_SECONDS = 20
 
-        start = time.time()
-        i=0
-        p = pyaudio.PyAudio()
+        video_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_movie.avi')
+        audio_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_audio.wav')
+        ret, frame = capture.read()
+        video = cv2.VideoWriter(video_url, fourcc, 20.0, (frame.shape[1], frame.shape[0]))
+        p_audio = pyaudio.PyAudio()
+        audio_stream = p_audio.open(format=FORMAT,
+                channels=CHANNELS,
+                rate=RATE,
+                input=True,
+                frames_per_buffer=CHUNK)
 
         print("* recording")
 
         for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)): # wav는 녹음시 한계가 필요하기 때문에 수정함
-
-            ret, frame = capture.read()
-            cv2.imshow('Camera Window', frame)
-            key = cv2.waitKey(33)
-            if time.time()-start > 90:
+            if stop_button==1:
+                ret, frame = capture.read()
+                video.write(frame)
+                data = audio_stream.read(CHUNK)
+                frames.append(data)
                 break
-            if i==0:
-                video_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_movie.avi')
-                audio_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_audio.wav')
-                video = cv2.VideoWriter(video_url, fourcc, 20.0, (frame.shape[1], frame.shape[0]))
-                p_audio = pyaudio.PyAudio()
-                audio_stream = p_audio.open(format=FORMAT,
-                        channels=CHANNELS,
-                        rate=RATE,
-                        input=True,
-                        frames_per_buffer=CHUNK)
-                i=1
+            ret, frame = capture.read()
             video.write(frame)
             data = audio_stream.read(CHUNK)
             frames.append(data)
-            print("녹화 중..")
-            if key==27:
-                print("kk")
+            print("%d : 녹화 중..", stop_button)
 
         print("* done recording")
+
+        stop_button = 0
 
         video.release()
         audio_stream.stop_stream()
         audio_stream.close()
         p_audio.terminate()
 
-        wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+        wf = wave.open(audio_url, 'wb')
         wf.setnchannels(CHANNELS)
-        wf.setsampwidth(p.get_sample_size(FORMAT))
+        wf.setsampwidth(p_audio.get_sample_size(FORMAT))
         wf.setframerate(RATE)
         wf.writeframes(b''.join(frames))
         wf.close()
 
         capture.release()
-        cv2.destroyAllWindows()   
+        cv2.destroyAllWindows()
+        # video+audio
         video_clip = VideoFileClip(video_url)
         audio_clip = AudioFileClip(audio_url)
         video_clip.audio = audio_clip
-        audio_url = os.path.join(settings.MEDIA_ROOT, '/audio/'+userID+'_'+question_num+'_audio.wav')
-        final_url = os.path.join(settings.MEDIA_ROOT, '/video/'+userID+'_'+question_num+'_final_video.mp4')
+        final_url = os.path.join(settings.MEDIA_ROOT, userID+'_'+question_num+'_final_video.mp4')
         video_clip.write_videofile(final_url,codec="mpeg4")
         result = {
             'result':'success'
         }
 
-        stt(audio_url, userID, question_num)
         return JsonResponse(result)
-
-    if request.POST.get('finish',True):
-        video.release()
-        audio_stream.stop_stream()
-        audio_stream.close()
-        p_audio.terminate()
-        wf = wave.open(audio_url, 'wb')
-        wf.setnchannels(1)
-        wf.setsampwidth(p_audio.get_sample_size(pyaudio.paInt16))
-        wf.setframerate(RATE)
-        wf.writeframes(b''.join(frames))
-        wf.close()
-        capture.release()
-        cv2.destroyAllWindows()   
-        video_clip = VideoFileClip(video_url)
-        audio_clip = AudioFileClip(audio_url)
-        video_clip.audio = audio_clip
-        final_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_final_video.mp4')
-        video_clip.write_videofile(final_url,codec="mpeg4")
 
 def interview_q2(request):
     if request.method == "POST":
