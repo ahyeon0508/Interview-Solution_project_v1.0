@@ -17,7 +17,7 @@
             $('#startbutton').click(function(){
                 var userID = $(this).attr('name')
                 $.ajax({
-                    url:'q1/record/',
+                    url:'record/',
                     method:'POST',
                     data:{
                         name:'start',
@@ -38,7 +38,7 @@
             $('#finishbutton').click(function(){
                 var userID = $(this).attr('name')
                 $.ajax({
-                    url:'q1/record_stop/',
+                    url:'record_stop/',
                     method:'POST',
                     data:{
                         name:'finish',

@@ -323,8 +323,8 @@ def interview_q2(request):
 def interview_q3(request):
     if request.method == "POST":
         
-        return render(request,'inter_setting.html',{'interview_question':interview_list[2]})
-    return render(request,'inter_setting.html')
+        return render(request,'inter_q3.html',{'interview_question':interview_list[2]})
+    return render(request,'inter_q3.html')
 
 def stt(request, audio_url, userID, question_num):
     kakao_speech_url = "https://kakaoi-newtone-openapi.kakao.com/v1/recognize"

@@ -10,6 +10,52 @@
     <!-- Css Styles -->
     <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/inter_setting.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function(){
+            $('#startbutton').click(function(){
+                var userID = $(this).attr('name')
+                $.ajax({
+                    url:'record/',
+                    method:'POST',
+                    data:{
+                        name:'start',
+                        click: true,
+                        question:3,
+                        userID: userID
+                    },
+                    success:function(data){
+                        if (response.result != 'success') {
+                            console.error(response.data)
+                            return;
+                        }
+                    }
+                });
+            });
+        });
+        $(function(){
+            $('#finishbutton').click(function(){
+                var userID = $(this).attr('name')
+                $.ajax({
+                    url:'record_stop/',
+                    method:'POST',
+                    data:{
+                        name:'finish',
+                        click: true,
+                        question:3,
+                        userID: userID
+                    },
+                    success:function(data){
+                        if (response.result != 'success') {
+                            console.error(response.data)
+                            return;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -18,17 +64,18 @@
     </p>
     
     <!-- 질문 받아 띄우기 -->
-    <div> {{ }} </div>
+    <div> {{ interview_question }} </div>
     <div> 3 / 3 </div>
     
-    <!-- 질문 시작 -->
+    <!-- herf에  -->
     <div class="button" id="start" herf="">
-        <Strong> 질문 시작 </Strong>
+        <input type="button" id="startbutton" name="{{user.id}}" value="질문시작"> 
     </div>
 
-    <!-- herf에 결과 html로 -->
+    <!-- herf에 q3 html로 -->
     <div class="button" id="end" herf="">
-        <Strong> 끝 > </Strong>
+        <input type="button" id="finishbutton" name="{{user.id}}" value="다음으로"> 
+        <strong>끝></strong>
     </div>
 </body>
 

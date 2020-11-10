@@ -23,8 +23,8 @@ urlpatterns = [
     path('questionDB/',questionDB.db,name='questionDB'),
     path('student/interview/',views.inter_setting,name='interviewSetting'),
     path('student/interview/q1',views.interview_q1,name='interviewQ1'),
-    path('student/interview/q1/record/',views.recordVideo,name='recordVideo'),
-     path('student/interview/q1/record_stop/',views.stop_button_q1,name='stopVideo'),
+    path('student/interview/record/',views.recordVideo,name='recordVideo'),
+    path('student/interview/record_stop/',views.stop_button_q1,name='stopVideo'),
     path('student/interview/q2',views.interview_q2,name='interviewQ2'),
     path('student/interview/q3',views.interview_q3,name='interviewQ3'),
 ]
