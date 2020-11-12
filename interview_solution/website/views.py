@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.conf import settings
+from django.utils import timezone
 
-from .models import User, Teacher, SchoolInfo, StudentQuestion
+from .models import User, Teacher, SchoolInfo, StudentQuestion, Report
 import json
 import logging
 import random
@@ -212,6 +213,7 @@ def resultPW(request, userID):
 interview_list = ['a','b','c']
 def inter_setting(request):
     # 질문 랜덤으로 정하기
+    global interview_list
     user_question = StudentQuestion.objects.filter(student=request.user).values('question')
     n = user_question.count()
     if n < 3:
@@ -220,13 +222,17 @@ def inter_setting(request):
         random_n = random.sample(range(0,n),3)
         for i in range(3):
             interview_list.append(user_question[random_n[i]])
-    return render(request,'inter_setting.html')
+    pub_date = timezone.datetime.now()
+    report = Report.objects.create(student=request.user,teacher=request.user.teacher,pub_date=pub_date)
+    report.save()
+    reportID = report.id
+    return render(request, 'inter_setting.html',{'reportID':reportID})
 
-def interview_q1(request):
+def interview_q1(request,reportID):
     if request.method == "POST":        
-        return render(request,'inter_q1.html',{'interview_question':interview_list[0]})
+        return render(request,'inter_q1.html',{'interview_question':interview_list[0], 'reportID':reportID})
     else:
-        return render(request,'inter_q1.html',{'interview_question':interview_list[0]})
+        return render(request,'inter_q1.html',{'interview_question':interview_list[0], 'reportID':reportID})
 
 stop_button = 0
 @csrf_exempt
@@ -246,6 +252,7 @@ def recordVideo(request):
     global stop_button
     userID = request.POST['userID']
     question_num = request.POST['question']
+    reportID = request.POST['reportID']
     if request.POST.get('start',True):
         del frames[:]
         # OPENCV
@@ -309,22 +316,34 @@ def recordVideo(request):
         video_clip.audio = audio_clip
         final_url = os.path.join(settings.MEDIA_ROOT, userID+'_'+question_num+'_final_video.mp4')
         video_clip.write_videofile(final_url,codec="mpeg4")
+
+        report = Report.objects.get(id=reportID)
+        if question_num=='1':
+            report.video1 = final_url
+            report.audio1 = audio_url
+        elif question_num=='2':
+            report.video2 = final_url
+            report.audio2 = audio_url
+        else:
+            report.video3 = final_url
+            report.audio3 = audio_url
+        report.save()
+        
         result = {
             'result':'success'
         }
 
         return JsonResponse(result)
 
-def interview_q2(request):
+def interview_q2(request,reportID):
     if request.method == "POST":
-        return render(request,'inter_q2.html',{'interview_question':interview_list[1]})
-    return render(request,'inter_q2.html')
+        return render(request,'inter_q2.html',{'interview_question':interview_list[1], 'reportID':reportID})
+    return render(request,'inter_q2.html',{'interview_question':interview_list[1], 'reportID':reportID})
 
-def interview_q3(request):
+def interview_q3(request,reportID):
     if request.method == "POST":
-        
-        return render(request,'inter_q3.html',{'interview_question':interview_list[2]})
-    return render(request,'inter_q3.html')
+        return render(request,'inter_q3.html',{'interview_question':interview_list[2], 'reportID':reportID})
+    return render(request,'inter_q3.html',{'interview_question':interview_list[2], 'reportID':reportID})
 
 def stt(request, audio_url, userID, question_num):
     kakao_speech_url = "https://kakaoi-newtone-openapi.kakao.com/v1/recognize"

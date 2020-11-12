@@ -109,15 +109,9 @@ class Report(models.Model):  # 수정필요
         verbose_name='pk'
     )
     title = models.CharField(max_length=100, default='제목', verbose_name='제목')
-    video_url1 = models.URLField(blank=True, null=True, verbose_name='영상1 url')
-    video_url2 = models.URLField(blank=True, null=True, verbose_name='영상2 url')
-    video_url3 = models.URLField(blank=True, null=True, verbose_name='영상3 url')
     video1 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상1')
     video2 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상2')
     video3 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상3')
-    audio1_url1 = models.URLField(blank=True, null=True, verbose_name='음성1 url')
-    audio2_url2 = models.URLField(blank=True, null=True, verbose_name='음성2 url')
-    audio3_url3 = models.URLField(blank=True, null=True, verbose_name='음성3 url')
     audio1 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='음성1')
     audio2 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='음성2')
     audio3 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='음성3')
@@ -138,12 +132,12 @@ class Report(models.Model):  # 수정필요
     comment3 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글3')
     pub_date = models.DateField(auto_now_add=True, verbose_name='날짜')
     student = models.ForeignKey(User, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher,null=True, blank=True, on_delete=models.CASCADE)
     share = models.BooleanField(default=True, verbose_name='공유')
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
 
     def __str__(self):
-        return self.id
+        return self.title
 
 
 class SchoolInfo(models.Model):

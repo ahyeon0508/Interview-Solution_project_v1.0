@@ -16,14 +16,16 @@
         $(function(){
             $('#startbutton').click(function(){
                 var userID = $(this).attr('name')
+                var reportID = $(this).attr('report')
                 $.ajax({
                     url:'record/',
                     method:'POST',
                     data:{
                         name:'start',
                         click: true,
-                        question:1,
-                        userID: userID
+                        question: 1,
+                        userID: userID,
+                        reportID: reportID
                     },
                     success:function(data){
                         if (response.result != 'success') {
@@ -69,7 +71,7 @@
     
     <!-- herf에  -->
     <div class="button" id="start" herf="">
-        <input type="button" id="startbutton" name="{{user.id}}" value="질문시작"> 
+        <input type="button" id="startbutton" name="{{user.id}}" report="{{reportID}}" value="질문시작"> 
     </div>
 
     <!-- herf에 q2 html로 -->
