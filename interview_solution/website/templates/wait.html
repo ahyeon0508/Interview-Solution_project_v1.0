@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>면접 대기</title>
+    <link href="../static/css/wait.css" rel="stylesheet">
+    <script>
+        $(function () {
+            $('.toggle-btn').click(function (e) {
+                e.preventDefault();
+                url = $(e.currentTarget).attr('href');
+                result = $(e.currentTarget).text();
+                check = confirm(result + '하시겠습니까?');
+
+                if (check == true) {
+                    $.ajax({
+                        // url: 'myVideo/detail/reportID=' + reportID,
+                        method: "POST",
+                        data: {
+                            'result': result,
+                        },
+                    })
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="wait-page">
+        <p id="check">영상 공개 여부</p>
+        <div class="toggle-btn" onclick="this.classList.toggle('active')">
+            <div class="inner-circle"></div>
+        </div>
+        <h1>면접 대기</h1>
+        <p>분석에 시간이 다소 소요됩니다.</p>
+        <p id="notice">질문을 누르시면 해당 영상을 볼 수 있으며, 영상 공개 여부를 설정할 수 있습니다.</p>
+        <div class="question">
+            <!-- . 뒤에 사용자가 선택한 질문 뜨게 하기 -->
+            <!-- href 뒤에 waitVideo.html과 연결되게 하는 링크 넣기 -->
+            <p id="Q1"><a href="">Q1. 지원동기를 말씀해주세요</a></p>
+            <p id="Q2"><a href="">Q2. </a></p>
+            <p id="Q3"><a href="">Q3. </a></p>
+        </div>
+    </div>
+</body>
+
+</html>
