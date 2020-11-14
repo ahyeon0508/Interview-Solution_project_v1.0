@@ -214,7 +214,7 @@ interview_list = ['a','b','c']
 def inter_setting(request):
     # 질문 랜덤으로 정하기
     global interview_list
-    user_question = StudentQuestion.objects.filter(student=request.user).values('question')
+    user_question = StudentQuestion.objects.filter(student=request.session.get('user')).values('question')
     n = user_question.count()
     if n < 3:
         interview_list = user_question
@@ -223,7 +223,7 @@ def inter_setting(request):
         for i in range(3):
             interview_list.append(user_question[random_n[i]])
     pub_date = timezone.datetime.now()
-    report = Report.objects.create(student=request.user,teacher=request.user.teacher,pub_date=pub_date)
+    report = Report.objects.create(student=request.session.get('user'), teacher=request.session.get('user').teacher,pub_date=pub_date)
     report.save()
     reportID = report.id
     return render(request, 'inter_setting.html',{'reportID':reportID})
