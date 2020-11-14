@@ -74,8 +74,8 @@
         <input type="button" id="startbutton" name="{{user.id}}" report="{{reportID}}" value="질문시작"> 
     </div>
 
-    <!-- herf에 q2 html로 -->
-    <div class="button" id="end" herf="">
+    <!-- herf에 q3 html로 -->
+    <div class="button" id="end" herf="{% url 'website:interviewQ3' reportID=reportID %}">
         <input type="button" id="finishbutton" name="{{user.id}}" value="다음으로"> 
     </div>
 </body>
