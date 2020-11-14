@@ -5,22 +5,54 @@ h1{
     font-family: 'Nanum Gothic', sans-serif;
     padding-bottom: 20px;
     font-size: 40px;
+    text-align: center;
 }
 
 .report-page{
-    width: 450px;
-    padding-top: 50px;
+    width: 70%;
+    padding-top: 20px;
     padding-bottom: 50px;
     margin: auto;
 }
 
 .form{
-    position: relative;
-    z-index: 1;
-    background: #FFFFFF;
-    max-width: 360px;
     margin: 0 auto 15px;
-    padding: 45px;
+    border: 1px solid gray;
+    border-radius: 25px;
+    padding : 20px 15px 20px 15px;
+}
+
+.content{
+    padding-top: 15px;
     text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+#script{
+    border: 1px solid gray;
+    text-align: center;
+    padding: 30px 0 30px 0;
+    margin: 15px 20px 0 20px;
+    float: left;
+}
+
+#speed{
+    font-size: 10px;
+}
+
+.talk_speed{
+    border: 1px solid gray;
+    text-align: center;
+    padding: 30px 15px 30px 15px;
+    margin: 15px 20px 0 20px;
+    float: left;
+}
+
+
+.info_stt{
+    visibility: hidden;
+}
+
+#comment{
+    margin: 50px 30px 20px 30px;
+    text-align: left;
 }
