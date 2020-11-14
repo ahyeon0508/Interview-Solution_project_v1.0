@@ -9,11 +9,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.utils import timezone
 
-<<<<<<< HEAD
 from .models import User, SchoolInfo, Report, Question
-=======
-from .models import User, Teacher, SchoolInfo, Report
->>>>>>> d4118d3a4e8dbf58345dd34858a005f2d228ac25
 import json
 import random
 from cv2 import cv2
