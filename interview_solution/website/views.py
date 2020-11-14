@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
@@ -126,7 +127,7 @@ def studentSignin(request):
             user = User.objects.get(userID=userID)
             if user.check_password(password):
                 request.session['user'] = user.userID
-                return render(request, 'signin.html', {'student':1, 'error' : '성공'})
+                return redirect('website:interviewSetting')
             else:
                 return render(request,'signin.html',{'student':1, 'error':'username or password is incorrect'})
         except:
@@ -211,10 +212,12 @@ def resultPW(request, student, userID):
 
 #질문 리스트 전역변수
 interview_list = ['a','b','c']
+@csrf_exempt
 def inter_setting(request):
     # 질문 랜덤으로 정하기
+    student = User.objects.get(userID=request.session.get('user'))
     global interview_list
-    user_question = StudentQuestion.objects.filter(student=request.user).values('question')
+    user_question = StudentQuestion.objects.filter(student=student).values('question')
     n = user_question.count()
     if n < 3:
         interview_list = user_question
@@ -223,7 +226,7 @@ def inter_setting(request):
         for i in range(3):
             interview_list.append(user_question[random_n[i]])
     pub_date = timezone.datetime.now()
-    report = Report.objects.create(student=request.user,teacher=request.user.teacher,pub_date=pub_date)
+    report = Report.objects.create(student=student,teacher=student.teacher,pub_date=pub_date)
     report.save()
     reportID = report.id
     return render(request, 'inter_setting.html',{'reportID':reportID})
@@ -487,4 +490,19 @@ def wait(request, reportID):
 
     report.save()
 
-    return render(request, 'inter_setting.html', {'report':report})
+    return render(request, 'wait.html', {'IQ1':interview_list[0], 'IQ2':interview_list[1], 'IQ3':interview_list[2], 'report':report})
+
+def waitVideo1(request, reportID):
+    report = Report.objects.get(id=reportID)
+    video = report.video1
+    return render(request, 'waitVideo.html', {'video':video})
+
+def waitVideo2(request, reportID):
+    report = Report.objects.get(id=reportID)
+    video = report.video2
+    return render(request, 'waitVideo.html', {'video':video})
+
+def waitVideo3(request, reportID):
+    report = Report.objects.get(id=reportID)
+    video = report.video3
+    return render(request, 'waitVideo.html', {'video':video})

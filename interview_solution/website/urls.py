@@ -32,5 +32,8 @@ urlpatterns = [
     path('student/interview/q3/record/',views.recordVideo,name='recordVideoQ3'),
     path('student/interview/q3/record_stop/',views.stop_button_q1,name='stopVideoQ3'),
     path('wait/<reportID>', views.wait, name='wait'),
+    path('waitVideo1/', views.waitVideo1, name='waitVideo1'),
+    path('waitVideo2/', views.waitVideo2, name='waitVideo2'),
+    path('waitVideo3/', views.waitVideo3, name='waitVideo3'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
