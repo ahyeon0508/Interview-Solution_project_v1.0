@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.utils import timezone
 
-from .models import User, Teacher, SchoolInfo, StudentQuestion, Report
+from .models import User, SchoolInfo, Report, Question
 import json
 import random
 from cv2 import cv2
@@ -58,40 +58,9 @@ def studentSignup(request):
     else:
         return render(request, 'signup.html', {'student':1})
 
-def teacherSignup(request):
-    if request.method == "POST":
-        userID = request.POST['userID']
-        username = request.POST.get('username','')
-        password = request.POST.get('password', '')
-        passwordChk = request.POST.get('passwordChk', '')
-        phone = request.POST.get('phone', '')
-        school = request.POST.get('school','')
-        grade = request.POST.get('grade', '')
-        sClass = request.POST.get('sClass', '')
-
-        if password != passwordChk:
-            return render(request, 'signup.html',{'student':0, 'message':'입력한 비밀번호가 일치하지 않습니다.'})
-
-        else:
-            Teacher.objects.create_teacher(userID=userID, username=username, password = password, phone = phone,school= school, grade= grade, sClass= sClass)
-            return redirect(reverse('website:teacherSignin'))
-    else:
-        return render(request, 'signup.html', {'student':0})
-
 def studentcheckID(request):
     try:
         user= User.objects.get(userID=request.GET['userID'])
-    except Exception as e:
-        user = None
-    result = {
-        'result':'success',
-        'data':"not exist" if user is None else "exist"
-    }
-    return JsonResponse(result)
-
-def teachercheckID(request):
-    try:
-        user= Teacher.objects.get(userID=request.GET['userID'])
     except Exception as e:
         user = None
     result = {
@@ -136,34 +105,13 @@ def studentSignin(request):
         return render(request,'signin.html', {'student':1})
 
 @csrf_exempt
-def teacherSignin(request):
-    if request.method == "POST":
-        userID = request.POST.get('userID', '')
-        password = request.POST.get('password', '')
-
-        try:
-            user = Teacher.objects.get(userID=userID)
-            if check_password(password, user.password):
-                request.session['user'] = user.userID
-                return render(request, 'signin.html', {'student':0, 'error' : '성공'})
-            else:
-                return render(request,'signin.html',{'student':0, 'error':'username or password is incorrect'})
-        except:
-            return render(request, 'signin.html', {'student':0, 'error': 'username or password is incorrect'})
-    else:
-        return render(request,'signin.html', {'student':0})
-
-@csrf_exempt
-def findID(request, student):
+def findID(request):
     if request.method == "POST":
         username = request.POST.get('username', '')
         phone = request.POST.get('phone', '')
 
         try:
-            if student == 0:
-                user = Teacher.objects.get(username=username, phone=phone)
-            else:
-                user = User.objects.get(username=username, phone=phone)
+            user = User.objects.get(username=username, phone=phone)
             return render(request, 'resultID.html', {'userID':user.userID})
         except:
             return render(request, 'findID.html', {'error': 'username or phone is incorrect'})
@@ -171,17 +119,14 @@ def findID(request, student):
         return render(request, 'findID.html')
 
 @csrf_exempt
-def findPW(request, student):
+def findPW(request):
     if request.method == "POST":
         username = request.POST.get('username', '')
         userID = request.POST.get('userID', '')
         phone = request.POST.get('phone', '')
 
         try:
-            if student == 0:
-                Teacher.objects.get(username=username, userID=userID, phone=phone)
-            else:
-                User.objects.get(username=username, userID=userID, phone=phone)
+            User.objects.get(username=username, userID=userID, phone=phone)
             return redirect(reverse('website:resultPW', args=[str(userID)]))
         except:
             return render(request, 'findPW.html', {'error': 'username or phone is incorrect'})
@@ -189,17 +134,14 @@ def findPW(request, student):
         return render(request, 'findPW.html')
 
 @csrf_exempt
-def resultPW(request, student, userID):
+def resultPW(request, userID):
     if request.method == "POST":
         password = request.POST.get('password', '')
         passwordChk = request.POST.get('passwordChk', '')
 
         try:
             if password == passwordChk:
-                if student == 0:
-                    user = Teacher.objects.get(userID=userID)
-                else:
-                    user = User.objects.get(userID=userID)
+                user = User.objects.get(userID=userID)
                 user.set_password(password)
                 user.save()
                 return redirect(reverse('website:studentSignin'))
@@ -217,7 +159,7 @@ def inter_setting(request):
     # 질문 랜덤으로 정하기
     student = User.objects.get(userID=request.session.get('user'))
     global interview_list
-    user_question = StudentQuestion.objects.filter(student=student).values('question')
+    user_question = Question.objects.all().values('question')
     n = user_question.count()
     if n < 3:
         interview_list = user_question
@@ -226,7 +168,7 @@ def inter_setting(request):
         for i in range(3):
             interview_list.append(user_question[random_n[i]])
     pub_date = timezone.datetime.now()
-    report = Report.objects.create(student=student,teacher=student.teacher,pub_date=pub_date)
+    report = Report.objects.create(student=student, pub_date=pub_date)
     report.save()
     reportID = report.id
     return render(request, 'inter_setting.html',{'reportID':reportID})
@@ -321,15 +263,8 @@ def recordVideo(request):
         video_clip.write_videofile(final_url,codec="mpeg4")
 
         report = Report.objects.get(id=reportID)
-        if question_num=='1':
-            report.video1 = final_url
-            report.audio1 = audio_url
-        elif question_num=='2':
-            report.video2 = final_url
-            report.audio2 = audio_url
-        else:
-            report.video3 = final_url
-            report.audio3 = audio_url
+        report.video = final_url
+        report.audio = audio_url
         report.save()
         
         result = {
@@ -337,16 +272,6 @@ def recordVideo(request):
         }
 
         return JsonResponse(result)
-
-def interview_q2(request,reportID):
-    if request.method == "POST":
-        return render(request,'inter_q2.html',{'interview_question':interview_list[1], 'reportID':reportID})
-    return render(request,'inter_q2.html',{'interview_question':interview_list[1], 'reportID':reportID})
-
-def interview_q3(request,reportID):
-    if request.method == "POST":
-        return render(request,'inter_q3.html',{'interview_question':interview_list[2], 'reportID':reportID})
-    return render(request,'inter_q3.html',{'interview_question':interview_list[2], 'reportID':reportID})
 
 def stt(audiofile):
     import base64
@@ -484,9 +409,7 @@ def stt(audiofile):
 
 def wait(request, reportID):
     report = Report.objects.get(id=reportID)
-    report.script1, report.speed1, report.adverb1, report.repetition1 = stt(report.video1)
-    report.script2, report.speed2, report.adverb2, report.repetition2 = stt(report.video2)
-    report.script3, report.speed3, report.adverb3, report.repetition3 = stt(report.video3)
+    report.script, report.speed, report.adverb, report.repetition = stt(report.video)
 
     report.save()
 
@@ -494,15 +417,5 @@ def wait(request, reportID):
 
 def waitVideo1(request, reportID):
     report = Report.objects.get(id=reportID)
-    video = report.video1
-    return render(request, 'waitVideo.html', {'video':video})
-
-def waitVideo2(request, reportID):
-    report = Report.objects.get(id=reportID)
-    video = report.video2
-    return render(request, 'waitVideo.html', {'video':video})
-
-def waitVideo3(request, reportID):
-    report = Report.objects.get(id=reportID)
-    video = report.video3
+    video = report.video
     return render(request, 'waitVideo.html', {'video':video})
