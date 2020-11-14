@@ -9,7 +9,11 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.utils import timezone
 
+<<<<<<< HEAD
 from .models import User, SchoolInfo, Report, Question
+=======
+from .models import User, Teacher, SchoolInfo, Report
+>>>>>>> d4118d3a4e8dbf58345dd34858a005f2d228ac25
 import json
 import random
 from cv2 import cv2
@@ -419,3 +423,39 @@ def waitVideo1(request, reportID):
     report = Report.objects.get(id=reportID)
     video = report.video
     return render(request, 'waitVideo.html', {'video':video})
+
+@csrf_exempt
+def myVideo(request):
+    if request.is_ajax():
+        id = request.POST.get('result')
+        one_Report = Report.objects.get(id=id)
+        one_Report.share = not(one_Report.share)
+        one_Report.save()
+        report = Report.objects.filter(user=request.user)
+        return render(request, 'myVideo.html', {'report' : report})
+
+    report = Report.objects.filter(user=request.user)
+    return render(request, 'myVideo.html', {'report' : report})
+
+@csrf_exempt
+def myVideoDetail(request, reportID):
+    report = Report.objects.get(id=reportID)
+    return render(request, 'report.html', {'report':report})
+
+@csrf_exempt
+def classVideo(request):
+    report = Report.objects.filter(teacher=request.user.teacher)
+    return render(request, 'classVideo.html', {'report' : report})
+
+@csrf_exempt
+def classVideoDetail(request, reportID):
+    report = Report.objects.get(id=reportID)
+
+    if request.method == "POST":
+        report.comment1 = request.POST['comment1']
+        report.comment2 = request.POST['comment2']
+        report.comment3 = request.POST['comment3']
+        report.save()
+        return render(request, 'classVideoDetail.html', {'report': report})
+
+    return render(request, 'classVideoDetail.html', {'report':report})
