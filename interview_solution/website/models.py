@@ -75,8 +75,8 @@ class Report(models.Model):  # 수정필요
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     share = models.BooleanField(default=True, verbose_name='공유')
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
-    def __str__(self):
-        return self.title
+    def __int__(self):
+        return self.id
 
 class SchoolInfo(models.Model):
     id = models.AutoField(

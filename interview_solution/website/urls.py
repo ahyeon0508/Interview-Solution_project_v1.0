@@ -17,14 +17,12 @@ urlpatterns = [
     path('resultPW/<userID>/', views.resultPW, name='resultPW'),
     path('questionDB/',questionDB.db,name='questionDB'),
     path('student/interview/',views.inter_setting,name='interviewSetting'),
-    path('student/interview/q1/<reportID>',views.interview_q1,name='interviewQ1'),
+    path('student/interview/q1/<int:reportID>',views.interview_q1,name='interviewQ1'),
     path('student/interview/q1/record/',views.recordVideo,name='recordVideoQ1'),
     path('student/interview/q1/record_stop/',views.stop_button_q1,name='stopVideoQ1'),
-    path('wait/<reportID>', views.wait, name='wait'),
+    path('wait/<int:reportID>', views.wait, name='wait'),
     path('waitVideo1/', views.waitVideo1, name='waitVideo1'),
     path('myVideo/', views.myVideo, name='myVideo'),
     path('myVideo/detail/<int:reportID>', views.myVideoDetail, name='myVideoDetail'),
-    path('classVideo/', views.classVideo, name='classVideo'),
-    path('classVideo/detail/<int:reportID>', views.classVideoDetail, name='classVideoDetail'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

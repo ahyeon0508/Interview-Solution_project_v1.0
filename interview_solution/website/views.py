@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.conf import settings
 from django.utils import timezone
+from django.db.models.aggregates import Count
+from random import randint
 
 from .models import User, SchoolInfo, Report, Question
 import json
@@ -153,20 +155,16 @@ def resultPW(request, userID):
         return render(request, 'resultPW.html')
 
 #질문 리스트 전역변수
-interview_list = ['a','b','c']
+interview_list = []
 @csrf_exempt
 def inter_setting(request):
     # 질문 랜덤으로 정하기
     student = User.objects.get(userID=request.session.get('user'))
     global interview_list
-    user_question = Question.objects.all().values('question')
-    n = user_question.count()
-    if n < 3:
-        interview_list = user_question
-    else:
-        random_n = random.sample(range(0,n),3)
-        for i in range(3):
-            interview_list.append(user_question[random_n[i]])
+    count = Question.objects.aggregate(count=Count('id'))['count']
+    random_index = randint(0, count - 1)
+    user_question = Question.objects.all()[random_index]
+    interview_list.append(user_question)
     pub_date = timezone.datetime.now()
     report = Report.objects.create(student=student, pub_date=pub_date)
     report.save()
@@ -423,35 +421,19 @@ def waitVideo1(request, reportID):
 @csrf_exempt
 def myVideo(request):
     if request.is_ajax():
+        print("A")
         id = request.POST.get('result')
         one_Report = Report.objects.get(id=id)
         one_Report.share = not(one_Report.share)
+        print(one_Report.share)
         one_Report.save()
-        report = Report.objects.filter(user=request.user)
+        report = Report.objects.filter(student=request.session.get('user'))
         return render(request, 'myVideo.html', {'report' : report})
 
-    report = Report.objects.filter(user=request.user)
-    return render(request, 'myVideo.html', {'report' : report})
+    report = Report.objects.filter(student=request.session.get('user'))
+    return render(request, 'myVideo.html', {'report' : report, 'user':request.session.get('user')})
 
 @csrf_exempt
 def myVideoDetail(request, reportID):
     report = Report.objects.get(id=reportID)
     return render(request, 'report.html', {'report':report})
-
-@csrf_exempt
-def classVideo(request):
-    report = Report.objects.filter(teacher=request.user.teacher)
-    return render(request, 'classVideo.html', {'report' : report})
-
-@csrf_exempt
-def classVideoDetail(request, reportID):
-    report = Report.objects.get(id=reportID)
-
-    if request.method == "POST":
-        report.comment1 = request.POST['comment1']
-        report.comment2 = request.POST['comment2']
-        report.comment3 = request.POST['comment3']
-        report.save()
-        return render(request, 'classVideoDetail.html', {'report': report})
-
-    return render(request, 'classVideoDetail.html', {'report':report})

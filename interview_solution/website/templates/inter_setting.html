@@ -7,9 +7,6 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../static/css/inter_setting.css" type="text/css">
 </head>
 
 <body>
@@ -26,9 +23,9 @@
     </p>
 
     <!--herf에 inter_main-->
-    <div class="button" herf="{% url 'website:interviewQ1' reportID=reportID %}">
+    <button class="button" id="startq1" OnClick="location.href='{% url 'website:interviewQ1' reportID=reportID %}'">
         <Strong> 시작 > </Strong>
-    </div>
+    </button>
 
     <script>
         var video = document.querySelector("#videoElement");
