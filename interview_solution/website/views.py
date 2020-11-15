@@ -207,7 +207,7 @@ def recordVideo(request):
         RATE = 16000 # 음성 데이터의 Sampling Rate: 16000Hz
         FORMAT = pyaudio.paInt16
         CHANNELS = 1
-        RECORD_SECONDS = 20
+        RECORD_SECONDS = 30
 
         video_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_movie.avi')
         audio_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_audio.wav')
@@ -337,6 +337,7 @@ def stt(audiofile):
 
     data = str(response.data, "utf-8")
     dict_data = literal_eval(data)
+    print(dict_data)
     result = dict_data['return_object']['recognized']
 
     # 기록
@@ -422,7 +423,7 @@ def stt(audiofile):
 
 def wait(request, reportID):
     report = Report.objects.get(id=reportID)
-    report.script, report.speed, report.adverb, report.repetition = stt('./videos/videos/jin_1_audio.wav')
+    report.script, report.speed, report.adverb, report.repetition = stt(report.audio.url)
 
     report.save()
 
@@ -451,7 +452,7 @@ def myVideo(request):
 @csrf_exempt
 def myVideoDetail(request, reportID):
     report = Report.objects.get(id=reportID)
-    report.script, report.speed, report.adverb, report.repetition = stt('./videos/videos/jin_1_audio.wav')
+    report.script, report.speed, report.adverb, report.repetition = stt(report.audio.path)
 
     report.save()
 

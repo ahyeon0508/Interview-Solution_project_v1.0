@@ -72,7 +72,7 @@ var myChart = new Chart(ctx, {
         // 부사구
         labels: Object.keys(ad),
         datasets: [{
-            label: '부사구 빈도',
+            label: '감탄사 빈도',
             // 빈도
             data: ad_count,
             backgroundColor: [
@@ -110,7 +110,7 @@ var myChart = new Chart(ctx, {
         },
         title: {
             display: true,
-            text: '부사구 빈도'
+            text: '감탄사 빈도'
         }
     }
 });
