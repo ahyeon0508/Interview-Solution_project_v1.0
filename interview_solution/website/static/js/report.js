@@ -1,14 +1,20 @@
-var data_rep = document.getElementById('info_rep');
-var data_ad = document.getElementById('info_adverb');
+var info_rep = document.getElementById('info_rep').innerHTML;
+var info_ad = document.getElementById('info_adverb').innerHTML;
+
+rep = info_rep.replaceAll('\'','\"');
+rep = JSON.parse(rep)
+
+ad = info_ad.replaceAll('\'','\"');
+ad = JSON.parse(ad)
 
 var rep_count = [];
-for (key in data_rep) {
-	rep_count.push(data_rep[key]);
+for (key in rep) {
+	rep_count.push(rep[key]);
 }
 
 var ad_count = [];
-for (key in data_ad) {
-	rad_count.push(data_ad[key]);
+for (key in ad) {
+	ad_count.push(ad[key]);
 }
 
 var ctx = document.getElementById('repetition').getContext('2d');
@@ -16,7 +22,7 @@ var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         // 반복어
-        labels: Object.keys(data_rep),
+        labels: Object.keys(rep),
         datasets: [{
             label: '반복어 빈도',
             // 빈도
@@ -64,7 +70,7 @@ var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         // 부사구
-        labels: Object.keys(data_ad),
+        labels: Object.keys(ad),
         datasets: [{
             label: '부사구 빈도',
             // 빈도
