@@ -23,9 +23,7 @@
     </p>
 
     <!--herf에 inter_main-->
-    <button class="button" id="startq1" OnClick="location.href='{% url 'website:interviewQ1' reportID=reportID %}'">
-        <Strong> 시작 > </Strong>
-    </button>
+    <input type="button" id="startq1" onClick="location.href='{% url 'website:interviewQ1' reportID=reportID %}'" value="시작 >">
 
     <script>
         var video = document.querySelector("#videoElement");

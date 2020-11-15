@@ -164,7 +164,7 @@ def inter_setting(request):
     count = Question.objects.aggregate(count=Count('id'))['count']
     random_index = randint(0, count - 1)
     user_question = Question.objects.all()[random_index]
-    interview_list.append(user_question)
+    interview_list.append(user_question.question)
     pub_date = timezone.datetime.now()
     report = Report.objects.create(student=student, pub_date=pub_date)
     report.save()
@@ -245,11 +245,17 @@ def recordVideo(request):
         p_audio.terminate()
 
         wf = wave.open(audio_url, 'wb')
+        print("A")
         wf.setnchannels(CHANNELS)
+        print("A")
         wf.setsampwidth(p_audio.get_sample_size(FORMAT))
+        print("A")
         wf.setframerate(RATE)
+        print("A")
         wf.writeframes(b''.join(frames))
+        print("A")
         wf.close()
+        print("A")
 
         capture.release()
         cv2.destroyAllWindows()
@@ -260,10 +266,13 @@ def recordVideo(request):
         final_url = os.path.join(settings.MEDIA_ROOT, userID+'_'+question_num+'_final_video.mp4')
         video_clip.write_videofile(final_url,codec="mpeg4")
 
+        print("A")
         report = Report.objects.get(id=reportID)
         report.video = final_url
         report.audio = audio_url
         report.save()
+
+        print(report.video)
         
         result = {
             'result':'success'
@@ -392,7 +401,8 @@ def stt(audiofile):
                 SL.append(sentence[i]['morp'][j]['lemma'])
 
     IC_counts = Counter(IC)
-    adverb = json.dump(IC_counts.most_common(5))
+    adverb = dict(IC_counts.most_common(5))
+    print(adverb)
 
     # 명사 추출
     okt = Okt()
@@ -401,17 +411,22 @@ def stt(audiofile):
     noun += SL
     print(noun)
     noun_counts = Counter(noun)
-    repetition = json.dump(noun_counts.most_common(5))
+    noun_list = []
+    for n, c in noun_counts.most_common(5):
+        if c >= 2:
+            noun_list.append((n, c))
+    repetition = dict(noun_list)
+    print(repetition)
 
     return script, speech_speed, adverb, repetition
 
 def wait(request, reportID):
     report = Report.objects.get(id=reportID)
-    report.script, report.speed, report.adverb, report.repetition = stt(report.video)
+    report.script, report.speed, report.adverb, report.repetition = stt('./videos/videos/jin_1_audio.wav')
 
     report.save()
 
-    return render(request, 'wait.html', {'IQ1':interview_list[0], 'IQ2':interview_list[1], 'IQ3':interview_list[2], 'report':report})
+    return render(request, 'wait.html', {'IQ1':'안녕하세요', 'report':report})
 
 def waitVideo1(request, reportID):
     report = Report.objects.get(id=reportID)
@@ -435,5 +450,10 @@ def myVideo(request):
 
 @csrf_exempt
 def myVideoDetail(request, reportID):
+    report = Report.objects.get(id=reportID)
+    report.script, report.speed, report.adverb, report.repetition = stt('./videos/videos/jin_1_audio.wav')
+
+    report.save()
+
     report = Report.objects.get(id=reportID)
     return render(request, 'report.html', {'report':report})
