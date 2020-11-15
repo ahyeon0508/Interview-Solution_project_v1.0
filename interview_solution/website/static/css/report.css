@@ -17,9 +17,9 @@ h1{
 
 .form{
     margin: 0 auto 15px;
-    border: 1px solid gray;
+    border: 1px solid gray; 
     border-radius: 25px;
-    padding : 20px 15px 20px 15px;
+    padding : 20px 15px 300px 15px;
 }
 
 .content{
@@ -30,13 +30,9 @@ h1{
 #script{
     border: 1px solid gray;
     text-align: center;
-    padding: 30px 0 30px 0;
+    padding: 30px 15px 30px 15px;
     margin: 15px 20px 0 20px;
-    float: left;
-}
-
-#speed{
-    font-size: 10px;
+    float: center;
 }
 
 .talk_speed{
@@ -44,15 +40,9 @@ h1{
     text-align: center;
     padding: 30px 15px 30px 15px;
     margin: 15px 20px 0 20px;
-    float: left;
+    float: center;
 }
-
 
 .info_stt{
     visibility: hidden;
-}
-
-#comment{
-    margin: 50px 30px 20px 30px;
-    text-align: left;
 }
