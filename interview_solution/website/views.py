@@ -192,13 +192,13 @@ def myVideo(request):
         report = Report.objects.filter(user=request.session.get('user'))
         return render(request, 'myVideo.html', {'report' : report})
 
-    report = Report.objects.filter(user=request.user)
+    report = Report.objects.filter(user=request.session.get('user'))
     return render(request, 'myVideo.html', {'report' : report})
 
 @csrf_exempt
 def myVideoDetail(request, reportID):
     report = Report.objects.get(id=reportID)
-    return render(request, 'myVideoDetail.html', {'report':report})
+    return render(request, 'report.html', {'report':report})
 
 @csrf_exempt
 def classVideo(request):
@@ -217,4 +217,3 @@ def classVideoDetail(request, reportID):
         return render(request, 'classVideoDetail.html', {'report': report})
 
     return render(request, 'classVideoDetail.html', {'report':report})
-

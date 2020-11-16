@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>내 면접 리포트</title>
+    <link href="../static/css/report.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+</head>
+
+<body>
+    <div class="report-page">
+        <h1>내 면접 리포트</h1>
+        <div class="form">
+            <div class="info">
+                <p id="title">{{report.title}}</p>
+                <p id="data">{{report.pub_date }}</p>
+            </div>
+            <div class="content">
+                <!-- src=""에 비디오 주소 넣기 -->
+                <video src="" controls>
+                    현재 브라우저는 비디오를 지원하지 않습니다.
+                </video>
+                <!-- 대본 -->
+                <div class="stt">
+                    <p id="script">{{report.script1}}</p>
+                </div>
+                <!-- 말하기 속도 -->
+                <div class="talk_speed">
+                    <p id="speed">* 분당 말하기 속도가 계산되어 제공됩니다. <br>
+                        한글은 270 ~ 330자, 영어는 110 ~ 160단어를 말하면 적당한 속도입니다 *</p>
+                    <p>{{report.speed1}}</p>
+                </div>
+                <!-- js로 차트로 만들예정-->
+                <!-- 예진 : 부사어와 횟수 가져오기 -->
+                <!-- ex) 음 5  {'음': 5}
+                            아 4 -->
+                <div class="info_stt">
+                    <p id="info_rep">{{report.repetition1}}</p>
+                    <p id="info_adverb">{{report.adverb1}}</p>
+                </div>
+                <div class="chart">
+                    <div class="repetition" style="float:left; padding: 0 50px 0 50px;">
+                        <canvas id="repetition" width="250" height="250" float:left;></canvas>
+                    </div>
+                    <div class="adverb" style="float:left;">
+                        <canvas id="adverb" width="250" height="250"></canvas>
+                    </div>
+                </div>
+                {%if report.comment1 %}
+                <p id="comment">{{report.comment1}}</p>
+                {% endif %}
+            </div>
+        </div>
+        <script type="text/javascript" src="../static/js/report.js"></script>
+    </div>
+</body>
