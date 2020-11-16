@@ -184,16 +184,18 @@ def resultPW(request, student, userID):
 
 @csrf_exempt
 def myVideo(request):
-    if request.is_ajax():
+    report = Report.objects.filter(user=request.session.get('user'))
+    return render(request, 'myVideo.html', {'report' : report})
+
+@csrf_exempt
+def myVideoAjax(request):
+    if 'result' in request.POST:
         id = request.POST.get('result')
         one_Report = Report.objects.get(id=id)
         one_Report.share = not(one_Report.share)
         one_Report.save()
-        report = Report.objects.filter(user=request.session.get('user'))
-        return render(request, 'myVideo.html', {'report' : report})
+        return HttpResponse(one_Report)
 
-    report = Report.objects.filter(user=request.session.get('user'))
-    return render(request, 'myVideo.html', {'report' : report})
 
 @csrf_exempt
 def myVideoDetail(request, reportID):
