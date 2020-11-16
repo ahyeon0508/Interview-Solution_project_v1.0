@@ -7,7 +7,7 @@
         check.click(function () {
             var reportID = $(this).attr('report')
             $.ajax({
-                url: 'myVideo/detail',
+                url: 'myVideo/detail/'+reportID,
                 method: 'POST',
                 data: {
                     result: reportID
@@ -29,7 +29,7 @@
     <div class="form">
         <div class="info">
             <div class="content">
-                <p>제목 / 생성일자 : {{report.pub_date | date:'m-d,H:i' }}</p>
+                <p>{{ report.title }} / 생성일자 : {{report.pub_date}}</p>
                 <label class="switch">
                     <input type="checkbox" report="{{reportID}}">
                     <span class="slider round"></span>

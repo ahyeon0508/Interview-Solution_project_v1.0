@@ -87,7 +87,7 @@ class Question(models.Model):
     student = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __int__(self):
         return self.id
 
 class StudentQuestion(models.Model):
@@ -100,7 +100,7 @@ class StudentQuestion(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __int__(self):
         return self.id
 
 class Report(models.Model):
@@ -132,9 +132,9 @@ class Report(models.Model):
     pub_date = models.DateField(auto_now_add=True, verbose_name='날짜')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    share = models.BooleanField(default=True, verbose_name='공유')
+    share = models.BooleanField(default=False, verbose_name='공유')
 
-    def __str__(self):
+    def __int__(self):
         return self.id
 
 class Comment(models.Model):
