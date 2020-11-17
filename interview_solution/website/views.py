@@ -200,8 +200,6 @@ def myVideoAjax(request):
 @csrf_exempt
 def myVideoDetail(request, reportID):
     report = Report.objects.get(id=reportID)
-    print(report.video1.url)
-    print(report.video1.path)
     return render(request, 'report.html', {'report':report})
 
 @csrf_exempt
