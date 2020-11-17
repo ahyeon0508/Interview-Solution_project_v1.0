@@ -492,6 +492,15 @@ def wait(request, reportID):
 
     return render(request, 'wait.html', {'IQ1':interview_list[0], 'IQ2':interview_list[1], 'IQ3':interview_list[2], 'report':report})
 
+@csrf_exempt
+def waitAjax(request):
+    if 'result' in request.POST:
+        id = request.POST.get('result')
+        one_Report = Report.objects.get(id=id)
+        one_Report.share = not(one_Report.share)
+        one_Report.save()
+        return HttpResponse(one_Report)
+
 def waitVideo1(request, reportID):
     report = Report.objects.get(id=reportID)
     video = report.video1
