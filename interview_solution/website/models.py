@@ -149,39 +149,4 @@ class SchoolInfo(models.Model):
     )
     name = models.CharField(blank=True, null=True, max_length=100)
     def __unicode__(self):
-        return self.name       verbose_name='pk'
-    )
-    video1 = models.URLField(blank=True, null=True, verbose_name='영상1 url')
-    video2 = models.URLField(blank=True, null=True, verbose_name='영상2 url')
-    video3 = models.URLField(blank=True, null=True, verbose_name='영상3 url')
-    script1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
-    script2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
-    script3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
-    # 리포트 어떤 거 저장할 것인지 이야기해야함.
-
-    def __str__(self):
-        return self.id
-
-
-class Comment(models.Model):
-    id = models.AutoField(
-        primary_key=True,
-        unique=True,
-        editable=False,
-        verbose_name='pk'
-    )
-    comment = models.CharField(max_length=200, null=True, blank=True, verbose_name='댓글')
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    report = models.ForeignKey(Report, on_delete=models.CASCADE)
-
-class SchoolInfo(models.Model):
-    id = models.AutoField(
-        primary_key=True,
-        unique=True,
-        editable=False,
-        verbose_name='pk'
-    )
-    name = models.CharField(blank=True, null=True, max_length=100)
-    def __unicode__(self):
         return self.name
