@@ -16,8 +16,8 @@ def intro(request):
 def studentHome(request):
     return render(request, 'stuhome.html')
 
-# def teacherHome(request):
-#     return render(request, 'teachHome.html')
+def teacherHome(request):
+    return render(request, 'teahome.html')
 
 @csrf_exempt
 def studentSignup(request):
@@ -117,12 +117,6 @@ def studentSignin(request):
         return render(request,'signin.html', {'student':1})
 
 @csrf_exempt
-def studentSignoff(request):
-    if request.session['user']:
-        del(request.session['user'])
-    return redirect(reverse('website:intro'))
-
-@csrf_exempt
 def teacherSignin(request):
     if request.method == "POST":
         userID = request.POST.get('userID', '')
@@ -141,9 +135,9 @@ def teacherSignin(request):
         return render(request,'signin.html', {'student':0})
 
 @csrf_exempt
-def teacherSignoff(request):
+def signoff(request):
     if request.session['user']:
-        del (request.session['user'])
+        del(request.session['user'])
     return redirect(reverse('website:intro'))
 
 @csrf_exempt
