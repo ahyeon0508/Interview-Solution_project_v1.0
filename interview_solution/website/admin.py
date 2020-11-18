@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User, SchoolInfo, Teacher, Question, StudentQuestion, Report
 from .form import ChangeForm,SignupForm
 
 # Register your models here.
@@ -28,3 +28,8 @@ class ProjectUserAdmin(UserAdmin):
 
 
 admin.site.register(User)
+admin.site.register(Teacher)
+admin.site.register(SchoolInfo)
+admin.site.register(Question)
+admin.site.register(StudentQuestion)
+admin.site.register(Report)

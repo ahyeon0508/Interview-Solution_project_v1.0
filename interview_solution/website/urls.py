@@ -1,21 +1,24 @@
 from django.urls import path
 from django.conf.urls import url
-from . import views, apis
+from . import views, apis, schoolInfo
 
 app_name = 'website'
 
 urlpatterns = [
-    path('signup/', views.signup, name='signup'),
-    url(r'^ajax/tag/autocomplete/$',views.ajax_schoolInfo_autocomplete),
+    path('', views.intro, name='intro'),
+    path('student/', views.studentHome, name='studentHome'),
+    # path('teacher/', views.teacherHome, name='teacher'),
+    path('student/signup/', views.studentSignup, name='studentSignup'),
+    path('teacher/signup/', views.teacherSignup, name='teacherSignup'),
+    path('schooldb/',schoolInfo.schoolInfo_db,name='schoolInfo'),
+    url(r'^student/signup/search/$',views.ajax_schoolInfo_autocomplete, name='search_signup'),
+    url(r'^teacher/signup/search/$',views.ajax_schoolInfo_autocomplete, name='search_signup'),
+    path('student/signup/checkid',views.studentcheckID,name='studentCheckid'),
+    path('teacher/signup/checkid',views.teachercheckID,name='teacherCheckid'),
     path('student/signin/', views.studentSignin, name='studentSignin'),
-    path('student/signoff', views.studentSignoff, name='studentSignoff'),
     # path('signin/', apis.SigninUserAPI.as_view(), name='signin'),
     path('teacher/signin/', views.teacherSignin, name='teacherSignin'),
-    path('teacher/signoff', views.teacherSignoff, name='teacherSignoff'),
-    path('findID/', views.findID, name='findID'),
-    path('findPW/', views.findPW, name='findPW'),
-    path('resultPW/<userID>/', views.resultPW, name='resultPW'),
-    path('', views.intro, name='intro'),
-    path('student/home', views.studentHome, name='studentHome'),
-    # path('teacher/home', views.teacherHome, name='teacherHome'),
+    path('findID/<int:student>', views.findID, name='findID'),
+    path('findPW/<int:student>', views.findPW, name='findPW'),
+    path('resultPW/<int:student>/<userID>/', views.resultPW, name='resultPW'),
 ]

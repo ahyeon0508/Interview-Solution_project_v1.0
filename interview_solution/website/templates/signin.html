@@ -18,9 +18,15 @@
             <input type="submit" value="로그인" id="signin">
         </form>
         <!-- a태그에 회원가입 url 넣기 -->
-        <a href="{% url 'website:signup' %}"><input type="submit" value="회원가입" id="signup"></a>
+        {% if student == 0 %}
+        <a href="{% url 'website:teacherSignup' %}"><input type="submit" value="회원가입" id = "signup"></a>
         <!-- a태그에 아이디(findId), 비밀번호(findPW) 찾기 url 넣기 -->
-        <p class="message">아이디/비밀번호를 잊으셨나요? <a href="{% url 'website:findID' %}">아이디</a>/<a href="{% url 'website:findPW' %}">비밀번호 찾기</a></p>
+        <p class="message">아이디/비밀번호를 잊으셨나요? <a href="{% url 'website:findID' student=student %}">아이디</a>/<a href="{% url 'website:findPW' student=student %}">비밀번호 찾기</a></p>
+        {% else %}
+        <a href="{% url 'website:studentSignup' %}"><input type="submit" value="회원가입" id = "signup"></a>
+        <!-- a태그에 아이디(findId), 비밀번호(findPW) 찾기 url 넣기 -->
+        <p class="message">아이디/비밀번호를 잊으셨나요? <a href="{% url 'website:findID' student=student %}">아이디</a>/<a href="{% url 'website:findPW' student=student %}">비밀번호 찾기</a></p>
+        {% endif %}
     </div>
 </div>
 
