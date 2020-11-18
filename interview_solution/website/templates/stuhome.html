@@ -8,9 +8,9 @@
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <!-- Css -->
-    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../static/css/home.css" type="text/css">
-    <link rel="stylesheet" href="../static/css/intro.css" type="text/css">
+    <link rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/home.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/intro.css" type="text/css">
 </head>
 
 <body>
@@ -18,11 +18,10 @@
     <!-- 상단 바 시작 -->
     <nav id="Topbar" class="navbar navbar-expand navbar-light topbar static-top">
         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <img id="menuicon" src="../static/img/menu.png" width="20px" height="20px" alt="menu">
+            <img id="menuicon" src="../../static/img/logo.png" width="20px" height="20px" alt="menu">
         </button>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-
                 {% if user.is_authenticated %}
                 <!--로그인한 경우 href 유저정보 관리 페이지로!-->
                 <a class="nav-link dropdown-toggle" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,7 +32,7 @@
                     <!--src 유저 이미지 표기!-->
                     <img class="img-profile rounded-circle" src="#">
                     {% else %}
-                    <img class="img-profile rounded-circle" src="../static/img/user.svg">
+                    <img class="img-profile rounded-circle" src="../../static/img/user.svg">
                     {% endif %}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -53,7 +52,7 @@
                 <!--herf 로그인 페이지로!-->
                 <a class="nav-link" href="{% url 'website:studentSignin' %}" id="user" role="button">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
-                    <img class="img-profile rounded-circle" src="../static/img/user.svg">
+                    <img class="img-profile rounded-circle" src="../../static/img/user.svg">
                 </a>
                 {% endif %}
 
@@ -64,7 +63,7 @@
 
     <!-- 내용 시작 -->
     <section class="categories">
-        <div class="container-fluid">
+        <div class="container-fluid set-bg"  data-setbg="../../static/img/10.jpg">
             <header class="headerintro">
                 <div class="container-fluid">
                     <div class="row">
@@ -80,38 +79,34 @@
                 <div class="col-lg-6 p-0">
                     <div class="categories__item categories__large__item">
                         <div class="categories__text">
-                            <h1>새내기로(로)</h1>
-                            <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
-                                edolore magna aliquapendisse ultrices gravida.</p>
+                            <h1>새내기로(路)</h1>
+                            <a>면접 시작</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                            <div class="categories__item set-bg" data-setbg="../static/img/분홍.png">
+                            <div class="categories__item set-bg" data-setbg="../../static/img/분홍.png">
                                 <div class="categories__text">
                                     <h4>내 영상</h4>
-                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
-                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                    <p>모의 면접 영상들을 질문별/제목별/날짜별로 관리하는 기능</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                            <div class="categories__item set-bg" data-setbg="../static/img/연파랑.png">
+                            <div class="categories__item set-bg" data-setbg="../../static/img/연파랑.png">
                                 <div class="categories__text">
                                     <h4>내 질문</h4>
-                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
-                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                    <p>별표 질문과 사용자 작성 질문, 교사에게 공유 받은 질문 및 AI 생성질문을 확인하는 기능</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                            <div class="categories__item set-bg" data-setbg="../static/img/연분홍.png">
+                            <div class="categories__item set-bg" data-setbg="../../static/img/연분홍.png">
                                 <div class="categories__text">
                                     <h4>질문 리스트</h4>
-                                    <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
-                                        edolore magna aliquapendisse ultrices gravida.</p>
+                                    <p>40여개의 공통질문과 학과별 질문을 제공하는 기능</p>
                                 </div>
                             </div>
                         </div>
@@ -123,19 +118,19 @@
     <!-- 내용 끝 -->
 
     <!-- Bootstrap core JavaScript-->
-    <script src="../static/vendor/jquery/jquery.min.js"></script>
-    <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/vendor/jquery/jquery.min.js"></script>
+    <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="../static/js/home.min.js"></script>
+    <script src="../../static/js/home.min.js"></script>
 
     <!-- Js Plugins -->
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-    <script src="../static/js/main.js"></script>
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/main.js"></script>
 </body>
 
 </html>
