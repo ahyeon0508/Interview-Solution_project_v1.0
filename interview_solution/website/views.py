@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -194,7 +194,7 @@ def questionList(request):
                 if myQ:
                     myQ.delete()
             except:
-                StudentQuestion.objects.create(question=myQuestion, student=request.user, teacher=request.user.teacher)
+                StudentQuestion.objects.create(question=myQuestion, student=request.session.get('user'), teacher=request.user.teacher,part=0)
             return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
         else:
             question = Question.objects.all()
@@ -204,8 +204,44 @@ def questionList(request):
         question = Question.objects.all()
         return render(request, 'questionList.html', {'question':question})
 
-
-@login_required
+# myQuestion - 모든 질문, 질문 검색
+@csrf_exempt
 def myQuestion(request):
-    question = StudentQuestion.objects.filter(student=request.user)
-    return render(request, 'myQuestion.html', {'question':question})
+    if request.method =="POST":
+        if 'question_search' in request.POST:
+            question_search = request.POST.get('question_search','')
+            try:
+                question = Question.objects.filter(question=question_search)
+                student_question = StudentQuestion.objects.filter(question=question)
+                print("question: ",question)
+                print("student_question: ",student_question)
+            except:
+                return render(request, 'myquestion.html', {'question':question, 'error':'해당 질문이 존재하지 않습니다.'})
+            return render(request, 'myquestion.html', {'question':student_question})
+    question = StudentQuestion.objects.filter(student=request.session.get('user'))
+    return render(request, 'myquestion.html', {'question':question})
+
+# myQuestion - 담은 질문(part: 0)
+@csrf_exempt
+def myQuestion_contain(request):
+    question = StudentQuestion.objects.filter(student=request.session.get('user'),part=0)
+    return render(request, 'myquestion.html', {'question':question})
+
+# myQuestion - 작성한 질문 (part: 1)
+@csrf_exempt
+def myQuestion_write(request):
+    question = StudentQuestion.objects.filter(student=request.session.get('user'),part=1)
+    return render(request, 'myquestion.html', {'question':question})
+
+# myQuestion - 받은 질문 (part: 2)
+@csrf_exempt
+def myQuestion_get(request):
+    question = StudentQuestion.objects.filter(student=request.session.get('user'),part=2)
+    return render(request, 'myquestion.html', {'question':question})
+
+# myQuestion - Question Delete
+@csrf_exempt
+def deletemyQuestion(request,questionID):
+    question = get_object_or_404(StudentQuestion,pk=questionID)
+    question.delete()
+    return redirect(reverse('website:myQuestion'))

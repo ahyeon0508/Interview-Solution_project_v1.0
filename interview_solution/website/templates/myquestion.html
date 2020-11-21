@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="{% static 'js/util.js' %}"></script>
     <title>내 질문</title>
 </head>
 
@@ -25,7 +26,7 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
                                <!--클릭시 본인에게 할당된 모든 질문 띄워지도록-->
-                                <a class="nav-link" href="#">모든 질문</a>
+                                <a class="nav-link" href="{% url 'website:myQuestion' %}">모든 질문</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,39 +34,51 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <!--클릭시 본인의 질문들 중, 담은 질문 띄워지도록-->
-                                    <a class="dropdown-item" href="#">담은 질문</a>
+                                    <a class="dropdown-item" href="{% url 'website:myQuestion_contain' %}">담은 질문</a>
                                     <!--클릭시 본인의 질문들 중, 작성한 질문 띄워지도록-->
-                                    <a class="dropdown-item" href="#">작성한 질문</a>
+                                    <a class="dropdown-item" href="{% url 'website:myQuestion_write' %}">작성한 질문</a>
                                     <!--클릭시 본인의 질문들 중, 받은 질문 띄워지도록-->
-                                    <a class="dropdown-item" href="#">받은 질문</a>
+                                    <a class="dropdown-item" href="{% url 'website:myQuestion_get' %}">받은 질문</a>
                                     <div class="dropdown-divider"></div>
                                     <!--클릭시 본인의 질문들 중, AI가 생성한 질문 띄워지도록-->
                                     <a class="dropdown-item disabled" href="#">AI 질문</a>
                                 </div>
                             </li>
                         </ul>
-                        <form class="form-inline my-2 my-lg-0">
+                        <form method="POST" class="form-inline my-2 my-lg-0">
                             <!--입력 창-->
-                            <input id="questionsearchinput" class="form-control mr-sm-2" type="search" placeholder="질문을 검색하세요" aria-label="검색">
+                            <input id="questionsearchinput" name="question_search" class="form-control mr-sm-2" type="search" placeholder="질문을 검색하세요" aria-label="검색">
                             <!--클릭시 입력창의 키워드가 들어간 본인의 질문들을 아래에 띄우도록-->
-                            <button id="questionsearchbutton" aria-activedescendant="" class="btn btn-outline-primary my-2 my-sm-0" type="submit">검색</button>
+                            <button id="questionsearchbutton" name="question_search_button" aria-activedescendant="" class="btn btn-outline-primary my-2 my-sm-0" type="submit">검색</button>
                         </form>
                     </div>
                 </nav>
             </div>
+            {{error}}
+            {% if question %}
             <div class="card-body">
                 <ul class="list-group list-group-flush">
-                   
+                {% for questionList in question %}
                     <!--for문으로 질문 단위 li태그 반복-->
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                        <!--"자신의 장점과 ~" 이 부분에 질문 내용 띄우도록 / small 태그 안 "담은 질문" 부분은 질문 종류 띄우도록 -->
-                        <div>자신의 장점과 단점은 무엇인가요?<small> - 담은 질문</small></div>
+                        <div> 
+                            {{questionList.question}}
+                            {% if questionList.part == 1 %}
+                                <small> - 작성한 질문</small>
+                            {% elif questionList.part == 2 %}
+                                <small> - 받은 질문</small>
+                            {% else %}
+                                <small> - 담은 질문</small>
+                            {% endif %}
+                        </div>
                         <!--삭제 버튼 클릭해 팝업창 띄워졌을 때, 예 클릭시 질문 삭제 하도록-->
-                        <button type="button" class="btn btn-secondary btn-sm">삭제</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="questionDeleteConfirm({{ questionList.id }})">삭제</button>
                     </li>
-                    
+                {% endfor %}
                 </ul>
             </div>
+            {% endif %}
         </div>
 
     </div>

@@ -27,3 +27,11 @@ function cancleForm(){
     }
   
   }
+
+function questionDeleteConfirm(n) {
+    if (confirm("이 질문을 내 질문에서 삭제하시겠습니까?")) {
+        window.location.href = "/website/myquestion/delete/" + n;
+    } else {
+        return false;
+    }
+}

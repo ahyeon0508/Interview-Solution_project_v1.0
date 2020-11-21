@@ -20,4 +20,8 @@ urlpatterns = [
     path('resultPW/<int:student>/<userID>/', views.resultPW, name='resultPW'),
     path('questionList/', views.questionList, name='questionList'),
     path('myQuestion/', views.myQuestion, name='myQuestion'),
+    path('myQuestion/contain/',views.myQuestion_contain,name='myQuestion_contain'),
+    path('myQuestion/get/',views.myQuestion_get,name='myQuestion_get'),
+    path('myQuestion/write/',views.myQuestion_write,name='myQuestion_write'),
+    path('myQuestion/delete/<int:questionID>/',views.deletemyQuestion, name='myQuestion_delete'),
 ]
