@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import render,redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
@@ -212,7 +213,7 @@ def resultPW(request, student, userID):
         return render(request, 'resultPW.html')
 
 #질문 리스트 전역변수
-interview_list = ['a','b','c']
+interview_list = []
 @csrf_exempt
 def inter_setting(request):
     # 질문 랜덤으로 정하기
@@ -221,9 +222,12 @@ def inter_setting(request):
     user_question = StudentQuestion.objects.filter(student=student).values('question')
     n = user_question.count()
     if n < 3:
-        interview_list = user_question
-        question = Question.objects.all()[1]
-        for i in range(n, 3 + 1):
+        for i in range(n):
+            interview_list.append(user_question[i])
+        count = Question.objects.aggregate(count=Count('id'))['count']
+        for i in range(n, 3):
+            random_index = random.randint(0, count - 1)
+            question = Question.objects.all()[random_index]
             interview_list.append(question.question)
     else:
         random_n = random.sample(range(0,n),3)
@@ -271,7 +275,7 @@ def recordVideo(request):
         RATE = 16000 # 음성 데이터의 Sampling Rate: 16000Hz
         FORMAT = pyaudio.paInt16
         CHANNELS = 1
-        RECORD_SECONDS = 20
+        RECORD_SECONDS = 45
 
         video_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_movie.avi')
         audio_url = os.path.join(settings.MEDIA_ROOT,userID+'_'+question_num+'_audio.wav')
@@ -420,7 +424,7 @@ def stt(audiofile):
     # 말하기 속도
     text_count = 0
     numList = []
-    speech_speed = 0.0
+    speech_speed = ""
 
     # 한글-음절수
     if any(chr.isdigit() for chr in script.replace(" ", "")):
@@ -429,11 +433,21 @@ def stt(audiofile):
         for num in numList:
             text_count -= int(len(num))
             text_count += int(len(readNumber(num)))
-        speech_speed = text_count / speech_Length
+        if 4.5 <= text_count / speech_Length <= 5.5:
+            speech_speed = "적당한 속도입니다."
+        elif  4.5 > text_count / speech_Length:
+            speech_speed = "조금 느린 속도입니다."
+        else :
+            speech_speed = "조금 빠른 속도입니다."
 
     else:
         text_count = len(script.replace(" ", ""))
-        speech_speed = text_count / speech_Length
+        if 4.5 <= text_count / speech_Length <= 5.5:
+            speech_speed = "적당한 속도입니다."
+        elif 4.5 > text_count / speech_Length:
+            speech_speed = "조금 느린 속도입니다."
+        else:
+            speech_speed = "조금 빠른 속도입니다."
 
     openApiURL = "http://aiopen.etri.re.kr:8000/WiseNLU_spoken"
 
@@ -486,13 +500,16 @@ def stt(audiofile):
             noun_list.append((n, c))
     repetition = dict(noun_list)
 
-    return script, speech_speed, adverb, repetition
+    return script, text_count, speech_speed, adverb, repetition
 
 def wait(request, reportID):
     report = Report.objects.get(id=reportID)
-    report.script1, report.speed1, report.adverb1, report.repetition1 = stt(report.video1)
-    report.script2, report.speed2, report.adverb2, report.repetition2 = stt(report.video2)
-    report.script3, report.speed3, report.adverb3, report.repetition3 = stt(report.video3)
+    if report.audio1:
+        report.script1, report.speed1, report.sCorrect1, report.adverb1, report.repetition1 = stt(report.audio1.path)
+    if report.audio2:
+        report.script2, report.speed2, report.sCorrect1, report.adverb2, report.repetition2 = stt(report.audio2.path)
+    if report.audio3:
+        report.script3, report.speed3, report.sCorrect1, report.adverb3, report.repetition3 = stt(report.audio3.path)
 
     report.save()
 
