@@ -474,11 +474,14 @@ def stt(audiofile):
                 NOUN.append(sentence[i]['morp'][j]['lemma'])
 
     IC_counts = Counter(IC)
-    print(IC_counts.most_common(5))
     adverb = dict(IC_counts.most_common(5))
 
     NOUN_counts = Counter(NOUN)
-    repetition = dict(NOUN_counts.most_common(5))
+    noun_list = []
+    for n, c in NOUN_counts.most_common(5):
+        if c >= 2:
+            noun_list.append((n, c))
+    repetition = dict(noun_list)
 
     return script, speech_speed, adverb, repetition
 
