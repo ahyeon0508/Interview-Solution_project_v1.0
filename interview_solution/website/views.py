@@ -222,7 +222,9 @@ def inter_setting(request):
     n = user_question.count()
     if n < 3:
         interview_list = user_question
-        question = Question.objects.all()
+        question = Question.objects.all()[1]
+        for i in range(n, 3 + 1):
+            interview_list.append(question.question)
     else:
         random_n = random.sample(range(0,n),3)
         for i in range(3):
