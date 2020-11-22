@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.utils import timezone
 
-from .models import User, Teacher, SchoolInfo, StudentQuestion, Report
+from .models import User, Teacher, SchoolInfo, StudentQuestion, Report, Question
 
 import json
 import random
@@ -222,6 +222,7 @@ def inter_setting(request):
     n = user_question.count()
     if n < 3:
         interview_list = user_question
+        question = Question.objects.all()
     else:
         random_n = random.sample(range(0,n),3)
         for i in range(3):
