@@ -82,10 +82,8 @@ class Question(models.Model):
         verbose_name='pk'
     )
     question = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문')
-    department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문
-    student = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
-
+    department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문, -1 : 개인질문
+    
     def __int__(self):
         return self.id
 
@@ -98,6 +96,7 @@ class StudentQuestion(models.Model):
     )
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
 
     def __int__(self):
         return self.id
@@ -135,13 +134,13 @@ class Report(models.Model):
     comment2 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글2')
     comment3 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글3')
     pub_date = models.DateField(auto_now_add=True, verbose_name='날짜')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher,null=True, blank=True, on_delete=models.CASCADE)
     share = models.BooleanField(default=False, verbose_name='공유')
     # 리포트 어떤 거 저장할 것인지 이야기해야함.
 
-    def __int__(self):
-        return self.id
+    def __str__(self):
+        return self.title
 
 class SchoolInfo(models.Model):
     id = models.AutoField(
