@@ -234,7 +234,7 @@ def inter_setting(request):
         for i in range(3):
             interview_list.append(user_question[random_n[i]])
     pub_date = timezone.datetime.now()
-    report = Report.objects.create(student=student,teacher=student.teacher,pub_date=pub_date)
+    report = Report.objects.create(student=student,teacher=student.teacher,pub_date=pub_date,question1=interview_list[0],question2=interview_list[1],question3=interview_list[2])
     report.save()
     reportID = report.id
     return render(request, 'inter_setting.html',{'reportID':reportID})
@@ -513,7 +513,7 @@ def wait(request, reportID):
 
     report.save()
 
-    return render(request, 'wait.html', {'IQ1':interview_list[0], 'IQ2':interview_list[1], 'IQ3':interview_list[2], 'report':report})
+    return render(request, 'wait.html', {'report':report})
 
 @csrf_exempt
 def waitAjax(request):
