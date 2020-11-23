@@ -1,0 +1,34 @@
+{% load static %}
+<link href="{% static 'css/questionSend.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script type="text/javascript" src="{% static 'js/check.js' %}"></script>
+
+<h1 id="title">예상질문 전송</h1>
+<div class="question-send-page">
+    <div class="questionInput">
+        <form method="post">
+            <span class="write_in"><input type="text" placeholder="예상질문을 입력해주세요." id="prediction" name="quesiton"
+                    style="border:none;"></span>
+            <button type="submit" class="btn btn-outline-secondary">전송</button>
+        </form>
+    </div>
+    <!-- 이전에 보냈던 질문 목록 -->
+    <p id="info">
+        <전송한 질문 목록>
+    </p>
+    <div class="questionInfo">
+        <!-- for문으로 출력 -->
+        <div class="list">
+            <div class="content">
+                <p>~~~~~</p>
+            </div>
+            <div class="delete">
+                <!-- Q_DeleteConfirm 함수의 인자에 전송한 질문 id 넣어주면 될듯? : 고영희 찾기와 유사-->
+                <!-- js로 이동해서 삭제할 예정 : 삭제 관련 url을 아현이한테 알려주거나 check.js에 url 입력하면 됨!-->
+                <button type="button" class="btn btn-outline-secondary" onclick="Q_DeleteConfirm()">삭제</button>
+            </div>
+        </div>
+        <!-- 이전에 보냈던 질문 목록이 없으면 -->
+        <p>보낸 질문이 없습니다.</p>
+    </div>
+</div>
