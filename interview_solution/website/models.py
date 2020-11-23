@@ -56,7 +56,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name='아이디')  # 아이디
     username = models.CharField(max_length=10, null=True, blank=True, verbose_name='유저이름')
-    password = models.CharField(max_length=20, verbose_name='비밀번호')
+    password = models.CharField(max_length=100, verbose_name='비밀번호')
     phone = models.CharField(max_length=11, blank=True, null=True, verbose_name='연락처')
     school = models.CharField(max_length=10, null=True, blank=True, verbose_name='학교')
     grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')

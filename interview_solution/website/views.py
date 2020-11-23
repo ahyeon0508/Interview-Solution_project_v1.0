@@ -188,7 +188,7 @@ def teacherVideo(request, reportID):
     return render(request, 'studentVideo.html', {'report':report, 'teacher':request.session.get('user')})
 
 @csrf_exempt
-def commentEdit(request, reportID):
+def commentEdit1(request, reportID):
     report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
 
     if request.method == "POST":
@@ -199,29 +199,62 @@ def commentEdit(request, reportID):
     return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
 
 @csrf_exempt
+def commentEdit2(request, reportID):
+    report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
+
+    if request.method == "POST":
+        report.comment2 = request.POST['comment2']
+        report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+@csrf_exempt
+def commentEdit3(request, reportID):
+    report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
+
+    if request.method == "POST":
+        report.comment3 = request.POST['comment3']
+        report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+@csrf_exempt
 def commentDelete1(request, reportID):
     report = get_object_or_404(Report, id=reportID)
-    report.comment1 = None
+    if report.comment1:
+        report.comment1 = None
+        report.save()
     return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
 
 @csrf_exempt
 def commentDelete2(request, reportID):
     report = get_object_or_404(Report, id=reportID)
-    report.comment2 = None
+    if report.comment2:
+        report.comment2 = None
+        report.save()
     return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
 
 @csrf_exempt
 def commentDelete3(request, reportID):
     report = get_object_or_404(Report, id=reportID)
-    report.comment3 = None
+    if report.comment3:
+        report.comment3 = None
+        report.save()
     return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
 
-def questionSend(request):
+@csrf_exempt
+def questionSend(request, studentID):
     if request.method == "POST":
         question = request.POST['question']
-        department = 1
+        questionDB = Question.objects.create(question=question, department = -1, student=studentID, teacher = request.session.get('user'))
+        questionDB.save()
+        return render(request, 'questionSend.html')
+
     return render(request, 'questionSend.html')
 
+@csrf_exempt
 def questionSendDelete(request, questionID):
     question = Question.objects.filter(id=questionID)
     question.delete()
