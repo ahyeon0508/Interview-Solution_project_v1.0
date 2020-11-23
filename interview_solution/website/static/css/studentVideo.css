@@ -60,7 +60,7 @@
     font-size: 15px;
 }
 
-.feedbackTable{
+.feedbackTable, #feedbackModify{
     margin-left: 50px;
     font-family: 'Nanum Gothic', sans-serif;
     float: left;

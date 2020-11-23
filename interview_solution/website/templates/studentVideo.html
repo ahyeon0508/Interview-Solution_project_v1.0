@@ -2,6 +2,17 @@
 <link href="{% static 'css/studentVideo.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <script type="text/javascript" src="{% static 'js/check.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#feedbackModify').hide();
+        $('#show').click(function () {
+            $('#feedbackContent').attr('style', "display:none;");
+            $('#feedbackModify').show();
+            return false;
+        });
+    });
+</script>
 
 <div class="student-interview-page">
     <!-- ~에 해당 학생의 이름 출력하게 하기 ex) 이아현의 면접 영상-->
@@ -48,7 +59,7 @@
                     <table>
                         <!-- 피드백 존재하는 만큼 반복해서 출력 -->
                         <!-- for문 이용하면 될듯? -->
-                        <tr>
+                        <tr id="feedbackContent">
                             <!-- 피드백 작성자 이름 출력 -->
                             <td style="font-weight: bold;">{{ teacher.username }} </td>
                             <!-- 피드백 내용 출력 -->
@@ -57,9 +68,14 @@
                     </table>
                 </div>
                 <div class="button" style="float: right; margin-right: 50px">
-                    <button type="submit" class="btn btn-outline-secondary">수정</button>
-                    <!-- f_DeleteConfirm 함수의 인자에 피드백 id 넣어주면 될듯? : 고영희 찾기와 유사-->
-                    <!-- js로 이동해서 삭제할 예정 : 삭제 관련 url을 아현이한테 알려주거나 check.js에 url 입력하면 됨!-->
+                    <div id="feedbackModify">
+                        <form method="post">
+                            <span class="write_in"><input type="text" name="feedback" value="{{ report.comment1 }}"
+                                    style="border:none;"></span>
+                            <button type="submit" class="btn btn-outline-secondary">확인</button>
+                        </form>
+                    </div>
+                    <button id="show" class="btn btn-outline-secondary">수정</button>
                     <button type="button" class="btn btn-outline-secondary" onclick="f_DeleteConfirm()">삭제</button>
                 </div>
             </div>
