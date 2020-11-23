@@ -31,7 +31,7 @@
             <div class="content">
                 {% for i in report %}
                 <!-- href 뒤에 내 면접 리포트 페이지로 이동할 수 있는 링크 넣기 -->
-                <p><a href="">{{ i.title }} / 생성일자 : {{i.pub_date}}</a></p>
+                <p><a href="{% url 'website:myVideoDetail' reportID=i.id %}">{{ i.title }} / 생성일자 : {{i.pub_date}}</a></p>
                 <label class="switch">
                     <input type="checkbox" report="{{i.id}}">
                     <span class="slider round"></span>

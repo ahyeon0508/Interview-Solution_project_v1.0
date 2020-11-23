@@ -1,0 +1,10 @@
+#container {
+    margin: 0px auto;
+    width: 500px;
+    height: 375px;
+}
+
+#videoElement {
+    width: 500px;
+    height: 375px;
+}

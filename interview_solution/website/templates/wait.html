@@ -1,0 +1,45 @@
+{% load static %}
+<link href="../static/css/wait.css" rel="stylesheet">
+<script>
+    $(document).ready(function () {
+        var check = $("input[type='checkbox']");
+        check.click(function () {
+            var reportID = $(this).attr('report')
+            $.ajax({
+                url: 'ajax/',
+                method: 'POST',
+                data: {
+                    result: reportID
+                },
+                success: function (response) {
+                    alert("담임선생님께 해당 모의 면접이 공유되었습니다.")
+                    return;
+                },
+                error: function () {
+                    alert('서버와의 통신에서 문제가 발생했습니다');
+                },
+            })
+        });
+    });
+</script>
+</head>
+
+<body>
+    <div class="wait-page">
+        <p id="check">영상 공개 여부</p>
+        <label class="switch">
+            <input type="checkbox" report="{{report.id}}">
+            <span class="slider round"></span>
+        </label>
+        <h1>면접 대기</h1>
+        <p>분석에 시간이 다소 소요됩니다.</p>
+        <p id="notice">질문을 누르시면 해당 영상을 볼 수 있으며, 영상 공개 여부를 설정할 수 있습니다.</p>
+        <div class="question">
+            <p id="Q1"><a href="{% url 'website:waitVideo1' reportID=report.id %}">{{ report.question1 }}</a></p>
+            <p id="Q2"><a href="{% url 'website:waitVideo2' reportID=report.id %}">{{ report.question2 }}</a></p>
+            <p id="Q3"><a href="{% url 'website:waitVideo3' reportID=report.id %}">{{ report.question3 }}</a></p>
+        </div>
+    </div>
+</body>
+
+</html>
