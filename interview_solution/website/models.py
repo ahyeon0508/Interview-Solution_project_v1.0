@@ -101,7 +101,7 @@ class StudentQuestion(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
-class Report(models.Model):
+class Report(models.Model):  # 수정필요
     id = models.AutoField(
         primary_key=True,
         unique=True,
@@ -109,6 +109,9 @@ class Report(models.Model):
         verbose_name='pk'
     )
     title = models.CharField(max_length=100, default='제목', verbose_name='제목')
+    question1 = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문1')
+    question2 = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문2')
+    question3 = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문3')
     video1 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상1')
     video2 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상2')
     video3 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상3')
@@ -131,9 +134,9 @@ class Report(models.Model):
     comment2 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글2')
     comment3 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글3')
     pub_date = models.DateField(auto_now_add=True, verbose_name='날짜')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher,null=True, blank=True, on_delete=models.CASCADE)
-    share = models.BooleanField(default=False, verbose_name='공유')
+    share = models.BooleanField(default=True, verbose_name='공유')
 
     def __int__(self):
         return self.id

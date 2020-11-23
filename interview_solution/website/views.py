@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
 from django.shortcuts import render, redirect
@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
-from .models import User, Teacher, SchoolInfo
+from .models import User, Teacher, SchoolInfo, Report, StudentQuestion, Question
 import json
 import logging
 
@@ -181,3 +181,48 @@ def resultPW(request, student, userID):
             return render(request, 'resultPW.html', {'error': 'password incorrect'})
     else:
         return render(request, 'resultPW.html')
+
+@csrf_exempt
+def teacherVideo(request, reportID):
+    report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
+    return render(request, 'studentVideo.html', {'report':report, 'teacher':request.session.get('user')})
+
+@csrf_exempt
+def commentEdit(request, reportID):
+    report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
+
+    if request.method == "POST":
+        report.comment1 = request.POST['comment1']
+        report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+@csrf_exempt
+def commentDelete1(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+    report.comment1 = None
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+@csrf_exempt
+def commentDelete2(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+    report.comment2 = None
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+@csrf_exempt
+def commentDelete3(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+    report.comment3 = None
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+def questionSend(request):
+    if request.method == "POST":
+        question = request.POST['question']
+        department = 1
+    return render(request, 'questionSend.html')
+
+def questionSendDelete(request, questionID):
+    question = Question.objects.filter(id=questionID)
+    question.delete()
+    return render(request, 'questionSend.html')
