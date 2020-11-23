@@ -41,7 +41,7 @@
             </div>
 
             <!--존재하는 피드백 출력-->
-            <!-- if문 사용 -->
+            {% if report.comment1 %}
             <div class="feedbackRead">
                 <br>
                 <div class="feedbackTable">
@@ -63,8 +63,9 @@
                     <button type="button" class="btn btn-outline-secondary" onclick="f_DeleteConfirm()">삭제</button>
                 </div>
             </div>
-            <!-- 피드백이 존재하지 않으면 -->
+            {% else %}
             <p id="notFeedback">피드백이 존재하지 않습니다.</p>
+            {% endif %}
         </div>
     </div>
 </div>

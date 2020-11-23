@@ -246,13 +246,16 @@ def commentDelete3(request, reportID):
 
 @csrf_exempt
 def questionSend(request, studentID):
+
+    studentQ = StudentQuestion.objects.filter(student=studentID, teacher=request.session.get('user'))
+
     if request.method == "POST":
         question = request.POST['question']
         questionDB = Question.objects.create(question=question, department = -1, student=studentID, teacher = request.session.get('user'))
         questionDB.save()
         return render(request, 'questionSend.html')
 
-    return render(request, 'questionSend.html')
+    return render(request, 'questionSend.html', {'questionSet':studentQ})
 
 @csrf_exempt
 def questionSendDelete(request, questionID):
