@@ -56,17 +56,17 @@ def create_questionDB():
         '공유경제 아나요? 예를 들면 자전거를 대여해주는 시스템이요. 그런게 갑자기 요즘 시대에 왜 생겼다고 생각하나요?',
         '한일무역 규제에 대해 어떻게 생각하나요?'
 ]
-    english_question_list = [
-        '사형제도에 대한 지원자의 입장을 영어로 말해보세요.',
-        '영자신문 동아리 활동에서 가장 기억에 남는 기사는 무엇인가요?',
-        '영어를 공부하는데 있어서 자신의 강점과 약점을 말해보세요.',
-        '다양한 영문학이 있는데, 구체적으로 영문학에서 어떤 부분이 관심 있는지 말씀해주세요.',
-        '자신의 좌우명을 영어로 말씀해주세요.',
-        '대학 진학 후 어떻게 영어 공부를 할 예정인가요?',
-        '영어에 관심을 갖게 된 계기는 무엇인가요?',
-        '영어영문학과를 오게 되면 가장 배우고 싶은 것은 무엇인가요?',
-        '영어 관련 어떤 활동을 했나요?',
-        '영어 공부하면서 힘들었던 점 있었다면 어떤 부분이 힘들었나요?'
+    korean_question_list = [
+        '본인이 생각하는 정보사회의 장단점에 대해 말씀해주세요'
+        '국어국문학과를 입학하게 되면 가장 배우고 싶은 것은 무엇인가요?'
+        '독서활동이 많은데, 지금 읽은 것들 중에서 친구들에게 어떤 책을 추천하고 싶은가요?'
+        '가장 인상깊게 읽은 책이 무엇인가요?'
+        '전공을 정할 때 가장 큰 영향을 준 책 한권에 대해 이야기 해주세요.'
+        '좋은 글이란 어떤건가요?'
+        '글쓰기 상을 많이 받았는데 가장 기억에 남는 대회는 무엇인가요?'
+        '문학과 현실의 관계에 대해 어떻게 생각하나요?'
+        '좋아하는 작가는 누구이고, 그 작가의 어떤 작품을 좋아하는지 말씀해주세요.'
+        '한국문학의 세계화가 지니는 가치는 무엇인가요?'
     ]
     biology_question_list = [
         '화생공 대신 왜 생명공학부에 지원했는가요?',
@@ -93,7 +93,7 @@ def create_questionDB():
         Question.objects.filter(question=question,department=2).delete()
         Question(question=question,department=2).save()
 
-    for question in english_question_list:
+    for question in korean_question_list:
         Question.objects.filter(question=question,department=3).delete()
         Question(question=question,department=3).save()
     
