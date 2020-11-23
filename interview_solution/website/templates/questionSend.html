@@ -7,7 +7,8 @@
 <div class="question-send-page">
     <div class="questionInput">
         <form method="post">
-            <span class="write_in"><input type="text" placeholder="예상질문을 입력해주세요." id="prediction" name="quesiton"
+            {% csrf_token %}
+            <span class="write_in"><input type="text" placeholder="예상질문을 입력해주세요." id="prediction" name="question"
                     style="border:none;"></span>
             <button type="submit" class="btn btn-outline-secondary">전송</button>
         </form>

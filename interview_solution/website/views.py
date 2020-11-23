@@ -112,12 +112,13 @@ def teacherSignin(request):
     if request.method == "POST":
         userID = request.POST.get('userID', '')
         password = request.POST.get('password', '')
-
+        request.session['user'] = None
         try:
             user = Teacher.objects.get(userID=userID)
-            if check_password(password, user.password):
+            if password == user.password:
+                student = 'jin'
                 request.session['user'] = user.userID
-                return render(request, 'signin.html', {'student':0, 'error' : '성공'})
+                return redirect(reverse('website:questionSend', args=[str(student)]))
             else:
                 return render(request,'signin.html',{'student':0, 'error':'username or password is incorrect'})
         except:
@@ -247,18 +248,25 @@ def commentDelete3(request, reportID):
 @csrf_exempt
 def questionSend(request, studentID):
 
-    studentQ = StudentQuestion.objects.filter(student=studentID, teacher=request.session.get('user'))
+    teacher = get_object_or_404(Teacher, userID=request.session.get('user'))
+    studentQ = StudentQuestion.objects.filter(student=studentID, teacher=request.session['user'])
 
     if request.method == "POST":
-        question = request.POST['question']
-        questionDB = Question.objects.create(question=question, department = -1, student=studentID, teacher = request.session.get('user'))
+        question = request.POST.get('question')
+        print(question)
+        questionDB = Question.objects.create(question=question, department = -1)
         questionDB.save()
-        return render(request, 'questionSend.html')
+        user = get_object_or_404(User, userID=studentID)
+        sQuestionDB = StudentQuestion.objects.create(question=questionDB, student=user, teacher = teacher)
+        sQuestionDB.save()
+        return render(request, 'questionSend.html', {'questionSet':studentQ})
 
     return render(request, 'questionSend.html', {'questionSet':studentQ})
 
 @csrf_exempt
 def questionSendDelete(request, questionID):
-    question = Question.objects.filter(id=questionID)
+    question = get_object_or_404(Question, id=questionID)
+    sQuestion = get_object_or_404(StudentQuestion, question=question)
+    user = sQuestion.student
     question.delete()
-    return render(request, 'questionSend.html')
+    return redirect(reverse('website:questionSend', args=[str(user)]))

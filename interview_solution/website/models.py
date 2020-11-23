@@ -83,7 +83,7 @@ class Question(models.Model):
         editable=False,
         verbose_name='pk'
     )
-    question = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문')
+    question = models.CharField(max_length=100, null=True, blank=True, verbose_name='질문')
     department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문
 
     def __int__(self):
@@ -97,6 +97,7 @@ class StudentQuestion(models.Model):
         verbose_name='pk'
     )
     student = models.ForeignKey(User, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __int__(self):
