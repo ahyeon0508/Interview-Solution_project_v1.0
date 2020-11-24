@@ -116,9 +116,8 @@ def teacherSignin(request):
         try:
             user = Teacher.objects.get(userID=userID)
             if password == user.password:
-                student = 'jin'
                 request.session['user'] = user.userID
-                return redirect(reverse('website:questionSend', args=[str(student)]))
+                return redirect(reverse('website:teacherVideo', args=[1]))
             else:
                 return render(request,'signin.html',{'student':0, 'error':'username or password is incorrect'})
         except:
@@ -185,41 +184,25 @@ def resultPW(request, student, userID):
 
 @csrf_exempt
 def teacherVideo(request, reportID):
-    report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
+    report = get_object_or_404(Report, id=reportID)
+
+    if request.method == "POST":
+        if request.POST.get('feedback1'):
+            report.comment1 = request.POST.get('feedback1')
+            report.save()
+            return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+        elif request.POST.get('feedback2'):
+            report.comment2 = request.POST.get('feedback2')
+            report.save()
+            return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+        elif request.POST.get('feedback3'):
+            report.comment3 = request.POST.get('feedback3')
+            report.save()
+            return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+        if request.POST.get('q_send'):
+            return redirect(reverse('website:questionSend', args=[str(report.student.userID)]))
+
     return render(request, 'studentVideo.html', {'report':report, 'teacher':request.session.get('user')})
-
-@csrf_exempt
-def commentEdit1(request, reportID):
-    report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
-
-    if request.method == "POST":
-        report.comment1 = request.POST['comment1']
-        report.save()
-        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
-
-    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
-
-@csrf_exempt
-def commentEdit2(request, reportID):
-    report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
-
-    if request.method == "POST":
-        report.comment2 = request.POST['comment2']
-        report.save()
-        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
-
-    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
-
-@csrf_exempt
-def commentEdit3(request, reportID):
-    report = Report.objects.filter(id=reportID, teacher=request.session.get('user'))
-
-    if request.method == "POST":
-        report.comment3 = request.POST['comment3']
-        report.save()
-        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
-
-    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
 
 @csrf_exempt
 def commentDelete1(request, reportID):
