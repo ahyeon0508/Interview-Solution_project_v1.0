@@ -39,7 +39,7 @@
     font-size: 20px;
 }
 
-#feedback{
+#feedback1, #feedback2, #feedback3{
     font-family: 'Nanum Gothic', sans-serif;
     text-align: left;
     margin: 30px 0 15px 20px;
@@ -60,9 +60,10 @@
     font-size: 15px;
 }
 
-.feedbackTable, #feedbackModify{
-    margin-left: 50px;
-    font-family: 'Nanum Gothic', sans-serif;
-    float: left;
-    font-size: 19px;
+.feedbackTable{
+    margin-right: 300px;
+}
+
+#button1, #button2, #button3{
+    margin-top: -30px;
 }

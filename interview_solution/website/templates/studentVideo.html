@@ -5,10 +5,29 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#feedbackModify').hide();
-        $('#show').click(function () {
-            $('#feedbackContent').attr('style', "display:none;");
-            $('#feedbackModify').show();
+        $('#feedbackModify1').hide();
+        $('#show1').click(function () {
+            $('#feedbackContent1').attr('style', "display:none;");
+            $('#button1').hide();
+            $('#feedbackModify1').show();
+            return false;
+        });
+    });
+    $(document).ready(function () {
+        $('#feedbackModify2').hide();
+        $('#show2').click(function () {
+            $('#feedbackContent2').attr('style', "display:none;");
+            $('#button2').hide();
+            $('#feedbackModify2').show();
+            return false;
+        });
+    });
+    $(document).ready(function () {
+        $('#feedbackModify3').hide();
+        $('#show3').click(function () {
+            $('#feedbackContent3').attr('style', "display:none;");
+            $('#button3').hide();
+            $('#feedbackModify3').show();
             return false;
         });
     });
@@ -45,9 +64,38 @@
             </video>
             {% endif %}
 
-            <p id="feedback">
-                <피드백 남기기>
+            <p id="feedback1">
+                <피드백>
             </p>
+
+            <!--존재하는 피드백 출력-->
+            {% if report.comment1 %}
+            <div class="feedbackRead">
+                <div class="feedbackTable">
+                    <table>
+                        <tr id="feedbackContent1">
+                            <!-- 피드백 작성자 이름 출력 -->
+                            <td style="font-weight: bold;">{{ teacher.username }} </td>
+                            <!-- 피드백 내용 출력 -->
+                            <td style="padding-left: 30px; font-size: 19px;">{{ report.comment1 }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="button1" style="float: right; margin-right: 40px">
+                    <button id="show1" class="btn btn-outline-secondary">수정</button>
+                    <button type="button" class="btn btn-outline-secondary"
+                        onclick="f_DeleteConfirm1({{ report.id }})">삭제</button>
+                </div>
+                <div id="feedbackModify1">
+                    <form method="post">
+                        <span class="write_in"><input type="text" name="feedback1" value="{{ report.comment1 }}"
+                                style="border:none;"></span>
+                        <button type="submit" class="btn btn-outline-secondary">확인</button>
+                    </form>
+                </div>
+
+            </div>
+            {% else %}
             <!-- 피드백 작성 폼 -->
             <div class="feedbackWrite">
                 <form method="post">
@@ -56,43 +104,13 @@
                     <button type="submit" class="btn btn-outline-secondary">확인</button>
                 </form>
             </div>
-
-            <!--존재하는 피드백 출력-->
-            {% if report.comment1 %}
-            <div class="feedbackRead">
-                <br>
-                <div class="feedbackTable">
-                    <table>
-                        <!-- 피드백 존재하는 만큼 반복해서 출력 -->
-                        <!-- for문 이용하면 될듯? -->
-                        <tr id="feedbackContent">
-                            <!-- 피드백 작성자 이름 출력 -->
-                            <td style="font-weight: bold;">{{ teacher.username }} </td>
-                            <!-- 피드백 내용 출력 -->
-                            <td style="padding-left: 30px;">{{ report.comment1 }}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="button" style="float: right; margin-right: 50px">
-                    <div id="feedbackModify">
-                        <form method="post">
-                            <span class="write_in"><input type="text" name="feedback1" value="{{ report.comment1 }}"
-                                    style="border:none;"></span>
-                            <button type="submit" class="btn btn-outline-secondary">확인</button>
-                        </form>
-                    </div>
-                    <button id="show" class="btn btn-outline-secondary">수정</button>
-                    <button type="button" class="btn btn-outline-secondary" onclick="f_DeleteConfirm1({{ report.id }})">삭제</button>
-                </div>
-            </div>
-            {% else %}
             <p id="notFeedback">피드백이 존재하지 않습니다.</p>
             {% endif %}
         </div>
     </div>
 
     <!-- 모의 면접 영상 2 -->
-    <div class="form1">
+    <div class="form2">
         <div class="content">
             <!-- ~~~~에 면접질문 출력하기 -->
             <p id="question">Q. {{ report.question2 }}</p>
@@ -107,9 +125,37 @@
             </video>
             {% endif %}
 
-            <p id="feedback">
-                <피드백 남기기>
+            <p id="feedback2">
+                <피드백>
             </p>
+
+            <!--존재하는 피드백 출력-->
+            {% if report.comment2 %}
+            <div class="feedbackRead">
+                <div class="feedbackTable">
+                    <table>
+                        <tr id="feedbackContent2">
+                            <!-- 피드백 작성자 이름 출력 -->
+                            <td style="font-weight: bold;">{{ teacher.username }} </td>
+                            <!-- 피드백 내용 출력 -->
+                            <td style="padding-left: 30px; font-size: 19px;">{{ report.comment2 }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="button2" style="float: right; margin-right: 40px">
+                    <button id="show2" class="btn btn-outline-secondary">수정</button>
+                    <button type="button" class="btn btn-outline-secondary"
+                        onclick="f_DeleteConfirm2({{ report.id }})">삭제</button>
+                </div>
+                <div id="feedbackModify2">
+                    <form method="post">
+                        <span class="write_in"><input type="text" name="feedback2" value="{{ report.comment2 }}"
+                                style="border:none;"></span>
+                        <button type="submit" class="btn btn-outline-secondary">확인</button>
+                    </form>
+                </div>
+            </div>
+            {% else %}
             <!-- 피드백 작성 폼 -->
             <div class="feedbackWrite">
                 <form method="post">
@@ -118,43 +164,13 @@
                     <button type="submit" class="btn btn-outline-secondary">확인</button>
                 </form>
             </div>
-
-            <!--존재하는 피드백 출력-->
-            {% if report.comment2 %}
-            <div class="feedbackRead">
-                <br>
-                <div class="feedbackTable">
-                    <table>
-                        <!-- 피드백 존재하는 만큼 반복해서 출력 -->
-                        <!-- for문 이용하면 될듯? -->
-                        <tr id="feedbackContent">
-                            <!-- 피드백 작성자 이름 출력 -->
-                            <td style="font-weight: bold;">{{ teacher.username }} </td>
-                            <!-- 피드백 내용 출력 -->
-                            <td style="padding-left: 30px;">{{ report.comment2 }}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="button" style="float: right; margin-right: 50px">
-                    <div id="feedbackModify">
-                        <form method="post">
-                            <span class="write_in"><input type="text" name="feedback2" value="{{ report.comment2 }}"
-                                    style="border:none;"></span>
-                            <button type="submit" class="btn btn-outline-secondary">확인</button>
-                        </form>
-                    </div>
-                    <button id="show" class="btn btn-outline-secondary">수정</button>
-                    <button type="button" class="btn btn-outline-secondary" onclick="f_DeleteConfirm2({{ report.id }})">삭제</button>
-                </div>
-            </div>
-            {% else %}
             <p id="notFeedback">피드백이 존재하지 않습니다.</p>
             {% endif %}
         </div>
     </div>
 
-        <!-- 모의 면접 영상 3 -->
-    <div class="form1">
+    <!-- 모의 면접 영상 3 -->
+    <div class="form3">
         <div class="content">
             <!-- ~~~~에 면접질문 출력하기 -->
             <p id="question">Q. {{ report.question3 }}</p>
@@ -169,9 +185,37 @@
             </video>
             {% endif %}
 
-            <p id="feedback">
-                <피드백 남기기>
+            <p id="feedback3">
+                <피드백>
             </p>
+
+            <!--존재하는 피드백 출력-->
+            {% if report.comment3 %}
+            <div class="feedbackRead">
+                <div class="feedbackTable">
+                    <table>
+                        <tr id="feedbackContent3">
+                            <!-- 피드백 작성자 이름 출력 -->
+                            <td style="font-weight: bold;">{{ teacher.username }} </td>
+                            <!-- 피드백 내용 출력 -->
+                            <td style="padding-left: 30px; font-size: 19px;">{{ report.comment3 }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="button3" style="float: right; margin-right: 40px">
+                    <button id="show3" class="btn btn-outline-secondary">수정</button>
+                    <button type="button" class="btn btn-outline-secondary"
+                        onclick="f_DeleteConfirm3({{ report.id }})">삭제</button>
+                </div>
+                <div id="feedbackModify3">
+                    <form method="post">
+                        <span class="write_in"><input type="text" name="feedback3" value="{{ report.comment3 }}"
+                                style="border:none;"></span>
+                        <button type="submit" class="btn btn-outline-secondary">확인</button>
+                    </form>
+                </div>
+            </div>
+            {% else %}
             <!-- 피드백 작성 폼 -->
             <div class="feedbackWrite">
                 <form method="post">
@@ -180,36 +224,6 @@
                     <button type="submit" class="btn btn-outline-secondary">확인</button>
                 </form>
             </div>
-
-            <!--존재하는 피드백 출력-->
-            {% if report.comment3 %}
-            <div class="feedbackRead">
-                <br>
-                <div class="feedbackTable">
-                    <table>
-                        <!-- 피드백 존재하는 만큼 반복해서 출력 -->
-                        <!-- for문 이용하면 될듯? -->
-                        <tr id="feedbackContent">
-                            <!-- 피드백 작성자 이름 출력 -->
-                            <td style="font-weight: bold;">{{ teacher.username }} </td>
-                            <!-- 피드백 내용 출력 -->
-                            <td style="padding-left: 30px;">{{ report.comment3 }}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="button" style="float: right; margin-right: 50px">
-                    <div id="feedbackModify">
-                        <form method="post">
-                            <span class="write_in"><input type="text" name="feedback3" value="{{ report.comment3 }}"
-                                    style="border:none;"></span>
-                            <button type="submit" class="btn btn-outline-secondary">확인</button>
-                        </form>
-                    </div>
-                    <button id="show" class="btn btn-outline-secondary">수정</button>
-                    <button type="button" class="btn btn-outline-secondary" onclick="f_DeleteConfirm3({{ report.id }})">삭제</button>
-                </div>
-            </div>
-            {% else %}
             <p id="notFeedback">피드백이 존재하지 않습니다.</p>
             {% endif %}
         </div>
