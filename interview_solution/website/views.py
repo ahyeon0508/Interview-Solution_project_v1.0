@@ -210,6 +210,7 @@ def commentDelete1(request, reportID):
     if report.comment1:
         report.comment1 = None
         report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
     return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
 
 @csrf_exempt
@@ -218,6 +219,7 @@ def commentDelete2(request, reportID):
     if report.comment2:
         report.comment2 = None
         report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
     return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
 
 @csrf_exempt
@@ -226,6 +228,7 @@ def commentDelete3(request, reportID):
     if report.comment3:
         report.comment3 = None
         report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
     return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
 
 @csrf_exempt
