@@ -132,7 +132,7 @@ class Report(models.Model):
     speed3 = models.FloatField(blank=True, null=True, verbose_name='말하기 속도3')
     sCorrect1 = models.CharField(max_length=10000, blank=True, null=True,  verbose_name='말하기 속도1')
     sCorrect2 = models.CharField(max_length=10000, blank=True, null=True,  verbose_name='말하기 속도2')
-    sCorret3 = models.CharField(max_length=10000, blank=True, null=True,  verbose_name='말하기 속도3')
+    sCorrect3 = models.CharField(max_length=10000, blank=True, null=True,  verbose_name='말하기 속도3')
     comment1 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글1')
     comment2 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글2')
     comment3 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글3')
