@@ -190,7 +190,7 @@ def questionList(request):
             question = request.POST.get('id', '')
             myQuestion = Question.objects.get(id=question)
             try :
-                myQ = StudentQuestion.objects.get(student=request.user, question=myQuestion)
+                myQ = StudentQuestion.objects.get(student=request.session.get('user'), question=myQuestion)
                 if myQ:
                     myQ.delete()
             except:
@@ -198,10 +198,10 @@ def questionList(request):
             return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
         else:
             question = Question.objects.all()
-            myQuestion = StudentQuestion.objects.filter(student=request.user)
+            myQuestion = StudentQuestion.objects.filter(student=request.session.get('user'))
             return render(request, 'questionList.html', {'question': question, 'myQuestion':myQuestion})
     else:
-        question = Question.objects.all()
+        question = Question.objects.exclude(department=-1)
         return render(request, 'questionList.html', {'question':question})
 
 # myQuestion - 모든 질문, 질문 검색
@@ -213,8 +213,6 @@ def myQuestion(request):
             try:
                 question = Question.objects.filter(question=question_search)
                 student_question = StudentQuestion.objects.filter(question=question)
-                print("question: ",question)
-                print("student_question: ",student_question)
             except:
                 return render(request, 'myquestion.html', {'question':question, 'error':'해당 질문이 존재하지 않습니다.'})
             return render(request, 'myquestion.html', {'question':student_question})
