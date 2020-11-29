@@ -86,7 +86,6 @@ class Question(models.Model):
     question = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문')
     department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문
     student = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.id
@@ -99,6 +98,7 @@ class StudentQuestion(models.Model):
         verbose_name='pk'
     )
     student = models.ForeignKey(User, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
 class Report(models.Model):
@@ -109,6 +109,9 @@ class Report(models.Model):
         verbose_name='pk'
     )
     title = models.CharField(max_length=100, default='제목', verbose_name='제목')
+    question1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
+    question2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
+    question3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
     video1 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상1')
     video2 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상2')
     video3 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상3')

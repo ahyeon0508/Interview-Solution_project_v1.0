@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>새내기路(로)</title>
+
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Css -->
+    <link rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../static/css/intro.css" type="text/css">
+</head>
+
+<body>
+    <!-- 상단 바 및 내용 시작 -->
+    <section class="categories">
+        <div class="container-fluid set-bg" data-setbg="../../static/img/10.jpg">
+            <header class="headerintro">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-2">
+                            <div class="header__logo">
+                                <a href="{% url 'website:intro' %}"><img src="../../static/img/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- 상단바 끝 -->
+
+           <!-- 내용 시작 -->
+            <div class="row">
+                <div class="col-lg-9 col-md-12 col-sm-12 p-0">
+                    <div class="categories__item categories__large__item">
+                        <div class="categories__text">
+                            <h1>새내기路(로)</h1>
+                            <p>언제 어디서나 스스로 면접을 대비할 수 있는 모의 면접 서비스.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 col-sm-6 p-0">
+                            <!-- herf에 학생홈페이지 url 넣기 -->
+                            <a class="categories__item set-bg" data-setbg="../../static/img/분홍.png" href="{% url 'website:studentHome' %}">
+                                <div class="categories__text">
+                                    <h4>학생</h4>
+                                    <p>질문을 골라 모의 면접을 진행하고, 결과 리포트를 확인할 수 있는 학생 홈페이지로 이동.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-12 col-md-6 col-sm-6 p-0">
+                            <!-- herf에 교사홈페이지 url 넣기 -->
+                            <a class="categories__item set-bg" data-setbg="../../static/img/파랑.png" href="{% url 'website:teacherHome' %}">
+                                <div class="categories__text">
+                                    <h4>교사</h4>
+                                    <p>지정한 학생들을 관리하고, 리포트를 공유하고 질문을 보낼 수 있는 교사 홈페이지로 이동.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 내용 끝 -->
+
+    <!-- 기능 소개 시작 -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4">
+                    <div class="section-title">
+                        <h4>기능</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row property__gallery">
+                <div class="col-lg-6 col-md-6 col-sm-6 mix women">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="../../static/img/연회색.png">
+                        </div>
+                        <div class="product__item__text">
+                            <h5><a href="#">스스로 모의 면접</a></h5>
+                            <p>가이드라인에 따라 쉽게 스스로 모의면접을 진행하고, 질문별/날짜별/제목별 분류로 영상을 관리할 수 있는 기능.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 mix women">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="../../static/img/연회색.png">
+                        </div>
+                        <div class="product__item__text">
+                            <h5><a href="#">다양한 질문 제공</a></h5>
+                            <p>미리 준비된 공통 및 학과질문과, 선생님께 입력받는 질문 및 서류 분석을 통한 AI 질문까지 제공하는 기능.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 mix women">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="../../static/img/연회색.png">
+                        </div>
+                        <div class="product__item__text">
+                            <h5><a href="#">면접 분석 리포트</a></h5>
+                            <p>질문별 영상 및 대본과, 자주쓰는 반복어 및 부사어와 말 빠르기를 자동으로 분석해 답변을 더 편하게 체크할 수 있는 기능.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-6 mix women">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="../../static/img/연회색.png">
+                        </div>
+                        <div class="product__item__text">
+                            <h5><a href="#">선생님과 공유</a></h5>
+                            <p>담임선생님과 모의 면접 영상을 공유하고, 댓글 피드백 및 질문 전송이 가능한 기능.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 기능 소개 끝 -->
+
+   <!-- 질문리스트 시작 -->
+    <section class="banner set-bg" data-setbg="../../static/img/연회색.png">
+        <section class="shop-cart spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <div class="section-title">
+                            <h4>질문</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shop__cart__table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="cart__product__item">
+                                            <div class="cart__product__item__title">
+                                                <h6>입학 후 학업계획에 대해 말해보세요.</h6>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">기본질문</td>
+                                        <td class="cart__quantity">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart__product__item">
+                                            <div class="cart__product__item__title">
+                                                <h6>스팸메일의 정의를 설명하고, 현재 기술동향에 대해 설명해보세요.</h6>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">컴퓨터공학과</td>
+                                        <td class="cart__quantity">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart__product__item">
+                                            <div class="cart__product__item__title">
+                                                <h6>한일무역규제에 대해 어떻게 생각하나요?</h6>
+                                            </div>
+                                        </td>
+                                        <td class="cart__price">경영학과</td>
+                                        <td class="cart__quantity">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- 질문 소개 끝 -->
+
+    <!-- 풋터 시작 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-7">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="./index.html"><img src="../../static/img/logo.png" alt=""></a>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                            cilisis.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright__text">
+                        <p>Copyright SSU Software18 made by 말하는 감자들(수현,아현,혜원,예진)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- 풋터 끝 -->
+
+    <!-- Js Plugins -->
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/main.js"></script>
+</body>
+
+</html>

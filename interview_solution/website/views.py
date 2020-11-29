@@ -10,6 +10,15 @@ from .models import User, Teacher, SchoolInfo
 import json
 import logging
 
+def intro(request):
+    return render(request, 'index.html')
+
+def studentHome(request):
+    return render(request, 'stuhome.html')
+
+def teacherHome(request):
+    return render(request, 'teahome.html')
+
 @csrf_exempt
 def studentSignup(request):
     if request.method == "POST":
@@ -124,6 +133,12 @@ def teacherSignin(request):
             return render(request, 'signin.html', {'student':0, 'error': 'username or password is incorrect'})
     else:
         return render(request,'signin.html', {'student':0})
+
+@csrf_exempt
+def signoff(request):
+    if request.session['user']:
+        del(request.session['user'])
+    return redirect(reverse('website:intro'))
 
 @csrf_exempt
 def findID(request, student):

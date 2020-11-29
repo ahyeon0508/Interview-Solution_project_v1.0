@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>인트로</title>
+
+    <!-- 폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Css -->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/intro.css' %}" type="text/css">
+</head>
+
+<body>
+    <!-- 상단 바 시작 -->
+    <nav id="Topbar" class="navbar navbar-expand navbar-light topbar static-top">
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <img id="menuicon" src="{% static 'img/menu.png' %}" width="20px" height="20px" alt="menu">
+        </button>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+
+                {% if user.is_authenticated %}
+                <!--로그인한 경우 href 유저정보 관리 페이지로!-->
+                <a class="nav-link dropdown-toggle" href="#" id="user" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <!--USERID 부분에 유저 ID 표기!-->
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> USERID </span>
+
+                    {% if user.image %}
+                    <!--src 유저 이미지 표기!-->
+                    <img class="img-profile rounded-circle" src="#">
+                    {% else %}
+                    <img class="img-profile rounded-circle" src="{% static 'img/user.svg' %}">
+                    {% endif %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    <!-- herf 유저정보 관리 페이지로!-->
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        MyPage
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <!--href 로그아웃으로!-->
+                    <a class="dropdown-item" href="{% url 'website:signoff' %}">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Logout
+                    </a>
+                </div>
+                {% else %}
+                <!--herf 로그인 페이지로!-->
+                <a class="nav-link" href="{% url 'website:studentSignin' %}" id="user" role="button">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
+                    <img class="img-profile rounded-circle" src="{% static 'img/user.svg' %}">
+                </a>
+                {% endif %}
+
+            </li>
+        </ul>
+    </nav>
+    <!-- 상단 바 끝 -->
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- 풋터 시작 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright__text">
+                        <p>Copyright SSU Software18 made by 말하는 감자들(수현,아현,혜원,예진)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- 풋터 끝 -->
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+</body>
+
+</html>
