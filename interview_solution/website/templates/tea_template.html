@@ -4,23 +4,27 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>홈 템플릿</title>
 
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <!-- Css -->
-    <link rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="{% static 'js/util.js' %}"></script>
     <link rel="stylesheet" href="../../static/css/home.css" type="text/css">
     <link rel="stylesheet" href="../../static/css/intro.css" type="text/css">
 </head>
 
 <body>
-
     <!-- 상단 바 시작 -->
-    <nav id="Topbar" class="navbar navbar-expand navbar-light topbar static-top">
-        <a class="navbar-brand" href="#">
-            <img src="../../static/img/logo.png" class="d-inline-block align-top" alt="">
-        </a>
+    <nav id="Topbar" class="navbar navbar-expand navbar-light topbar header__menu">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a class="col-xl-1 col-lg-1 navbar-brand" href="#">
+                <img src="../../static/img/logo.png" width="100" height="30" class="d-inline-block align-top" alt="">
+            </a>
+        </div>
+
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 {% if user.is_authenticated %}
