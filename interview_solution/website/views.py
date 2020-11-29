@@ -108,7 +108,7 @@ def studentSignin(request):
             user = User.objects.get(userID=userID)
             if user.check_password(password):
                 request.session['user'] = user.userID
-                return render(request, 'signin.html', {'student':1, 'error' : '성공'})
+                return redirect(reverse('website:studentHome'))
             else:
                 return render(request,'signin.html',{'student':1, 'error':'username or password is incorrect'})
         except:
@@ -124,9 +124,9 @@ def teacherSignin(request):
 
         try:
             user = Teacher.objects.get(userID=userID)
-            if check_password(password, user.password):
+            if password == user.password:
                 request.session['user'] = user.userID
-                return render(request, 'signin.html', {'student':0, 'error' : '성공'})
+                return redirect(reverse('webisite:teacherHome'))
             else:
                 return render(request,'signin.html',{'student':0, 'error':'username or password is incorrect'})
         except:
