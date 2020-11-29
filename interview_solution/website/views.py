@@ -126,7 +126,7 @@ def teacherSignin(request):
             user = Teacher.objects.get(userID=userID)
             if password == user.password:
                 request.session['user'] = user.userID
-                return redirect(reverse('webisite:teacherHome'))
+                return redirect(reverse('website:teacherHome'))
             else:
                 return render(request,'signin.html',{'student':0, 'error':'username or password is incorrect'})
         except:
