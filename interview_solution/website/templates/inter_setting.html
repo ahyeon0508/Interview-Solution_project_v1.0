@@ -13,21 +13,22 @@
 </head>
 
 <body>
-    <h4>2. 면접 세팅</h4>
-    <h5>: 체크 한 질문 중 3개가 랜덤으로 나옵니다.</h5>
 
-    <div id="container">
-        <video autoplay="true" id="videoElement"></video>
-    </div>
-
-    <p>
-        문제는 랜덤하게 3개가 나옵니다.<br>
-        시작 = ctrl + X / 정지 = ctrl + Z / 일시정지 = Space / 캡쳐 = ctrl + S<br>
-    </p>
-
-    <!--herf에 inter_main-->
-    <div class="button" herf="{% url 'website:interviewQ1' reportID=reportID %}">
-        <Strong> 시작 > </Strong>
+    <div class="container">
+        <div class="card text-center">
+            <div class="card-header">
+                <h5>2. Setting</h5>
+            </div>
+            <div class="card-body">
+                <div id="container">
+                    <video autoplay="true" id="videoElement"></video>
+                </div>
+                체크한 질문 중 3개가 랜덤으로 나옵니다. 준비 되셨다면 시작 버튼을 누르세요.
+            </div>
+            <div class="card-footer text-muted">
+                <a href="{% url 'website:interviewQ1' reportID=reportID %}" class="btn btn-outline-primary"><Strong> 시작 > </Strong></a>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -44,9 +45,6 @@
                     console.log("Something wrong!");
                 });
         }
-
     </script>
 
-</body>
-
-</html>
+</body></html>
