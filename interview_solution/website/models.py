@@ -85,9 +85,8 @@ class Question(models.Model):
     )
     question = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문')
     department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문
-    student = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __int__(self):
         return self.id
 
 class StudentQuestion(models.Model):
