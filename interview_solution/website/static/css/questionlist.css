@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+.btn-star{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url("../img/star_unfill.png");
+    text-indent: -9999px;
+    overflow: hidden;
+    border: none;
+}
+
+.btn-star.active{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url("../img/star_fill.png");
+    text-indent: -9999px;
+    overflow: hidden;
+    border: none;
+}
+
+.star{
+    margin-right: 10px;
+}
