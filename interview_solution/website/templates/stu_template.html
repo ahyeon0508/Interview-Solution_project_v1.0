@@ -35,11 +35,11 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                {% if user.is_authenticated %}
+                {% if user %}
                 <!--로그인한 경우 href 유저정보 관리 페이지로!-->
                 <a class="nav-link dropdown-toggle" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <!--USERID 부분에 유저 ID 표기!-->
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> USERID </span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{user.userID}} </span>
 
                     {% if user.image %}
                     <!--src 유저 이미지 표기!-->
