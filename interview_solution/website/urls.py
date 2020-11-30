@@ -5,6 +5,9 @@ from . import views, apis, schoolInfo
 app_name = 'website'
 
 urlpatterns = [
+    path('', views.intro, name='intro'),
+    path('student/', views.studentHome, name='studentHome'),
+    path('teacher/', views.teacherHome, name='teacherHome'),
     path('student/signup/', views.studentSignup, name='studentSignup'),
     path('teacher/signup/', views.teacherSignup, name='teacherSignup'),
     path('schooldb/',schoolInfo.schoolInfo_db,name='schoolInfo'),
@@ -13,8 +16,8 @@ urlpatterns = [
     path('student/signup/checkid',views.studentcheckID,name='studentCheckid'),
     path('teacher/signup/checkid',views.teachercheckID,name='teacherCheckid'),
     path('student/signin/', views.studentSignin, name='studentSignin'),
-    # path('signin/', apis.SigninUserAPI.as_view(), name='signin'),
     path('teacher/signin/', views.teacherSignin, name='teacherSignin'),
+    path('signoff/', views.signoff, name='signoff'),
     path('findID/<int:student>', views.findID, name='findID'),
     path('findPW/<int:student>', views.findPW, name='findPW'),
     path('resultPW/<int:student>/<userID>/', views.resultPW, name='resultPW'),

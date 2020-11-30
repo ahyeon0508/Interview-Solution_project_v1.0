@@ -59,8 +59,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=100, verbose_name='비밀번호')
     phone = models.CharField(max_length=11, blank=True, null=True, verbose_name='연락처')
     school = models.CharField(max_length=10, null=True, blank=True, verbose_name='학교')
-    grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')
-    sClass = models.CharField(max_length=10, null=True, blank=True, verbose_name='반')
+    grade = models.IntegerField(null=True, blank=True, verbose_name='학년')
+    sClass = models.IntegerField(null=True, blank=True, verbose_name='반')
     teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
     is_activate = models.BooleanField(default=True)
 
@@ -97,7 +97,7 @@ class StudentQuestion(models.Model):
         verbose_name='pk'
     )
     student = models.ForeignKey(User, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __int__(self):
@@ -111,9 +111,9 @@ class Report(models.Model):  # 수정필요
         verbose_name='pk'
     )
     title = models.CharField(max_length=100, default='제목', verbose_name='제목')
-    question1 = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문1')
-    question2 = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문2')
-    question3 = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문3')
+    question1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
+    question2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
+    question3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
     video1 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상1')
     video2 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상2')
     video3 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상3')

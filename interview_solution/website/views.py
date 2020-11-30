@@ -10,6 +10,22 @@ from .models import User, Teacher, SchoolInfo, Report, StudentQuestion, Question
 import json
 import logging
 
+def intro(request):
+    return render(request, 'index.html')
+
+def studentHome(request):
+    if request.session['user']:
+        user = get_object_or_404(User, userID=request.session['user'])
+        return render(request, 'stuhome.html', {'user': user})
+    return render(request, 'stuhome.html')
+
+def teacherHome(request):
+    if request.session['user']:
+        teacher = get_object_or_404(Teacher, userID=request.session['user'])
+        report = Report.objects.filter(teacher=teacher)
+        return render(request, 'teahome.html', {'report':report, 'user':teacher})
+    return render(request, 'teahome.html')
+
 @csrf_exempt
 def studentSignup(request):
     if request.method == "POST":
@@ -99,7 +115,7 @@ def studentSignin(request):
             user = User.objects.get(userID=userID)
             if user.check_password(password):
                 request.session['user'] = user.userID
-                return render(request, 'signin.html', {'student':1, 'error' : '성공'})
+                return redirect(reverse('website:studentHome'))
             else:
                 return render(request,'signin.html',{'student':1, 'error':'username or password is incorrect'})
         except:
@@ -117,13 +133,19 @@ def teacherSignin(request):
             user = Teacher.objects.get(userID=userID)
             if password == user.password:
                 request.session['user'] = user.userID
-                return redirect(reverse('website:teacherVideo', args=[1]))
+                return redirect(reverse('website:teacherHome'))
             else:
                 return render(request,'signin.html',{'student':0, 'error':'username or password is incorrect'})
         except:
             return render(request, 'signin.html', {'student':0, 'error': 'username or password is incorrect'})
     else:
         return render(request,'signin.html', {'student':0})
+
+@csrf_exempt
+def signoff(request):
+    if request.session['user']:
+        del(request.session['user'])
+    return redirect(reverse('website:intro'))
 
 @csrf_exempt
 def findID(request, student):
