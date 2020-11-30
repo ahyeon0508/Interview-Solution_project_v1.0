@@ -22,7 +22,7 @@ def studentHome(request):
 def teacherHome(request):
     if request.session['user']:
         teacher = get_object_or_404(Teacher, userID=request.session['user'])
-        report = Report.objects.filter(teacher=teacher)
+        report = Report.objects.filter(teacher=teacher, share=True)
         return render(request, 'teahome.html', {'report':report, 'user':teacher})
     return render(request, 'teahome.html')
 
