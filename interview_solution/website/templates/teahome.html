@@ -31,7 +31,7 @@
             <!--학생 card 반복 / herf에는 학생면접영상 페이지로 -->
             {% if report %}
             {% for i in report %}
-            <a herf="{% url 'website:teacherVideo' reportID=i.id %}">
+            <a href="{% url 'website:teacherVideo' reportID=i.id %}">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
