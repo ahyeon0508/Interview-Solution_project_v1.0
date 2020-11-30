@@ -138,7 +138,7 @@ class Report(models.Model):  # 수정필요
     pub_date = models.DateField(auto_now_add=True, verbose_name='날짜')
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher,null=True, blank=True, on_delete=models.CASCADE)
-    share = models.BooleanField(default=True, verbose_name='공유')
+    share = models.BooleanField(default=False, verbose_name='공유')
 
     def __int__(self):
         return self.id
