@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>면접 진행</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/inter_setting.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function(){
+            $('#startbutton').click(function(){
+                var userID = $(this).attr('name')
+                var reportID = $(this).attr('report')
+                $.ajax({
+                    url:'record/',
+                    method:'POST',
+                    data:{
+                        name:'start',
+                        click: true,
+                        question: 1,
+                        userID: userID,
+                        reportID: reportID
+                    },
+                    success:function(data){
+                        if (response.result != 'success') {
+                            console.error(response.data)
+                            return;
+                        }
+                    }
+                });
+            });
+        });
+        $(function(){
+            $('#finishbutton').click(function(){
+                var userID = $(this).attr('name')
+                $.ajax({
+                    url:'record_stop/',
+                    method:'POST',
+                    data:{
+                        name:'finish',
+                        click: true,
+                        question:1,
+                        userID: userID
+                    },
+                    success:function(data){
+                        if (response.result != 'success') {
+                            console.error(response.data)
+                            return;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <p>
+        시작 = ctrl + X / 정지 = ctrl + Z / 일시정지 = Space / 캡쳐 = ctrl + S
+    </p>
+    
+    <!-- 질문 받아 띄우기 -->
+    <div> {{ interview_question }} </div>
+    <div> 1 / 3 </div>
+    
+    <!-- herf에  -->
+    <input type="button" id="startbutton" name="{{user.id}}" report="{{reportID}}" value="질문시작">
+
+    <!-- herf에 q2 html로 -->
+    <input type="button" id="finishbutton" name="{{user.id}}" onClick="location.href='{% url 'website:interviewQ2' reportID=reportID %}'" value="다음으로">
+</body>
+
+</html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #container {
     margin: 0px auto;
     width: 500px;
@@ -8,3 +9,15 @@
     width: 500px;
     height: 375px;
 }
+=======
+#container {
+    margin: 0px auto;
+    width: 500px;
+    height: 375px;
+}
+
+#videoElement {
+    width: 500px;
+    height: 375px;
+}
+>>>>>>> 18fc6e2c740b91343b71fe07605b595442a4f29f

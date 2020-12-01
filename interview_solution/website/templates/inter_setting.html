@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>면접 세팅</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/inter_setting.css" type="text/css">
+</head>
+
+<body>
+    <h4>2. 면접 세팅</h4>
+    <h5>: 체크 한 질문 중 3개가 랜덤으로 나옵니다.</h5>
+
+    <div id="container">
+        <video autoplay="true" id="videoElement"></video>
+    </div>
+
+    <p>
+        문제는 랜덤하게 3개가 나옵니다.<br>
+        시작 = ctrl + X / 정지 = ctrl + Z / 일시정지 = Space / 캡쳐 = ctrl + S<br>
+    </p>
+
+    <!--herf에 inter_main-->
+    <input type="button" id="startq1" onClick="location.href='{% url 'website:interviewQ1' reportID=reportID %}'" value="시작 >">
+
+    <script>
+        var video = document.querySelector("#videoElement");
+
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function(err0r) {
+                    console.log("Something wrong!");
+                });
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -29,7 +29,6 @@ class Teacher(models.Model):
     def __str__(self):
         return self.userID
 
-
 class UserManager(BaseUserManager):
     def create_user(self, userID, password, username=None, phone=None, school=None, grade=None, sClass=None):
         if not userID:
@@ -51,7 +50,6 @@ class UserManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
         return user
-
 
 class User(AbstractBaseUser, PermissionsMixin):
     userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name='아이디')  # 아이디
@@ -84,7 +82,7 @@ class Question(models.Model):
         verbose_name='pk'
     )
     question = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문')
-    department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문
+    department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문, -1 : 개인질문
 
     def __int__(self):
         return self.id
@@ -97,8 +95,11 @@ class StudentQuestion(models.Model):
         verbose_name='pk'
     )
     student = models.ForeignKey(User, on_delete=models.CASCADE)
-    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
+
+    def __int__(self):
+        return self.id
 
 class Report(models.Model):
     id = models.AutoField(
@@ -129,6 +130,9 @@ class Report(models.Model):
     speed1 = models.FloatField(blank=True, null=True, verbose_name='말하기 속도1')
     speed2 = models.FloatField(blank=True, null=True, verbose_name='말하기 속도2')
     speed3 = models.FloatField(blank=True, null=True, verbose_name='말하기 속도3')
+    sCorrect1 = models.CharField(max_length=10000, blank=True, null=True,  verbose_name='말하기 속도1')
+    sCorrect2 = models.CharField(max_length=10000, blank=True, null=True,  verbose_name='말하기 속도2')
+    sCorrect3 = models.CharField(max_length=10000, blank=True, null=True,  verbose_name='말하기 속도3')
     comment1 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글1')
     comment2 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글2')
     comment3 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글3')
