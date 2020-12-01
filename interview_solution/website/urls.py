@@ -1,6 +1,6 @@
 from django.urls import path
 from django.conf.urls import url
-from . import views, apis, schoolInfo
+from . import views, apis, schoolInfo, questionDB
 
 app_name = 'website'
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path('findID/<int:student>', views.findID, name='findID'),
     path('findPW/<int:student>', views.findPW, name='findPW'),
     path('resultPW/<int:student>/<userID>/', views.resultPW, name='resultPW'),
+    path('questionDB/',questionDB.db,name='questionDB'),
     path('questionList/', views.questionList, name='questionList'),
     path('myQuestion/', views.myQuestion, name='myQuestion'),
     path('myQuestion/contain/',views.myQuestion_contain,name='myQuestion_contain'),
