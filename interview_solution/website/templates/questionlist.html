@@ -19,7 +19,7 @@
         <div class="card">
             <div class="card-header">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="#">질문 리스트</a>
+                    <a class="navbar-brand" href="{% url 'website:questionList' %}">질문 리스트</a>
                     <!--모바일 환경에서 화면비에 따라 토글 띄워지는 부분-->
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -29,21 +29,21 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
                                 <!--일단 초기에 기본 질문이 띄워지도록, 클릭하면 기본 질문이 띄워지도록-->
-                                <a class="nav-link" href="">기본 질문</a>
+                                <a class="nav-link" href="{% url 'website:questionDepartment' q_department=0 %}">기본 질문</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="{% url 'website:questionDepartment' q_department=1111 %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     학과 질문
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <!--클릭시 컴퓨터 질문 띄워지도록-->
-                                    <a class="dropdown-item" href="">컴퓨터</a>
+                                    <a class="dropdown-item" href="{% url 'website:questionDepartment' q_department=1 %}">컴퓨터</a>
                                     <!--클릭시 국문 질문 띄워지도록-->
-                                    <a class="dropdown-item" href="">국문</a>
+                                    <a class="dropdown-item" href="{% url 'website:questionDepartment' q_department=3 %}">국문</a>
                                     <!--클릭시 경영 질문 띄워지도록-->
-                                    <a class="dropdown-item" href="">경영</a>
+                                    <a class="dropdown-item" href="{% url 'website:questionDepartment' q_department=2 %}">경영</a>
                                     <!--클릭시 생명공학 질문 띄워지도록-->
-                                    <a class="dropdown-item" href="">생명공학</a>
+                                    <a class="dropdown-item" href="{% url 'website:questionDepartment' q_department=4 %}">생명공학</a>
                                 </div>
                             </li>
                         </ul>
@@ -58,22 +58,61 @@
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
-
+                    {{error}}
+                    {% if question %}
                     <!--for문으로 질문 단위 li태그 반복-->
+                    {% for questionList in question %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
                             <!--내 질문인 경우 채운 별 띄우기, 내 질문 아닌 경우 빈 별 띄우기-->
-                            <img alt="빈 별" src="../static/img/star_unfill.png" width="15px" height="15px">
-                            <img lt="채운 별" src="../static/img/star_fill.png" width="15px" height="15px">
-                            
+                            <a herf="{% url 'website:questionStar' questionID=questionList.id %}" class="btn-star"><img alt="빈 별" src="../static/img/star_unfill.png" width="15px" height="15px"></a>
                             <!--원래는 이거 감싼 a 클래스로 하는 건데ㅜㅜ 별 모양이 안뜨네-->
                             <!--예제 https://fabl1106.github.io/django/2019/05/05/Django-14.-%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8-%EC%A2%8B%EC%95%84%EC%9A%94-%EB%B2%84%ED%8A%BC-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.html-->
                             <!--<a herf="" class="btn-star"></a>-->
-
                             <!--"자신의 장점과" 이 부분에 질문 내용 띄우도록 / small 태그 안 "기본 질문" 부분은 5개의 질문 종류(기본, 학과4개) 띄우도록 -->
-                            자신의 장점과 단점을 소개해보세요. <small> - 기본 질문</small>
+                            <!-- 자신의 장점과 단점을 소개해보세요. <small> - 기본 질문</small> -->
+                            {{questionList.question}}
+                            {% if questionList.department == 0 %}
+                            <small> - 기본 질문</small>
+                            {% elif questionList.department == 1 %}
+                            <small> - 컴퓨터 학과 질문</small>
+                            {% elif questionList.department == 2 %}
+                            <small> - 경영학과 질문</small>
+                            {% elif questionList.department == 3 %}
+                            <small> - 국어국문학과 질문</small>
+                            {% elif questionList.department == 4 %}
+                            <small> - 생명공학과 질문</small>
+                            {% endif %}                       
                         </div>
                     </li>
+                    {% endfor %}
+                    {% endif %}
+
+                    {% if myQuestion %}
+                    <!--for문으로 질문 단위 li태그 반복-->
+                    {% for questionList in myQuestion %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <!--내 질문인 경우 채운 별 띄우기, 내 질문 아닌 경우 빈 별 띄우기-->
+                            <a herf="{% url 'website:questionNonestar' questionID=questionList.id %}" class="btn-star"><img alt="채운 별" src="../static/img/star_fill.png" width="15px" height="15px"></a>
+                            <!--<img lt="채운 별" id="star" name="{{questionList.id}}" src="../static/img/star_fill.png" width="15px" height="15px">-->
+                            <!--원래는 이거 감싼 a 클래스로 하는 건데ㅜㅜ 별 모양이 안뜨네-->
+                            <!--예제 https://fabl1106.github.io/django/2019/05/05/Django-14.-%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8-%EC%A2%8B%EC%95%84%EC%9A%94-%EB%B2%84%ED%8A%BC-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.html-->
+                            <!--<a herf="" class="btn-star"></a>-->
+                            <!--"자신의 장점과" 이 부분에 질문 내용 띄우도록 / small 태그 안 "기본 질문" 부분은 5개의 질문 종류(기본, 학과4개) 띄우도록 -->
+                            <!-- 자신의 장점과 단점을 소개해보세요. <small> - 기본 질문</small> -->
+                            {{questionList.question}}
+                            {% if questionList.part == 1 %}
+                            <small> - 작성한 질문</small>
+                            {% elif questionList.part == 2 %}
+                            <small> - 받은 질문</small>
+                            {% else %}
+                            <small> - 담은 질문</small>
+                            {% endif %}                     
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
                 </ul>
             </div>
         </div>
