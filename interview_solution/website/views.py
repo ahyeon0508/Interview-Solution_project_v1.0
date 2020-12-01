@@ -227,6 +227,29 @@ def resultPW(request, student, userID):
     else:
         return render(request, 'resultPW.html')
 
+
+@login_required
+def mypage(request):
+    if request.method == "POST":
+        user = request.session.get('user')
+        question = request.POST.get('findQuestion', '')
+        answer = request.POST.get('findAnswer', '')
+        oldPW = request.POST.get('password', '')
+        newPW = request.POST.get('passwordChk', '')
+        phone = request.POST.get('phone', '')
+        school = request.POST.get('schoolName', '')
+        grade = request.POST.get('grade', '')
+        if check_password(oldPW, user.password) is False or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
+            return render(request, 'mypage_Info.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
+        else:
+            user.set_password(newPW)
+            user.save()
+            request.session['user'] = user.userID
+            return render(request, 'mypage_Info.html', {'notice': '수정이 완료되었습니다.'})
+    else:
+        user = User.objects.get(userID=request.user.userID)
+        return render(request, 'mypage_Info.html', {'user':user})
+
 #질문 리스트 전역변수
 interview_list = []
 @csrf_exempt
