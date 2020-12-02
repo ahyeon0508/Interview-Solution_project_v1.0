@@ -28,7 +28,11 @@
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                            {% if request.session.user %}
                             <a class="categories__item set-bg" data-setbg="../../static/img/분홍.png" href="{% url 'website:myVideo' %}">
+                            {% else %}
+                            <a class="categories__item set-bg" data-setbg="../../static/img/분홍.png" href="{% url 'website:studentSignin' %}">
+                            {% endif %}
                                 <div class="categories__text">
                                     <h4>내 영상</h4>
                                     <p>모의 면접 영상들을 질문별/제목별/날짜별로 관리하는 기능</p>
@@ -36,7 +40,11 @@
                             </a>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                            <a class="categories__item set-bg" data-setbg="../../static/img/연파랑.png" href="{% url 'website:myQuestion' %}">
+                            {% if request.session.user %}
+                            <a class="categories__item set-bg" data-setbg="../../static/img/연파랑.png" href="{% url 'website:questionList' %}">
+                            {% else %}
+                            <a class="categories__item set-bg" data-setbg="../../static/img/연파랑.png" href="{% url 'website:studentSignin' %}">
+                            {% endif %}
                                 <div class="categories__text">
                                     <h4>내 질문</h4>
                                     <p>별표 질문과 사용자 작성 질문, 교사에게 공유 받은 질문 및 AI 생성질문을 확인하는 기능</p>
