@@ -11,6 +11,7 @@
     <!-- Css Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/inter_setting.css' %}" type="text/css">
+    <script type="text/javascript" src="{% static 'js/util.js' %}"></script>
 </head>
 
 <body>
@@ -38,15 +39,15 @@
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <!--클릭시 기본 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
-                                            <a class="dropdown-item" href="{% url 'website:interviewStart department=0' %}">기본 질문</a>
+                                            <a class="dropdown-item" href="{% url 'website:interviewStartPart' department=0 %}">기본 질문</a>
                                             <!--클릭시 컴퓨터 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
-                                            <a class="dropdown-item" href="{% url 'website:interviewStart department=1' %}">컴퓨터</a>
+                                            <a class="dropdown-item" href="{% url 'website:interviewStartPart' department=1 %}">컴퓨터</a>
                                             <!--클릭시 국문 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
-                                            <a class="dropdown-item" href="{% url 'website:interviewStart department=2' %}">국문</a>
+                                            <a class="dropdown-item" href="{% url 'website:interviewStartPart' department=2 %}">국문</a>
                                             <!--클릭시 경영 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
-                                            <a class="dropdown-item" href="{% url 'website:interviewStart department=3' %}">경영</a>
+                                            <a class="dropdown-item" href="{% url 'website:interviewStartPart' department=3 %}">경영</a>
                                             <!--클릭시 생명공학 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
-                                            <a class="dropdown-item" href="{% url 'website:interviewStart department=4' %}}">생명공학</a>
+                                            <a class="dropdown-item" href="{% url 'website:interviewStartPart' department=4 %}">생명공학</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -62,8 +63,8 @@
                                 <div class="form-check">
                                     <!--내 질문인 경우, 지금 'checked'부분 앞뒤에 조건(if 내 질문인 경우 checked) 넣기-->
                                     <!--A라고 되어있는 id와 for 부분에 각 질문의 고유id ex) p.id 같은걸로 넣기!-->
-                                    <input type="checkbox" name="interview[]" id="A" value="{{questionList.question}}" onclick="questionstar({{questionList.id}})" checked>
-                                    <label class="form-check-label" for="A">
+                                    <input type="checkbox" name="interview[]" id="star_{{questionList.id}}" value="{{questionList.question}}" onclick="interstar({{questionList.id}})" checked>
+                                    <label class="form-check-label" for="star_{{questionList.id}}">
                                         <!--"자신의 장점과 ~" 이 부분에 질문 내용 띄우도록 / small 태그 안 "담은 질문" 부분은 6개의 종류로(내질문,기본,컴퓨터,국문,경영,생명공학) 띄우도록 -->
                                         <!--자신의 장점과 단점은 무엇이라고 생각하나요? <small> - 내 질문 </small> -->
                                     </label>
@@ -85,13 +86,8 @@
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
                                     <!--내 질문인 경우, 지금 'checked'부분 앞뒤에 조건(if 내 질문인 경우 checked) 넣기-->
-                                    {%if request.session.user %}
-                                    <input type="checkbox" name="question[1]" id="nonstar_{{questionList.id}}" value="{{questionList.question}}" onclick="questionnonstar({{questionList.id}})">
+                                    <input type="checkbox" name="interview[]" id="nonstar_{{questionList.id}}" value="{{questionList.question}}" onclick="internonstar({{questionList.id}})">
                                     <label for="nonstar_{{questionList.id}}">
-                                    {%else%}
-                                    <input type="checkbox" name="question[1]" id="nonstar_{{questionList.id}}" value="{{questionList.question}}">
-                                    <label for="nonstar_{{questionList.id}}">
-                                    {%endif%}
                                     {{questionList.question}}
                                         {% if questionList.department == 0 %}
                                         <small> - 기본 질문</small>

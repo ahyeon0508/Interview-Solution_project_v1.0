@@ -738,7 +738,7 @@ def questionStar(request,questionID):
 
 @csrf_exempt
 def questionNonStar(request,questionID):
-    # Push the star button
+    # Push the nonstar button
     question = Question.objects.get(id=questionID)
     user = User.objects.get(userID=request.session.get('user'))
     myQuestion = StudentQuestion.objects.create(student=user,part=0,question=question)
@@ -822,3 +822,15 @@ def inter_startPart(request,department):
         for i in myQuestion:
             question = question.exclude(id=i.question.id)
     return render(request, 'inter_start.html', {'question': question})
+
+def inter_Star(request, questionID):
+    # Push the star button
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'), id=questionID)
+    myQuestion.delete()
+    return redirect(reverse('website:interviewStart'))
+
+def inter_NonStar(request, questionID):
+    question = Question.objects.get(id=questionID)
+    user = User.objects.get(userID=request.session.get('user'))
+    myQuestion = StudentQuestion.objects.create(student=user,part=0,question=question)
+    return redirect(reverse('website:interviewStart'))
