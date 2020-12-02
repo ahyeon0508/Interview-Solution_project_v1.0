@@ -58,49 +58,49 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     {{error}}
-                    <!--내 질문인 경우 채운 별 띄우기-->
+                    
+                    <!--1. 내 질문인 경우 위해-->
                     {% if myQuestion %}
                     <!--for문으로 질문 단위 li태그 반복-->
                     {% for questionList in myQuestion %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <!--채운 별 = a로-->
-                            <a herf="{% url 'website:questionNonestar' questionID=questionList.id %}" class="btn-star active"></a>
-                            <!--참고 예제 https://fabl1106.github.io/django/2019/05/05/Django-14.-%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8-%EC%A2%8B%EC%95%84%EC%9A%94-%EB%B2%84%ED%8A%BC-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.html-->
-
-                            <!--채운 별 = a로-->
-                            <img alt="채운 별" id="star" name="{{questionList.id}}" src="{% static 'img/star_fill.png' %}" width="15px" height="15px">
-                            <!--"자신의 장점과" 이 부분에 질문 내용 띄우도록 / small 태그 안 "기본 질문" 부분은 5개의 질문 종류(기본, 학과4개) 띄우도록 -->
+                           <!--내 질문인 경우, 지금 'checked'부분 앞뒤에 조건(if 내 질문인 경우 checked) 넣기-->
+                            <input type="checkbox" name="question[]" id="question1" value="{{questionList.question}}" checked>
+                            <label for="question1">{{questionList.question}}
                             {{questionList.question}}
                             {% if questionList.part == 1 %}
                             <small> - 작성한 질문</small>
                             {% elif questionList.part == 2 %}
                             <small> - 받은 질문</small>
                             {% else %}
-                            <small> - 담은 질문</small>
+                            <small> - 담은 질문</small></label>
                             {% endif %}
                         </div>
                     </li>
                     {% endfor %}
                     {% endif %}
-                    <!--내 질문 아닌 경우 빈 별 띄우기-->
+                    
+                    
+                    <!--2. 질문 리스트-->
                     {% if question %}
                     <!--for문으로 질문 단위 li태그 반복-->
                     {% for questionList in question %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <input type="checkbox" id="box1">
-                            <label for="box1">{{questionList.question}}
-                            {% if questionList.department == 0 %}
-                            <small> - 기본 질문</small>
-                            {% elif questionList.department == 1 %}
-                            <small> - 컴퓨터 학과 질문</small>
-                            {% elif questionList.department == 2 %}
-                            <small> - 경영학과 질문</small>
-                            {% elif questionList.department == 3 %}
-                            <small> - 국어국문학과 질문</small>
-                            {% elif questionList.department == 4 %}
-                            <small> - 생명공학과 질문</small></label>
+                            <!--내 질문인 경우, 지금 'checked'부분 앞뒤에 조건(if 내 질문인 경우 checked) 넣기-->
+                            <input type="checkbox" name="question[]" id="question1" value="{{questionList.question}}" checked>
+                            <label for="question1">{{questionList.question}}
+                                {% if questionList.department == 0 %}
+                                <small> - 기본 질문</small>
+                                {% elif questionList.department == 1 %}
+                                <small> - 컴퓨터 학과 질문</small>
+                                {% elif questionList.department == 2 %}
+                                <small> - 경영학과 질문</small>
+                                {% elif questionList.department == 3 %}
+                                <small> - 국어국문학과 질문</small>
+                                {% elif questionList.department == 4 %}
+                                <small> - 생명공학과 질문</small></label>
                             {% endif %}
                         </div>
                     </li>
