@@ -16,27 +16,6 @@ import pyaudio
 import wave
 from moviepy.editor import *
 
-def readNumber(num):
-    units = [''] + list('십백천')
-    nums = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구']
-    result = []
-    i = 0
-    n = int(num)
-    while n > 0:
-        n, r = divmod(n, 10)
-        if r > 0:
-            result.append(nums[r-1] + units[i])
-        i += 1
-    return ''.join(result[::-1])
-
-def isEng(value):
-    count = 0
-    for c in value:
-        if ord('a') <= ord(c.lower()) <= ord('z'):
-            count += 1
-    if len(value) == count:
-        return True
-
 def intro(request):
     return render(request, 'index.html')
 
