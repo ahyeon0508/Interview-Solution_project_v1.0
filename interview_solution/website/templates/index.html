@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -8,62 +9,47 @@
     <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <!-- Css -->
-    <link rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../../static/css/intro.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/intro.css' %}" type="text/css">
 </head>
 
 <body>
-    <!-- 상단 바 및 내용 시작 -->
-    <section class="categories">
-        <div class="container-fluid set-bg" data-setbg="../../static/img/새내기로.jpg">
-            <header class="headerintro">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-2">
-                            <div class="header__logo">
-                                <a href="{% url 'website:intro' %}"><img src="../../static/img/logo.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- 상단바 끝 -->
+    <!-- 내용 시작 -->
+    <div class="container-fluid set-bg" data-setbg="{% static 'img/introbackground.svg' %}">
 
-           <!-- 내용 시작 -->
-            <div class="row">
-                <div class="col-lg-9 col-md-12 col-sm-12 p-0">
-                    <div class="categories__item categories__large__item">
-                        <div class="categories__text">
-                            <h1>새내기路(로)</h1>
-                            <p id="introduce">언제 어디서나 스스로 면접을 대비할 수 있는 모의 면접 서비스.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-6 col-sm-6 p-0">
-                            <!-- herf에 학생홈페이지 url 넣기 -->
-                            <a class="categories__item set-bg" data-setbg="../../static/img/분홍.png" href="{% url 'website:studentHome' %}">
-                                <div class="categories__text">
-                                    <h4>학생</h4>
-                                    <p>질문을 골라 모의 면접을 진행하고, 결과 리포트를 확인할 수 있는 학생 홈페이지로 이동.</p>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-12 col-md-6 col-sm-6 p-0">
-                            <!-- herf에 교사홈페이지 url 넣기 -->
-                            <a class="categories__item set-bg" data-setbg="../../static/img/파랑.png" href="{% url 'website:teacherHome' %}">
-                                <div class="categories__text">
-                                    <h4>교사</h4>
-                                    <p>지정한 학생들을 관리하고, 리포트를 공유하고 질문을 보낼 수 있는 교사 홈페이지로 이동.</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+        <!-- 상단로고 -->
+        <div class="row">
+            <a id="intrologo" href="{% url 'website:intro' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
+        </div>
+        <!-- 상단로고 끝 -->
+
+        <!-- 내용 시작 -->
+        <div class="row justify-content-around">
+            <div class="col-lg-5 p-0">
+                <div id="intro">
+                    <h1 id="introh1">새내기路(로)</h1>
+                    <p id="introp">언제 어디서나 스스로 면접을 대비할 수 있는 모의 면접 서비스.</p>
                 </div>
             </div>
+            <div class="col-lg-3 p-0">
+                <a id="studentbutton" class="categories__item set-bg" data-setbg="{% static 'img/introstubutton.svg' %}" href="{% url 'website:studentHome' %}">
+                    <div class="categories__text">
+                        <h4>학생</h4>
+                        <p>질문을 골라 모의 면접을 진행하고, 결과 리포트를 확인할 수 있는 학생 홈페이지로 이동.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 p-0">
+                <a id="teacherbutton" class="categories__item set-bg" data-setbg="{% static 'img/introteabutton.svg' %}" href="{% url 'website:teacherHome' %}">
+                    <div class="categories__text">
+                        <h4>교사</h4>
+                        <p>지정한 학생들을 관리하고, 리포트를 공유하고 질문을 보낼 수 있는 교사 홈페이지로 이동.</p>
+                    </div>
+                </a>
+            </div>
         </div>
-    </section>
+
+    </div>
 
     <!-- 내용 끝 -->
 
@@ -80,7 +66,7 @@
             <div class="row property__gallery">
                 <div class="col-lg-6 col-md-6 col-sm-6 mix women">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../../static/img/연회색.png">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/연회색.png' %}">
                         </div>
                         <div class="product__item__text">
                             <h5><a href="#">스스로 모의 면접</a></h5>
@@ -90,7 +76,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 mix women">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../../static/img/연회색.png">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/연회색.png' %}">
                         </div>
                         <div class="product__item__text">
                             <h5><a href="#">다양한 질문 제공</a></h5>
@@ -100,7 +86,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 mix women">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../../static/img/연회색.png">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/연회색.png' %}">
                         </div>
                         <div class="product__item__text">
                             <h5><a href="#">면접 분석 리포트</a></h5>
@@ -110,7 +96,7 @@
                 </div>
                 <div class="col-lg-6 col-md-4 col-sm-6 mix women">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="../../static/img/연회색.png">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/연회색.png' %}">
                         </div>
                         <div class="product__item__text">
                             <h5><a href="#">선생님과 공유</a></h5>
@@ -123,8 +109,8 @@
     </section>
     <!-- 기능 소개 끝 -->
 
-   <!-- 질문리스트 시작 -->
-    <section class="banner set-bg" data-setbg="../../static/img/연회색.png">
+    <!-- 질문리스트 시작 -->
+    <section class="banner set-bg" data-setbg="{% static 'img/연회색.png' %}">
         <section class="shop-cart spad">
             <div class="container">
                 <div class="row">
@@ -186,17 +172,6 @@
     <!-- 풋터 시작 -->
     <footer class="footer">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-7">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="./index.html"><img src="../../static/img/logo.png" alt=""></a>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            cilisis.</p>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="footer__copyright__text">

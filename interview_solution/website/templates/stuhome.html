@@ -4,31 +4,21 @@
 
     <!-- 내용 시작 -->
     <section class="categories">
-        <div class="container-fluid set-bg"  data-setbg="../../static/img/새내기로.jpg">
-            <header class="headerintro">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-2">
+        <div class="container-fluid set-bg"  data-setbg="{% static 'img/introbackground.svg' %}">
 
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- Header Section End -->
-
-            <div class="row">
+            <div id="stuwrapper" class="row">
                 <div class="col-lg-6 p-0">
                     <div class="categories__item categories__large__item">
                         <div class="categories__text">
                             <h1>새내기路(로)</h1>
-                            <a href="{% url 'website:interviewSetting' %}">면접 시작</a>
+                            <a href="{% url 'website:interviewSetting' %}" class="btn btn-outline-primary"><Strong> 면접 시작 </Strong></a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                            <a class="categories__item set-bg" data-setbg="../../static/img/분홍.png" href="{% url 'website:myVideo' %}">
+                            <a class="categories__item set-bg" data-setbg="{% static 'img/분홍.png' %}" href="{% url 'website:myVideo' %}">
                                 <div class="categories__text">
                                     <h4>내 영상</h4>
                                     <p>모의 면접 영상들을 질문별/제목별/날짜별로 관리하는 기능</p>
@@ -36,7 +26,7 @@
                             </a>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                            <a class="categories__item set-bg" data-setbg="../../static/img/연파랑.png" href="#">
+                            <a class="categories__item set-bg" data-setbg="{% static 'img/연파랑.png' %}" href="#">
                                 <div class="categories__text">
                                     <h4>내 질문</h4>
                                     <p>별표 질문과 사용자 작성 질문, 교사에게 공유 받은 질문 및 AI 생성질문을 확인하는 기능</p>
@@ -44,7 +34,7 @@
                             </a>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 p-0">
-                            <a class="categories__item set-bg" data-setbg="../../static/img/연분홍.png" href="#">
+                            <a class="categories__item set-bg" data-setbg="{% static 'img/연분홍.png' %}" href="#">
                                 <div class="categories__text">
                                     <h4>질문 리스트</h4>
                                     <p>40여개의 공통질문과 학과별 질문을 제공하는 기능</p>

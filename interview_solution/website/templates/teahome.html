@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- 내용 시작 -->
-<div class="container-fluid set-bg" data-setbg="../../static/img/새내기로.jpg">
+<div class="container-fluid set-bg" data-setbg="{% static 'img/introbackground.svg' %}">
     <div class="row">
         <div class="col-lg-6 p-0">
             <div class="categories__item categories__large__item">
@@ -14,7 +14,6 @@
         </div>
     </div>
 </div>
-<!-- Header Section End -->
 <!-- 내용 끝 -->
 <section class="product spad">
     <div class="container">
@@ -37,7 +36,7 @@
                         <div class="row">
                             <div class="col-sm-6 col-md-4">
                                 <!--학생 이미지-->
-                                <img src="../../static/img/3.jpg" alt="" class="img-rounded img-responsive" />
+                                <img src="% static 'img/연회색.png' %}" alt="" class="img-rounded img-responsive" />
                             </div>
                             <div class="col-sm-6 col-md-8">
                                 <!--리포트 제목-->
