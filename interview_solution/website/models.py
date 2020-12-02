@@ -109,9 +109,9 @@ class Report(models.Model):  # 수정필요
         verbose_name='pk'
     )
     title = models.CharField(max_length=100, default='제목', verbose_name='제목')
-    question1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트1')
-    question2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트2')
-    question3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='스크립트3')
+    question1 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='질문1')
+    question2 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='질문2')
+    question3 = models.CharField(max_length=50000, blank=True, null=True, verbose_name='질문3')
     video1 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상1')
     video2 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상2')
     video3 = models.FileField(blank=True, null=True, upload_to="videos",verbose_name='영상3')

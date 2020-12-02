@@ -1,4 +1,6 @@
+{% extends 'stu_template.html' %}
 {% load static %}
+{% block content %}
 <link href="{% static 'css/myVideo.css' %}" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
@@ -29,7 +31,7 @@
     <div class="form">
         <div class="info">
             <div class="content">
-                {% for i in report %}
+                {% for i in video %}
                 <!-- href 뒤에 내 면접 리포트 페이지로 이동할 수 있는 링크 넣기 -->
                 <p><a href="{% url 'website:myVideoDetail' reportID=i.id %}">{{ i.title }} / 생성일자 : {{i.pub_date}}</a></p>
                 <label class="switch">
@@ -41,3 +43,4 @@
         </div>
     </div>
 </div>
+{% endblock %}

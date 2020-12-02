@@ -12,17 +12,19 @@ h1{
 .wait-page{
     border: solid 1px gray;
     text-align: center;
-    margin: auto;
+    margin: 30px 60px -50px 60px;
     padding: 30px 80px 20px 80px;
 }
 
 #notice{
-    font-size: 10px;
+    font-size: 18px;
     margin-bottom: 50px;
     font-family: 'Nanum Gothic', sans-serif;
 }
 
 #Q1, #Q2, #Q3{
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 16px;
     border: solid 1px gray;
     border-radius: 25px;
     text-align: center;
@@ -31,10 +33,12 @@ h1{
 }
 
 .question{
+    font-family: 'Nanum Gothic', sans-serif;
     margin-bottom: 50px;
 }
 
 #check{
+    font-family: 'Nanum Gothic', sans-serif;
     text-align: right;
     margin : -20px -50px 30px 0px;
 }
@@ -99,4 +103,12 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
-  
+
+a{
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+}

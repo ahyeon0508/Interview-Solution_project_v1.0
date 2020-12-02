@@ -33,15 +33,17 @@ h1{
     text-align: center;
 }
 
-#script{
+#script1, #script2, #script3{
+    font-family: 'Nanum Gothic', sans-serif;
     border: 1px solid gray;
     text-align: center;
     padding: 30px 15px 30px 15px;
-    margin: 15px 20px 0 20px;
+    margin: 15px 20px 25px 20px;
     float: center;
 }
 
 .talk_speed{
+    font-family: 'Nanum Gothic', sans-serif;
     border: 1px solid gray;
     text-align: center;
     padding: 30px 15px 30px 15px;
@@ -54,9 +56,13 @@ h1{
 }
 
 .comment{
+    font-family: 'Nanum Gothic', sans-serif;
     margin: 30px 0 30px 0;
 }
 
 .question{
+    font-family: 'Nanum Gothic', sans-serif;
     margin-bottom: 20px;
+    font-size: 20px;
+    font-family: 'Nanum Gothic', sans-serif;
 }

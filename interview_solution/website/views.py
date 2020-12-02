@@ -593,7 +593,7 @@ def waitVideo3(request, reportID):
 def myVideo(request):
     try:
         report = Report.objects.filter(student=request.session.get('user'))
-        return render(request, 'myVideo.html', {'report' : report})
+        return render(request, 'myVideo.html', {'video' : report})
     except:
         return redirect(reverse('website:studentHome'))
 

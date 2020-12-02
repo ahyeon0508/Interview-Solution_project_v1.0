@@ -103,12 +103,13 @@ select{
 .form #userID{
     font-family: 'Nanum Gothic', sans-serif;
     display:inline-block;
-    width: 70%; 
+    width: 77%; 
+    float: left;
 }
 
 .form #userIDChk{
     font-family: 'Nanum Gothic', sans-serif;
     display:inline-block;
+    font-size: 12px;
     width: 20%; 
->>>>>>> cb5195591566723db54cfc312433fc8d04b1d30e
 }

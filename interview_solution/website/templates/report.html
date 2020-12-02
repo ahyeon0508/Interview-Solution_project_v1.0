@@ -1,4 +1,6 @@
+{% extends 'stu_template.html' %}
 {% load static %}
+{% block content %}
 <link href="{% static 'css/report.css' %}" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
@@ -14,7 +16,7 @@
         <div class="content">
             <p class="question">Q. {{report.question1}}</p>
             <!-- src=""에 비디오 주소 넣기 -->
-            <video id="videoElement" controls width='70%'>
+            <video id="videoElement1" controls width='70%'>
                 {% if report.video1 %}
                 <source src="{{ report.video1.url }}" type="video/mp4" />
                 현재 브라우저는 비디오를 지원하지 않습니다.
@@ -22,7 +24,7 @@
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script1">답변내용 <br><br> {{report.script1}}</p>
+                <p id="script1"><답변내용> <br><br> {{report.script1}}</p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
@@ -58,12 +60,15 @@
         <div class="content">
             <p class="question">Q. {{report.question2}}</p>
             <!-- src=""에 비디오 주소 넣기 -->
-            <video src="{{ report.video2.url }}" controls width='70%'>
+            <video id="videoElement2" controls width='70%'>
+                {% if report.video2 %}
+                <source src="{{ report.video2.url }}" type="video/mp4" />
                 현재 브라우저는 비디오를 지원하지 않습니다.
+                {% endif %}
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script2">답변내용 <br><br> {{report.script2}}</p>
+                <p id="script2"><답변내용> <br><br> {{report.script2}}</p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
@@ -100,16 +105,19 @@
         <div class="content">
             <p class="question">Q. {{report.question3}}</p>
             <!-- src=""에 비디오 주소 넣기 -->
-            <video src="{{ report.video3.url }}" controls width='70%'>
+            <video id="videoElement3" controls width='70%'>
+                {% if report.video3 %}
+                <source src="{{ report.video3.url }}" type="video/mp4" />
                 현재 브라우저는 비디오를 지원하지 않습니다.
+                {% endif %}
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script">답변내용 <br><br> {{report.script3}}</p>
+                <p id="script3"><답변내용> <br><br> {{report.script3}}</p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
-                <p id="speed">* 분당 말하기 속도가 계산되어 제공됩니다. <br>
+                <p id="speed3">* 분당 말하기 속도가 계산되어 제공됩니다. <br>
                     270 ~ 330자를 말하면 적당한 속도입니다 *</p>
                 <p>현재 분당 말하기 속도 : {{report.speed3}}</p>
                 <p>{{report.sCorrect3}}</p>
@@ -136,3 +144,4 @@
     </div>
     <script type="text/javascript" src="{% static 'js/report.js' %}"></script>
 </div>
+{% endblock %}
