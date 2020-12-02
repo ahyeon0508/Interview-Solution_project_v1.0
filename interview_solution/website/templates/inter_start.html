@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>면접 설정</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/inter_setting.css' %}" type="text/css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card text-center">
+            <div class="card-header">
+                <h5>1. Question</h5>
+            </div>
+            <div class="card-body">
+
+                <div class="card">
+                    <div class="card-header">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <a class="navbar-brand" href="#">면접 질문 설정</a>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item active">
+                                        <!--클릭시 본인에게 할당된 모든 질문 띄워지도록-->
+                                        <a class="nav-link" href="{% url 'website:myQuestion' %}">내 질문</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            모든 질문
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <!--클릭시 기본 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
+                                            <a class="dropdown-item" href="{% url 'website:myQuestion_contain' %}">기본 질문</a>
+                                            <!--클릭시 컴퓨터 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
+                                            <a class="dropdown-item" href="{% url 'website:myQuestion_write' %}">컴퓨터</a>
+                                            <!--클릭시 국문 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
+                                            <a class="dropdown-item" href="{% url 'website:myQuestion_get' %}">국문</a>
+                                            <!--클릭시 경영 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
+                                            <a class="dropdown-item" href="{% url 'website:myQuestion_write' %}">경영</a>
+                                            <!--클릭시 생명공학 질문 모두 띄워지도록(내 질문은 제외하는게 나을 듯!)-->
+                                            <a class="dropdown-item" href="{% url 'website:myQuestion_get' %}">생명공학</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+
+                            <!--for문으로 질문 단위 li태그 반복-->
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <!--1. checked 초기 상태 : 내 질문인 경우에는 checked에 on, 아닌 경우 off -->
+                                    <!--2. checked 나중 상태 : 질문을 선택한 경우 checked에 on, 아닌 경우 off (아마 자동일 듯) -->
+                                    <input type="checkbox" class="form-check-input" checked="" id="" name="" value="">
+                                    <label class="form-check-label" for="">
+                                        <!--"자신의 장점과 ~" 이 부분에 질문 내용 띄우도록 / small 태그 안 "담은 질문" 부분은 6개의 종류로(내질문,기본,컴퓨터,국문,경영,생명공학) 띄우도록 -->
+                                        자신의 장점과 단점은 무엇이라고 생각하나요? <small> - 내 질문 </small>
+                                    </label>
+
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+
+                <!--버튼을 누르면 check된 질문이 다음 면접화면에 사용 됨-->
+                <!--혹시 프론트에서 JQuery로 하는 부분이라면 말해주세용 : 아마 value와 id, name 사용하는 듯-->
+                <!--예제 = https://csslab.tistory.com/116-->
+                <a href="" type="submit" class="btn btn-outline-primary"><Strong> 다음 > </Strong></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
