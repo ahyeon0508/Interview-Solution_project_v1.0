@@ -59,17 +59,16 @@
                             <!--for문으로 질문 단위 li태그 반복-->
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div class="form-check">
-                                    <!--1. checked 초기 상태 : 내 질문인 경우에는 checked에 on, 아닌 경우 off -->
-                                    <!--2. checked 나중 상태 : 질문을 선택한 경우 checked에 on, 아닌 경우 off (아마 자동일 듯) -->
-                                    <input type="checkbox" class="form-check-input" checked="" id="" name="" value="">
-                                    <label class="form-check-label" for="">
+                                    <!--내 질문인 경우, 지금 'checked'부분 앞뒤에 조건(if 내 질문인 경우 checked) 넣기-->
+                                    <!--A라고 되어있는 id와 for 부분에 각 질문의 고유id ex) p.id 같은걸로 넣기!-->
+                                    <input type="checkbox" name="interview[]" id="A" value="{{questionList.question}}" checked>
+                                    <label class="form-check-label" for="A">
                                         <!--"자신의 장점과 ~" 이 부분에 질문 내용 띄우도록 / small 태그 안 "담은 질문" 부분은 6개의 종류로(내질문,기본,컴퓨터,국문,경영,생명공학) 띄우도록 -->
                                         자신의 장점과 단점은 무엇이라고 생각하나요? <small> - 내 질문 </small>
                                     </label>
 
                                 </div>
                             </li>
-
 
                         </ul>
                     </div>
