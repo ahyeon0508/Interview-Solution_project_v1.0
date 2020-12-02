@@ -14,17 +14,20 @@ def intro(request):
     return render(request, 'index.html')
 
 def studentHome(request):
-    if request.session['user']:
+    try:
         user = get_object_or_404(User, userID=request.session['user'])
+        print(user)
         return render(request, 'stuhome.html', {'user': user})
-    return render(request, 'stuhome.html')
+    except:
+        return render(request, 'stuhome.html')
 
 def teacherHome(request):
-    if request.session['user']:
+    try:
         teacher = get_object_or_404(Teacher, userID=request.session['user'])
         report = Report.objects.filter(teacher=teacher, share=True)
-        return render(request, 'teahome.html', {'report':report, 'user':teacher})
-    return render(request, 'teahome.html')
+        return render(request, 'teahome.html', {'report':report, 'teacher':teacher})
+    except:
+        return render(request, 'teahome.html')
 
 @csrf_exempt
 def studentSignup(request):
