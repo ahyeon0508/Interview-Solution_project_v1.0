@@ -12,8 +12,8 @@ h1{
 .wait-page{
     border: solid 1px gray;
     text-align: center;
-    margin: 30px 100px -50px 100px;
-    padding: 30px 80px 20px 80px;
+    margin: 90px 180px 20px 180px;
+    padding: 30px 80px 80px 80px;
 }
 
 #notice{
@@ -29,7 +29,7 @@ h1{
     border-radius: 25px;
     text-align: center;
     float: center;
-    padding: 30px 0px 30px 0px;
+    padding: 30px 0 30px 0;
 }
 
 .question{
@@ -111,4 +111,38 @@ a{
 
 a:hover{
     text-decoration: none;
+}
+
+#button{
+    text-align: center;
+}
+
+.move{
+    display: inline-block;
+    margin: 0 20px -100px 0;
+}
+
+#home{
+    margin: 12px;
+    font-family: 'Nanum Gothic', sans-serif;
+    outline: 0;
+    background: #e6e9ee;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 15px;
+    border-radius: 15px;
+}
+
+#myVideo{
+    font-family: 'Nanum Gothic', sans-serif;
+    outline: 0;
+    background: #cbd6e5;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 15px;
+    border-radius: 15px;
 }

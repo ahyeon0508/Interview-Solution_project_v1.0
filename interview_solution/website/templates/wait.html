@@ -40,6 +40,14 @@
             <p id="Q2"><a href="{% url 'website:waitVideo2' reportID=report.id %}">Q2. {{ report.question2 }}</a></p>
             <p id="Q3"><a href="{% url 'website:waitVideo3' reportID=report.id %}">Q3. {{ report.question3 }}</a></p>
         </div>
+        <div id="button">
+            <div class="move">
+                <input type="button" id="home" onClick="location.href='{% url 'website:studentHome' %}'" value="홈으로">
+            </div>
+            <div class="move">
+                <input type="button" id="myVideo" onClick="location.href='{% url 'website:myVideo' %}'" value="내영상으로">
+            </div>
+        </div>
     </div>
 </body>
 {% endblock %}
