@@ -22,7 +22,6 @@ def intro(request):
 def studentHome(request):
     try:
         user = get_object_or_404(User, userID=request.session['user'])
-        print(user)
         return render(request, 'stuhome.html', {'user': user})
     except:
         return render(request, 'stuhome.html', {'user':None})
