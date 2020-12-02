@@ -88,7 +88,7 @@ class Question(models.Model):
     department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문
 
     def __str__(self):
-        return self.id
+        return self.question
 
 
 class StudentQuestion(models.Model):
@@ -102,6 +102,9 @@ class StudentQuestion(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     part =  models.IntegerField(null=True, blank=True, verbose_name='종류')
     teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.question.question
 
 class Report(models.Model):  # 수정필요
     id = models.AutoField(

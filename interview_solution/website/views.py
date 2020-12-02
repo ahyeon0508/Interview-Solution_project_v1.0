@@ -166,7 +166,6 @@ def resultPW(request, student, userID):
     if request.method == "POST":
         password = request.POST.get('password', '')
         passwordChk = request.POST.get('passwordChk', '')
-
         try:
             if password == passwordChk:
                 if student == 0:
@@ -190,20 +189,28 @@ def questionList(request):
         if request.method == "POST":
             if 'question_search' in request.POST:
                 question_search = request.POST.get('question_search','')
-                myQuestion = StudentQuestion.objects.filter(student=request.session.get('user'),question=question)
+                myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'),question__question__contains=question_search)
                 question = Question.objects.filter(question__contains=question_search)
-                question = question.difference(myQuestion)
+                if myQuestion.exists():
+                    for i in myQuestion:
+                        question = question.exclude(id=i.question.id)
                 if myQuestion.exists() is False and question.exists() is False:
                     return render(request, 'questionList.html', {'error':'해당 질문이 존재하지 않습니다.'})
+
                 return render(request, 'questionList.html', {'question':question, 'myQuestion':myQuestion})
+
             question = Question.objects.all()
-            myQuestion = StudentQuestion.objects.filter(student=request.session.get('user'))
-            question = question.difference(myQuestion)
+            myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
+            if myQuestion.exists():
+                for i in myQuestion:
+                    question = question.exclude(id=i.question.id)
             return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
         else:
             question = Question.objects.all()
-            myQuestion = StudentQuestion.objects.filter(student=request.session.get('user'))
-            question = question.difference(myQuestion)
+            myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
+            if myQuestion.exists():
+                for i in myQuestion:
+                    question = question.exclude(id=i.question.id)
             return render(request, 'questionList.html', {'question': question, 'myQuestion':myQuestion})
     else:
         if request.method=="POST":
@@ -212,7 +219,7 @@ def questionList(request):
                 question_search = request.POST.get('question_search','')
                 question = Question.objects.filter(question__contains=question_search)
                 if question.exists() is False:
-                    return render(request, 'questionList.html', {'error':'해당 질문이 존재하지 않습니다.'})                    
+                    return render(request, 'questionList.html', {'error':'해당 질문이 존재하지 않습니다.'})                   
                 return render(request, 'questionList.html', {'question':question})
         question = Question.objects.exclude(department=-1)
         return render(request, 'questionList.html', {'question':question})
@@ -237,11 +244,15 @@ def questionListPart(request, q_department):
         if q_department == 1111:
             question = Question.objects.exclude(department=-1).exclude(department=0)
             myQuestion = StudentQuestion.objects.filter(part=0)
-            question = question.difference(myQuestion)
+            if myQuestion.exists():
+                for i in myQuestion:
+                    question = question.exclude(id=i.question.id)
             return render(request, 'questionList.html', {'question': question, 'myQuestion':myQuestion})
-        question = Question.objects.filter(department=q_department)
-        myQuestion = StudentQuestion.objects.filter(part=0)
-        question = question.difference(myQuestion)
+        question= Question.objects.filter(department=q_department)
+        myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user')).filter(question__department=q_department)
+        if myQuestion.exists():
+            for i in myQuestion:
+                question = question.exclude(id=i.question.id)
         return render(request, 'questionList.html', {'question': question, 'myQuestion':myQuestion})
     else:
         if q_department == 1111:
