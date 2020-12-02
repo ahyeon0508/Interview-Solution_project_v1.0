@@ -65,9 +65,6 @@
                                     <!--A라고 되어있는 id와 for 부분에 각 질문의 고유id ex) p.id 같은걸로 넣기!-->
                                     <input type="checkbox" name="interview[]" id="star_{{questionList.id}}" value="{{questionList.question}}" onclick="interstar({{questionList.id}})" checked>
                                     <label class="form-check-label" for="star_{{questionList.id}}">
-                                        <!--"자신의 장점과 ~" 이 부분에 질문 내용 띄우도록 / small 태그 안 "담은 질문" 부분은 6개의 종류로(내질문,기본,컴퓨터,국문,경영,생명공학) 띄우도록 -->
-                                        <!--자신의 장점과 단점은 무엇이라고 생각하나요? <small> - 내 질문 </small> -->
-                                    </label>
                                     {{questionList.question}}
                                     {% if questionList.part == 1 %}
                                     <small> - 작성한 질문</small>
