@@ -810,3 +810,15 @@ def deletemyQuestion(request,questionID):
     question = get_object_or_404(StudentQuestion,pk=questionID)
     question.delete()
     return redirect(reverse('website:myQuestion'))
+
+def inter_start(request):
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
+    return render(request, 'inter_start.html', {'myQuestion': myQuestion})
+
+def inter_startPart(request,department):
+    question= Question.objects.filter(department=department)
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user')).filter(question__department=department)
+    if myQuestion.exists():
+        for i in myQuestion:
+            question = question.exclude(id=i.question.id)
+    return render(request, 'inter_start.html', {'question': question})
