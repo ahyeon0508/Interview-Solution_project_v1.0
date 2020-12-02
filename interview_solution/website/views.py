@@ -227,17 +227,28 @@ def questionList(request):
 @csrf_exempt
 def questionStar(request,questionID):
     # Push the star button
-    if request.session.get('user'):
-        myQuestion = StudentQuestion.objects.filter(student=request.session.get('user'), id=questionID)
-        myQuestion.delete()
-    return redirect(reverse('website:questionList'))
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'), id=questionID)
+    myQuestion.delete()
+    question = Question.objects.all()
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
+    if myQuestion.exists():
+        for i in myQuestion:
+            question = question.exclude(id=i.question.id)
+    return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
+
 
 @csrf_exempt
-def questionNonestar(request,questionID):
+def questionNonStar(request,questionID):
     # Push the star button
-    question = Question.objects.filter(id=questionID)
-    myQuestion = StudentQuestion.objects.create(student=request.session.get('user'), teacher=request.session.get('user').teacher,part=0,question=question.question)
-    return redirect(reverse('website:questionList'))
+    question = Question.objects.get(id=questionID)
+    user = User.objects.get(userID=request.session.get('user'))
+    myQuestion = StudentQuestion.objects.create(student=user,part=0,question=question)
+    question = Question.objects.all()
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
+    if myQuestion.exists():
+        for i in myQuestion:
+            question = question.exclude(id=i.question.id)
+    return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
 
 def questionListPart(request, q_department):
     if request.session.get('user'):
