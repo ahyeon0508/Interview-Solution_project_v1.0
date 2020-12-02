@@ -37,10 +37,10 @@
             </ul>
             <ul class="navbar-nav ml-auto" style="margin-right: 35px;">
                 <li class="nav-item">
-                    {% if user %}
+                    {% if request.session.user %}
                     <li class="nav-item dropdown" >
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ user.userID }}</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ request.session.user }}</span>
                             {% if user.image %}
                             <img class="img-profile rounded-circle" src="{{ user.image.url }}">
                             {% else %}
