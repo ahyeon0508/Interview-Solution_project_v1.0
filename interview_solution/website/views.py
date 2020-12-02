@@ -166,7 +166,6 @@ def resultPW(request, student, userID):
     if request.method == "POST":
         password = request.POST.get('password', '')
         passwordChk = request.POST.get('passwordChk', '')
-
         try:
             if password == passwordChk:
                 if student == 0:
@@ -185,24 +184,82 @@ def resultPW(request, student, userID):
 
 @csrf_exempt
 def questionList(request):
-    if request.user:
+    if request.session.get('user'):
+        # Search
         if request.method == "POST":
-            question = request.POST.get('id', '')
-            myQuestion = Question.objects.get(id=question)
-            try :
-                myQ = StudentQuestion.objects.get(student=request.session.get('user'), question=myQuestion)
-                if myQ:
-                    myQ.delete()
-            except:
-                StudentQuestion.objects.create(question=myQuestion, student=request.session.get('user'), teacher=request.user.teacher,part=0)
+            if 'question_search' in request.POST:
+                question_search = request.POST.get('question_search','')
+                myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'),question__question__contains=question_search)
+                question = Question.objects.filter(question__contains=question_search)
+                if myQuestion.exists():
+                    for i in myQuestion:
+                        question = question.exclude(id=i.question.id)
+                if myQuestion.exists() is False and question.exists() is False:
+                    return render(request, 'questionList.html', {'error':'해당 질문이 존재하지 않습니다.'})
+
+                return render(request, 'questionList.html', {'question':question, 'myQuestion':myQuestion})
+
+            question = Question.objects.all()
+            myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
+            if myQuestion.exists():
+                for i in myQuestion:
+                    question = question.exclude(id=i.question.id)
             return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
         else:
             question = Question.objects.all()
-            myQuestion = StudentQuestion.objects.filter(student=request.session.get('user'))
+            myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
+            if myQuestion.exists():
+                for i in myQuestion:
+                    question = question.exclude(id=i.question.id)
             return render(request, 'questionList.html', {'question': question, 'myQuestion':myQuestion})
     else:
+        if request.method=="POST":
+            # Search
+            if 'question_search' in request.POST:
+                question_search = request.POST.get('question_search','')
+                question = Question.objects.filter(question__contains=question_search)
+                if question.exists() is False:
+                    return render(request, 'questionList.html', {'error':'해당 질문이 존재하지 않습니다.'})                   
+                return render(request, 'questionList.html', {'question':question})
         question = Question.objects.exclude(department=-1)
         return render(request, 'questionList.html', {'question':question})
+
+@csrf_exempt
+def questionStar(request,questionID):
+    # Push the star button
+    if request.session.get('user'):
+        myQuestion = StudentQuestion.objects.filter(student=request.session.get('user'), id=questionID)
+        myQuestion.delete()
+    return redirect(reverse('website:questionList'))
+
+@csrf_exempt
+def questionNonestar(request,questionID):
+    # Push the star button
+    question = Question.objects.filter(id=questionID)
+    myQuestion = StudentQuestion.objects.create(student=request.session.get('user'), teacher=request.session.get('user').teacher,part=0,question=question.question)
+    return redirect(reverse('website:questionList'))
+
+def questionListPart(request, q_department):
+    if request.session.get('user'):
+        if q_department == 1111:
+            question = Question.objects.exclude(department=-1).exclude(department=0)
+            myQuestion = StudentQuestion.objects.filter(part=0)
+            if myQuestion.exists():
+                for i in myQuestion:
+                    question = question.exclude(id=i.question.id)
+            return render(request, 'questionList.html', {'question': question, 'myQuestion':myQuestion})
+        question= Question.objects.filter(department=q_department)
+        myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user')).filter(question__department=q_department)
+        if myQuestion.exists():
+            for i in myQuestion:
+                question = question.exclude(id=i.question.id)
+        return render(request, 'questionList.html', {'question': question, 'myQuestion':myQuestion})
+    else:
+        if q_department == 1111:
+            question = Question.objects.exclude(department=-1).exclude(department=0)
+            return render(request, 'questionList.html', {'question': question})
+        question = Question.objects.filter(department=q_department)
+        return render(request, 'questionList.html', {'question': question})
 
 # myQuestion - 모든 질문, 질문 검색
 @csrf_exempt
