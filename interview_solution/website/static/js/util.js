@@ -17,6 +17,29 @@ function removeChar(event) {
         event.target.value = event.target.value.replace(/[^0-9]/g, "");
 }
 
+function fn_pw_lenCheck() {
+    var pw = document.getElementById("password").value; //비밀번호
+
+    if(pw.length < 8 || pw.length > 20) {
+        alert("비밀번호를 다시 입력하여 주시기 바랍니다.");
+        return false;
+    }
+
+    return true;
+}
+
+function fn_pw_check() {
+    var pw = document.getElementById("password").value; //비밀번호
+    var pw2 = document.getElementById("passwordChk").value; // 확인 비밀번호
+
+    if(pw != pw2) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return false;
+    }
+
+    return true;
+}
+
 function cancleForm(){
     if(confirm("이 페이지를 벗어나면 마지막 저장 후 수정된 내용은 저장되지 않습니다.")){
         // 메인 홈페이지 주소 입력하기

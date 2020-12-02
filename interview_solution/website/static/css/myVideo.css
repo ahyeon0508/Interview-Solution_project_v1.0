@@ -10,7 +10,7 @@ h1{
 
 .content{
     display: table;
-    margin: 0 auto;
+    margin: 30px auto 30px auto;
 }
 
 .content > p{
@@ -19,11 +19,10 @@ h1{
     border: 1px solid;
     border-radius: 25px;
     border-color: #C0C0C0;
-    padding: 30px 130px 30px 30px;
+    padding: 30px 400px 30px 30px;
     margin: 0 -40px 0 0px;
     font-size: 20px;
     float: left;
-
 }
 
 .switch {
@@ -39,7 +38,55 @@ h1{
   
 /* Hide default HTML checkbox */
 .switch input {display:none;}
+
+/* The sliderF */
+.sliderF {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
   
+.sliderF:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+input:checked + .sliderF {
+    background-color: #9CC1D9;
+}
+  
+input:focus + .sliderF {
+    box-shadow: 0 0 1px #9CC1D9;
+}
+  
+input:checked + .sliderF:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+  
+/* Rounded sliders */
+.sliderF.round {
+    border-radius: 34px;
+}
+  
+.sliderF.round:before {
+    border-radius: 50%;
+}
+
 /* The slider */
 .slider {
     position: absolute;
@@ -48,7 +95,7 @@ h1{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: #9CC1D9;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -61,22 +108,23 @@ h1{
     left: 4px;
     bottom: 4px;
     background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-  
-input:checked + .slider {
-    background-color: #9CC1D9;
-}
-  
-input:focus + .slider {
-    box-shadow: 0 0 1px #9CC1D9;
-}
-  
-input:checked + .slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+}
+  
+input:checked + .slider {
+    background-color: #ccc;
+}
+  
+input:focus + .slider {
+    box-shadow: 0 0 1px #ccc;
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(-0.7px);
+    -ms-transform: translateX(-0.7px);
+    transform: translateX(-0.7px);
 }
   
 /* Rounded sliders */
@@ -87,4 +135,12 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
-  
+
+a{
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+}

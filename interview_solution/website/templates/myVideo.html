@@ -15,7 +15,7 @@
                     result: reportID
                 },
                 success: function (response) {
-                    alert("담임선생님께 해당 모의 면접이 공유되었습니다.")
+                    alert("해당 모의 면접 공유여부 설정이 완료됐습니다.")
                     return;
                 },
                 error: function () {
@@ -30,16 +30,24 @@
     <h1>내 영상</h1>
     <div class="form">
         <div class="info">
+            {% for i in video %}
             <div class="content">
-                {% for i in video %}
                 <!-- href 뒤에 내 면접 리포트 페이지로 이동할 수 있는 링크 넣기 -->
-                <p><a href="{% url 'website:myVideoDetail' reportID=i.id %}">{{ i.title }} / 생성일자 : {{i.pub_date}}</a></p>
+                <p><a href="{% url 'website:myVideoDetail' reportID=i.id %}">{{ i.title }} / 생성일자 : {{i.pub_date}}</a>
+                </p>
+                {% if i.share == True %}
                 <label class="switch">
-                    <input type="checkbox" report="{{i.id}}">
+                    <input type="checkbox" id="checkBoxId" report="{{i.id}}">
                     <span class="slider round"></span>
                 </label>
-                {% endfor %}
+                {% else %}
+                <label class="switch">
+                    <input type="checkbox" id="checkBoxId" report="{{i.id}}">
+                    <span class="sliderF round"></span>
+                </label>
+                {% endif %}
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>

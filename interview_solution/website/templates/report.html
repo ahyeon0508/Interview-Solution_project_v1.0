@@ -6,9 +6,8 @@
 
 <div class="report-page">
     <h1>내 면접 리포트</h1>
-    <div class="info">
+    <div id="report_info">
         <p id="title">{{report.title}}</p>
-        <!-- 생성일자 -->
         <p id="date">{{ report.pub_date }}</p>
     </div>
     <!-- 첫 번째 질문 -->
@@ -24,21 +23,22 @@
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script1"><답변내용> <br><br> {{report.script1}}</p>
+                <p id="script1"><답변 내용> <br><br> {{report.script1}}</p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
                 <p id="speed1">* 분당 말하기 속도가 계산되어 제공됩니다. <br>
                     270 ~ 330자를 말하면 적당한 속도입니다 *</p>
                 <p>현재 분당 말하기 속도 : {{report.speed1}}</p>
-                <p>{{report.sCorrect1}}</p>
+                <p class="speed_result">{{report.sCorrect1}}</p>
             </div>
             <div class="info_stt">
                 <p id="info_rep1">{{report.repetition1}}</p>
                 <p id="info_adverb1">{{report.adverb1}}</p>
             </div>
             <!-- 차트 -->
-            <div class="chart" style="display: table; margin: 0 auto;">
+            <div class="chart" style="display: table; margin: 0 auto 10px auto;">
+                <p class="analysis"><답변 내용 분석></p>
                 <div class="repetition" style="float:left; padding-right: 50px; ">
                     <canvas id="repetition1" width="250" height="250" float:left;></canvas>
                 </div>
@@ -68,21 +68,22 @@
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script2"><답변내용> <br><br> {{report.script2}}</p>
+                <p id="script2"><답변 내용> <br><br> {{report.script2}}</p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
                 <p id="speed2">* 분당 말하기 속도가 계산되어 제공됩니다. <br>
                     270 ~ 330자를 말하면 적당한 속도입니다 *</p>
                 <p>현재 분당 말하기 속도 : {{report.speed2}}</p>
-                <p>{{report.sCorrect2}}</p>
+                <p class="speed_result">{{report.sCorrect2}}</p>
             </div>
             <div class="info_stt">
                 <p id="info_rep2">{{report.repetition2}}</p>
                 <p id="info_adverb2">{{report.adverb2}}</p>
             </div>
             <!-- 차트 -->
-            <div class="chart" style="display: table; margin: 0 auto;">
+            <div class="chart" style="display: table; margin: 0 auto 10px auto;">
+                <p class="analysis"><답변 내용 분석></p>
                 <div class="repetition" style="float:left; padding-right: 50px; ">
                     <canvas id="repetition2" width="250" height="250" float:left;></canvas>
                 </div>
@@ -113,21 +114,22 @@
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script3"><답변내용> <br><br> {{report.script3}}</p>
+                <p id="script3"><답변 내용> <br><br> {{report.script3}}</p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
                 <p id="speed3">* 분당 말하기 속도가 계산되어 제공됩니다. <br>
                     270 ~ 330자를 말하면 적당한 속도입니다 *</p>
                 <p>현재 분당 말하기 속도 : {{report.speed3}}</p>
-                <p>{{report.sCorrect3}}</p>
+                <p class="speed_result">{{report.sCorrect3}}</p>
             </div>
             <div class="info_stt">
                 <p id="info_rep3">{{report.repetition3}}</p>
                 <p id="info_adverb3">{{report.adverb3}}</p>
             </div>
             <!-- 차트 -->
-            <div class="chart" style="display: table; margin: 0 auto;">
+            <div class="chart" style="display: table; margin: 0 auto 10px auto;">
+                <p class="analysis"><답변 내용 분석></p>
                 <div class="repetition" style="float:left; padding-right: 50px; ">
                     <canvas id="repetition3" width="250" height="250" float:left;></canvas>
                 </div>
