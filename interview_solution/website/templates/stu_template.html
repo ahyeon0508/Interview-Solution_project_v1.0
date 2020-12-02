@@ -36,30 +36,30 @@
                 <li class="nav-item"><a class="nav-link" href="#">질문 리스트</a></li>
             </ul>
             <ul class="navbar-nav ml-auto" style="margin-right: 35px;">
-                <li class="nav-item">
+                <div class="nav-item">
                     {% if request.session.user %}
-                    <li class="nav-item dropdown" >
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{request.session.user}}</span>
-                            {% if user.image %}
-                            <img class="img-profile rounded-circle" src="{{ user.image.url }}">
-                            {% else %}
-                            <img class="img-profile rounded-circle" width="30" height="30" src="{% static 'img/user.svg' %}">
-                            {% endif %}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="{% url 'website:mypage' %}">Mypage</a>
-                          <a class="dropdown-item" href="{% url 'website:signoff' %}">Logout</a>
-                          <!-- <div class="dropdown-divider"></div> -->
-                        </div>
-                    </li>
-                    {% else %}
-                    <!-- 로그인 페이지로! -->
-                    <a class="nav-link" href="{% url 'website:studentSignin' %}" id="user" role="button">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{request.session.user}}</span>
+                        {% if user.image %}
+                        <img class="img-profile rounded-circle" src="{{ user.image.url }}">
+                        {% else %}
+                        <img class="img-profile rounded-circle" width="30" height="30" src="{% static 'img/user.svg' %}">
+                        {% endif %}
                     </a>
-                    {% endif %}
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'website:mypage' %}">Mypage</a>
+                        <a class="dropdown-item" href="{% url 'website:signoff' %}">Logout</a>
+                        <!-- <div class="dropdown-divider"></div> -->
+                    </div>
                 </li>
+                {% else %}
+                <!-- 로그인 페이지로! -->
+                <a class="nav-link" href="{% url 'website:studentSignin' %}" id="user" role="button">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
+                </a>
+                {% endif %}
+                </div>
             </ul>
         </div>
     </nav>
