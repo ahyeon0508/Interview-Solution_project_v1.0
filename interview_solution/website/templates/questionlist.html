@@ -1,0 +1,127 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/questionlist.css' %}">
+    <script type="text/javascript" src="{% static 'js/util.js' %}"></script>
+    <title>질문 리스트</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="{% url 'website:questionList' %}">질문 리스트</a>
+                    <!--모바일 환경에서 화면비에 따라 토글 띄워지는 부분-->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <!--일단 초기에 기본 질문이 띄워지도록, 클릭하면 기본 질문이 띄워지도록-->
+                                <a class="nav-link" href="{% url 'website:questionDepartment' q_department=0 %}">기본 질문</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="{% url 'website:questionDepartment' q_department=1111 %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    학과 질문
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <!--클릭시 컴퓨터 질문 띄워지도록-->
+                                    <a class="dropdown-item" href="{% url 'website:questionDepartment' q_department=1 %}">컴퓨터</a>
+                                    <!--클릭시 국문 질문 띄워지도록-->
+                                    <a class="dropdown-item" href="{% url 'website:questionDepartment' q_department=3 %}">국문</a>
+                                    <!--클릭시 경영 질문 띄워지도록-->
+                                    <a class="dropdown-item" href="{% url 'website:questionDepartment' q_department=2 %}">경영</a>
+                                    <!--클릭시 생명공학 질문 띄워지도록-->
+                                    <a class="dropdown-item" href="{% url 'website:questionDepartment' q_department=4 %}">생명공학</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <form method="POST" class="form-inline my-2 my-lg-0">
+                            <!--입력 창-->
+                            <input id="questionsearchinput" name="question_search" class="form-control mr-sm-2" type="search" placeholder="질문을 검색하세요" aria-label="검색">
+                            <!--클릭시 입력창의 키워드가 들어간 질문 리스트의 질문들을 아래에 띄우도록-->
+                            <button id="questionsearchbutton" name="question_search_button" aria-activedescendant="" class="btn btn-outline-primary my-2 my-sm-0" type="submit">검색</button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {{error}}
+                    
+                    <!--1. 내 질문인 경우 위해-->
+                    {% if myQuestion %}
+                    <!--for문으로 질문 단위 li태그 반복-->
+                    {% for questionList in myQuestion %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                           <!--내 질문인 경우, 지금 'checked'부분 앞뒤에 조건(if 내 질문인 경우 checked) 넣기-->
+                            <input type="checkbox" name="question[0]" id="star_{{questionList.id}}" value="{{questionList.question}}" onclick="questionstar({{questionList.id}})" checked>
+                            <label for="star_{{questionList.id}}">
+                            {{questionList.question}}
+                            {% if questionList.part == 1 %}
+                            <small> - 작성한 질문</small>
+                            {% elif questionList.part == 2 %}
+                            <small> - 받은 질문</small>
+                            {% else %}
+                            <small> - 담은 질문</small></label>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                    
+                    
+                    <!--2. 질문 리스트-->
+                    {% if question %}
+                    <!--for문으로 질문 단위 li태그 반복-->
+                    {% for questionList in question %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <!--내 질문인 경우, 지금 'checked'부분 앞뒤에 조건(if 내 질문인 경우 checked) 넣기-->
+                            {%if request.session.user %}
+                            <input type="checkbox" name="question[1]" id="nonstar_{{questionList.id}}" value="{{questionList.question}}" onclick="questionnonstar({{questionList.id}})">
+                            <label for="nonstar_{{questionList.id}}">
+                            {%else%}
+                            <input type="checkbox" name="question[1]" id="nonstar_{{questionList.id}}" value="{{questionList.question}}">
+                            <label for="nonstar_{{questionList.id}}">
+                            {%endif%}
+                            {{questionList.question}}
+                                {% if questionList.department == 0 %}
+                                <small> - 기본 질문</small>
+                                {% elif questionList.department == 1 %}
+                                <small> - 컴퓨터 학과 질문</small>
+                                {% elif questionList.department == 2 %}
+                                <small> - 경영학과 질문</small>
+                                {% elif questionList.department == 3 %}
+                                <small> - 국어국문학과 질문</small>
+                                {% elif questionList.department == 4 %}
+                                <small> - 생명공학과 질문</small></label>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
