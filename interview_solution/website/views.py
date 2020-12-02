@@ -374,7 +374,7 @@ def recordVideo(request):
         video_clip = VideoFileClip(video_url)
         audio_clip = AudioFileClip(audio_url)
         video_clip.audio = audio_clip
-        final_url = os.path.join(settings.MEDIA_ROOT, userID+'_'+reportID+'_'+question_num+'_final_video.mp4')
+        final_url = reportID+'_'+question_num+'_final_video.mp4'
         print(final_url)
         video_clip.write_videofile(final_url,codec="mpeg4")
 
