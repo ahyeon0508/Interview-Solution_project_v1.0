@@ -16,27 +16,6 @@ import pyaudio
 import wave
 from moviepy.editor import *
 
-def readNumber(num):
-    units = [''] + list('십백천')
-    nums = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구']
-    result = []
-    i = 0
-    n = int(num)
-    while n > 0:
-        n, r = divmod(n, 10)
-        if r > 0:
-            result.append(nums[r-1] + units[i])
-        i += 1
-    return ''.join(result[::-1])
-
-def isEng(value):
-    count = 0
-    for c in value:
-        if ord('a') <= ord(c.lower()) <= ord('z'):
-            count += 1
-    if len(value) == count:
-        return True
-
 def intro(request):
     return render(request, 'index.html')
 
@@ -46,7 +25,7 @@ def studentHome(request):
         print(user)
         return render(request, 'stuhome.html', {'user': user})
     except:
-        return render(request, 'stuhome.html')
+        return render(request, 'stuhome.html', {'user':None})
 
 def teacherHome(request):
     try:
@@ -246,15 +225,15 @@ def mypage(request):
         school = request.POST.get('schoolName', '')
         grade = request.POST.get('grade', '')
         if check_password(oldPW, user.password) is False or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
-            return render(request, 'mypage_Info.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
+            return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
         else:
             user.set_password(newPW)
             user.save()
             request.session['user'] = user.userID
-            return render(request, 'mypage_Info.html', {'notice': '수정이 완료되었습니다.'})
+            return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
     else:
         user = User.objects.get(userID=request.user.userID)
-        return render(request, 'mypage_Info.html', {'user':user})
+        return render(request, 'mypage.html', {'user':user})
 
 def secede(request):
     student = get_object_or_404(User, userID=request.session.get('user'))
@@ -592,6 +571,7 @@ def waitVideo3(request, reportID):
 @csrf_exempt
 def myVideo(request):
     try:
+        print(request.session.get('user'))
         report = Report.objects.filter(student=request.session.get('user'))
         return render(request, 'myVideo.html', {'video' : report})
     except:
@@ -609,6 +589,7 @@ def myVideoAjax(request):
 @csrf_exempt
 def myVideoDetail(request, reportID):
     report = Report.objects.get(id=reportID)
+    print(report.student.userID)
     return render(request, 'report.html', {'report':report})
 
 @csrf_exempt
