@@ -1054,7 +1054,7 @@ ol {
     z-index: 1;
     min-height: 900px;
     position: relative;
-    background: url(../img/연회색.png) no-repeat center;
+    background: url() no-repeat center;
     background-size: cover;
 }
 
@@ -3804,4 +3804,13 @@ ol {
         width: 100%;
         font-size: 24px;
     }
+}
+
+a{
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
 }

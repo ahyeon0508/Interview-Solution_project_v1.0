@@ -22,7 +22,6 @@ def intro(request):
 def studentHome(request):
     try:
         user = get_object_or_404(User, userID=request.session['user'])
-        print(user)
         return render(request, 'stuhome.html', {'user': user})
     except:
         return render(request, 'stuhome.html', {'user':None})
@@ -212,7 +211,6 @@ def resultPW(request, student, userID):
     else:
         return render(request, 'resultPW.html')
 
-@login_required
 def mypage(request):
     if request.method == "POST":
         user = request.session.get('user')
@@ -231,7 +229,7 @@ def mypage(request):
             request.session['user'] = user.userID
             return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
     else:
-        user = User.objects.get(userID=request.user.userID)
+        user = User.objects.get(userID=request.session.get('user'))
         return render(request, 'mypage.html', {'user':user})
 
 def secede(request):

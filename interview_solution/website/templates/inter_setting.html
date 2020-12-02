@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -8,25 +9,28 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <!-- Css Styles -->
-    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../static/css/inter_setting.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/inter_setting.css' %}" type="text/css">
 </head>
 
 <body>
-    <h4>2. 면접 세팅</h4>
-    <h5>: 체크 한 질문 중 3개가 랜덤으로 나옵니다.</h5>
 
-    <div id="container">
-        <video autoplay="true" id="videoElement"></video>
+    <div id="card" class="container">
+        <div class="card text-center">
+            <div class="card-header">
+                <h5>2. Setting</h5>
+            </div>
+            <div class="card-body">
+                <div id="container">
+                    <video autoplay="true" id="videoElement"></video>
+                </div>
+                체크한 질문 중 3개가 랜덤으로 나옵니다. 준비 되셨다면 시작 버튼을 누르세요.
+            </div>
+            <div class="card-footer text-muted">
+                <a href="{% url 'website:interviewQ1' reportID=reportID %}" class="btn btn-outline-primary"><Strong> 시작 > </Strong></a>
+            </div>
+        </div>
     </div>
-
-    <p>
-        문제는 랜덤하게 3개가 나옵니다.<br>
-        시작 = ctrl + X / 정지 = ctrl + Z / 일시정지 = Space / 캡쳐 = ctrl + S<br>
-    </p>
-
-    <!--herf에 inter_main-->
-    <input type="button" id="startq1" onClick="location.href='{% url 'website:interviewQ1' reportID=reportID %}'" value="시작 >">
 
     <script>
         var video = document.querySelector("#videoElement");
@@ -42,9 +46,10 @@
                     console.log("Something wrong!");
                 });
         }
-
     </script>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-</body>
-
-</html>
+</body></html>
