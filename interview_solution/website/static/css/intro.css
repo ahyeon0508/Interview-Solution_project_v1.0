@@ -3805,3 +3805,12 @@ ol {
         font-size: 24px;
     }
 }
+
+a{
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+}
