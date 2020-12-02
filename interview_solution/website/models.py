@@ -82,10 +82,10 @@ class Question(models.Model):
         verbose_name='pk'
     )
     question = models.CharField(max_length=100, null=True, blank=True, verbose_name='질문')
-    department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문, -1 : 개인질문
+    department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문
 
-    def __int__(self):
-        return self.id
+    def __str__(self):
+        return self.question
 
 class StudentQuestion(models.Model):
     id = models.AutoField(
@@ -96,10 +96,11 @@ class StudentQuestion(models.Model):
     )
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    part =  models.IntegerField(null=True, blank=True, verbose_name='종류')
     teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
 
-    def __int__(self):
-        return self.id
+    def __str__(self):
+        return self.question.question
 
 class Report(models.Model):  # 수정필요
     id = models.AutoField(

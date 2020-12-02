@@ -39,3 +39,38 @@ function fn_pw_check() {
 
     return true;
 }
+
+function cancleForm(){
+    if(confirm("이 페이지를 벗어나면 마지막 저장 후 수정된 내용은 저장되지 않습니다.")){
+        // 메인 홈페이지 주소 입력하기
+      window.location.href = "";
+    }
+    else {
+        return false;
+    }
+  
+  }
+
+function questionDeleteConfirm(n) {
+    if (confirm("이 질문을 내 질문에서 삭제하시겠습니까?")) {
+        window.location.href = "/website/myquestion/delete/" + n;
+    } else {
+        return false;
+    }
+}
+
+function questionnonstar(n) {
+    if (confirm("이 질문을 내 질문으로 등록하시겠습니까?")) {
+        window.location.href = "/website/questionList/nonstar/" + n;
+    } else {
+        return false;
+    }
+}
+
+function questionstar(n) {
+    if (confirm("이 질문을 내 질문에서 취소하시겠습니까?")) {
+        window.location.href = "/website/questionList/star/" + n;
+    } else {
+        return false;
+    }
+}
