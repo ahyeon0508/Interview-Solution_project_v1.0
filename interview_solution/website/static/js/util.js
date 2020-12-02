@@ -39,13 +39,3 @@ function fn_pw_check() {
 
     return true;
 }
-
-function cancleForm(){
-    if(confirm("이 페이지를 벗어나면 마지막 저장 후 수정된 내용은 저장되지 않습니다.")){
-        // 메인 홈페이지 주소 입력하기
-      window.location.href = "";
-    }
-    else {
-        return false;
-    }
-}
