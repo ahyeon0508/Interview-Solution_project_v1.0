@@ -213,7 +213,6 @@ def resultPW(request, student, userID):
     else:
         return render(request, 'resultPW.html')
 
-@login_required
 def mypage(request):
     if request.method == "POST":
         user = request.session.get('user')
