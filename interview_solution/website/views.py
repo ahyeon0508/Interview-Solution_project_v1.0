@@ -254,7 +254,7 @@ def inter_setting(request):
             interview_list.append(user_question[i])
         count = Question.objects.aggregate(count=Count('id'))['count']
         for i in range(n, 3):
-            random_index = random.randint(0, count - 1)
+            random_index = random.randint(0, count)
             question = Question.objects.all()[random_index]
             interview_list.append(question.question)
     else:
