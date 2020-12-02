@@ -7,9 +7,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../website/static/vendor/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="../../website/static/css/questionlist.css">
-    <script type="text/javascript" src="{% static 'js/util.js' %}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/questionlist.css' %}">
+
     <title>질문 리스트</title>
 </head>
 
@@ -78,12 +78,12 @@
                             <small> - 받은 질문</small>
                             {% else %}
                             <small> - 담은 질문</small>
-                            {% endif %}                     
+                            {% endif %}
                         </div>
                     </li>
                     {% endfor %}
                     {% endif %}
-                    
+
                     {% if question %}
                     <!--for문으로 질문 단위 li태그 반복-->
                     {% for questionList in question %}
@@ -94,8 +94,6 @@
                             <!--원래는 이거 감싼 a 클래스로 하는 건데ㅜㅜ 별 모양이 안뜨네-->
                             <!--예제 https://fabl1106.github.io/django/2019/05/05/Django-14.-%EC%9D%B8%EC%8A%A4%ED%83%80%EA%B7%B8%EB%9E%A8-%EC%A2%8B%EC%95%84%EC%9A%94-%EB%B2%84%ED%8A%BC-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.html-->
                             <!--<a herf="" class="btn-star"></a>-->
-                            <!--"자신의 장점과" 이 부분에 질문 내용 띄우도록 / small 태그 안 "기본 질문" 부분은 5개의 질문 종류(기본, 학과4개) 띄우도록 -->
-                            <!-- 자신의 장점과 단점을 소개해보세요. <small> - 기본 질문</small> -->
                             {{questionList.question}}
                             {% if questionList.department == 0 %}
                             <small> - 기본 질문</small>
@@ -107,7 +105,7 @@
                             <small> - 국어국문학과 질문</small>
                             {% elif questionList.department == 4 %}
                             <small> - 생명공학과 질문</small>
-                            {% endif %}                       
+                            {% endif %}
                         </div>
                     </li>
                     {% endfor %}
@@ -119,7 +117,9 @@
     </div>
 
     <!-- Bootstrap JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body></html>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
