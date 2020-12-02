@@ -231,7 +231,7 @@ def mypage(request):
             request.session['user'] = user.userID
             return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
     else:
-        user = User.objects.get(userID=request.user.userID)
+        user = User.objects.get(userID=request.session.get('user'))
         return render(request, 'mypage.html', {'user':user})
 
 def secede(request):
