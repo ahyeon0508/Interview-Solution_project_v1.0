@@ -20,20 +20,20 @@
     <!-- 상단 바 시작 -->
     <nav id="Topbar" class="navbar navbar-expand navbar-light topbar header__menu">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a class="col-xl-1 col-lg-1 navbar-brand" href="#">
+            <a class="col-xl-1 col-lg-1 navbar-brand" href="{% url 'website:teacherHome' %}">
                 <img src="../../static/img/logo.png" width="100" height="30" class="d-inline-block align-top" alt="">
             </a>
         </div>
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                {% if user.is_authenticated %}
+                {% if teacher %}
                 <!--로그인한 경우 href 유저정보 관리 페이지로!-->
-                <a class="nav-link dropdown-toggle" href="#" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="{% url 'website:mypage' %}" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <!--USERID 부분에 유저 ID 표기!-->
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> USERID </span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{teacher.userID}} </span>
 
-                    {% if user.image %}
+                    {% if teacher.image %}
                     <!--src 유저 이미지 표기!-->
                     <img class="img-profile rounded-circle" src="#">
                     {% else %}
@@ -42,7 +42,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                     <!-- herf 유저정보 관리 페이지로!-->
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{% url 'website:mypage' %}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         MyPage
                     </a>
@@ -55,7 +55,7 @@
                 </div>
                 {% else %}
                 <!--herf 로그인 페이지로!-->
-                <a class="nav-link" href="{% url 'website:studentSignin' %}" id="user" role="button">
+                <a class="nav-link" href="{% url 'website:teacherSignin' %}" id="user" role="button">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
                     <img class="img-profile rounded-circle" src="../../static/img/user.svg">
                 </a>

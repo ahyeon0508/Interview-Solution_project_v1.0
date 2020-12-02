@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.shortcuts import render,redirect, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib.auth.hashers import check_password, make_password
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -9,9 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.conf import settings
 from django.utils import timezone
-
-from .models import User, Teacher, SchoolInfo, StudentQuestion, Report, Question
-
+from .models import User, Teacher, SchoolInfo, Report, StudentQuestion, Question
 import json
 import random
 from cv2 import cv2
@@ -44,10 +41,20 @@ def intro(request):
     return render(request, 'index.html')
 
 def studentHome(request):
-    return render(request, 'stuhome.html')
+    try:
+        user = get_object_or_404(User, userID=request.session['user'])
+        print(user)
+        return render(request, 'stuhome.html', {'user': user})
+    except:
+        return render(request, 'stuhome.html')
 
 def teacherHome(request):
-    return render(request, 'teahome.html')
+    try:
+        teacher = get_object_or_404(Teacher, userID=request.session['user'])
+        report = Report.objects.filter(teacher=teacher, share=True)
+        return render(request, 'teahome.html', {'report':report, 'teacher':teacher})
+    except:
+        return render(request, 'teahome.html')
 
 @csrf_exempt
 def studentSignup(request):
@@ -151,12 +158,12 @@ def teacherSignin(request):
     if request.method == "POST":
         userID = request.POST.get('userID', '')
         password = request.POST.get('password', '')
-
+        request.session['user'] = None
         try:
             user = Teacher.objects.get(userID=userID)
             if password == user.password:
                 request.session['user'] = user.userID
-                return redirect(reverse('webisite:teacherHome'))
+                return redirect(reverse('website:teacherHome'))
             else:
                 return render(request,'signin.html',{'student':0, 'error':'username or password is incorrect'})
         except:
@@ -227,7 +234,6 @@ def resultPW(request, student, userID):
     else:
         return render(request, 'resultPW.html')
 
-
 @login_required
 def mypage(request):
     if request.method == "POST":
@@ -249,6 +255,11 @@ def mypage(request):
     else:
         user = User.objects.get(userID=request.user.userID)
         return render(request, 'mypage_Info.html', {'user':user})
+
+def secede(request):
+    student = get_object_or_404(User, userID=request.session.get('user'))
+    student.delete()
+    return redirect(reverse('website:intro'))
 
 #질문 리스트 전역변수
 interview_list = []
@@ -299,7 +310,7 @@ frames =[]
 @csrf_exempt
 def recordVideo(request):
     global stop_button
-    userID = request.POST['userID']
+    userID = request.session.get('user')
     question_num = request.POST['question']
     reportID = request.POST['reportID']
     if request.POST.get('start',True):
@@ -363,7 +374,8 @@ def recordVideo(request):
         video_clip = VideoFileClip(video_url)
         audio_clip = AudioFileClip(audio_url)
         video_clip.audio = audio_clip
-        final_url = os.path.join(settings.MEDIA_ROOT, userID+'_'+question_num+'_final_video.mp4')
+        final_url = os.path.join(settings.MEDIA_ROOT, userID+'_'+reportID+'_'+question_num+'_final_video.mp4')
+        print(final_url)
         video_clip.write_videofile(final_url,codec="mpeg4")
 
         report = Report.objects.get(id=reportID)
@@ -579,8 +591,11 @@ def waitVideo3(request, reportID):
 
 @csrf_exempt
 def myVideo(request):
-    report = Report.objects.filter(user=request.session.get('user'))
-    return render(request, 'myVideo.html', {'report' : report})
+    try:
+        report = Report.objects.filter(student=request.session.get('user'))
+        return render(request, 'myVideo.html', {'report' : report})
+    except:
+        return redirect(reverse('website:studentHome'))
 
 @csrf_exempt
 def myVideoAjax(request):
@@ -613,3 +628,78 @@ def classVideoDetail(request, reportID):
         return render(request, 'classVideoDetail.html', {'report': report})
 
     return render(request, 'classVideoDetail.html', {'report':report})
+
+@csrf_exempt
+def teacherVideo(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+
+    if request.method == "POST":
+        if request.POST.get('feedback1'):
+            report.comment1 = request.POST.get('feedback1')
+            report.save()
+            return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+        elif request.POST.get('feedback2'):
+            report.comment2 = request.POST.get('feedback2')
+            report.save()
+            return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+        elif request.POST.get('feedback3'):
+            report.comment3 = request.POST.get('feedback3')
+            report.save()
+            return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+        if request.POST.get('q_send'):
+            return redirect(reverse('website:questionSend', args=[str(report.student.userID)]))
+
+    return render(request, 'studentVideo.html', {'report':report, 'teacher':request.session.get('user')})
+
+@csrf_exempt
+def commentDelete1(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+    if report.comment1:
+        report.comment1 = None
+        report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+@csrf_exempt
+def commentDelete2(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+    if report.comment2:
+        report.comment2 = None
+        report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+@csrf_exempt
+def commentDelete3(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+    if report.comment3:
+        report.comment3 = None
+        report.save()
+        return redirect(reverse('website:teacherVideo', args=[str(report.id)]))
+    return render(request, 'studentVideo.html', {'report': report, 'teacher': request.session.get('user')})
+
+@csrf_exempt
+def questionSend(request, studentID):
+
+    teacher = get_object_or_404(Teacher, userID=request.session.get('user'))
+    studentQ = StudentQuestion.objects.filter(student=studentID, teacher=request.session['user'])
+
+    if request.method == "POST":
+        question = request.POST.get('question')
+        print(question)
+        questionDB = Question.objects.create(question=question, department = -1)
+        questionDB.save()
+        user = get_object_or_404(User, userID=studentID)
+        sQuestionDB = StudentQuestion.objects.create(question=questionDB, student=user, teacher = teacher)
+        sQuestionDB.save()
+        return render(request, 'questionSend.html', {'questionSet':studentQ})
+
+    return render(request, 'questionSend.html', {'questionSet':studentQ})
+
+@csrf_exempt
+def questionSendDelete(request, questionID):
+    question = get_object_or_404(Question, id=questionID)
+    sQuestion = get_object_or_404(StudentQuestion, question=question)
+    user = sQuestion.student
+    question.delete()
+    return redirect(reverse('website:questionSend', args=[str(user)]))

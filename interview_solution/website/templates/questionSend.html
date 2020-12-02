@@ -1,0 +1,37 @@
+{% load static %}
+<link href="{% static 'css/questionSend.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script type="text/javascript" src="{% static 'js/check.js' %}"></script>
+
+<h1 id="title">예상질문 전송</h1>
+<div class="question-send-page">
+    <div class="questionInput">
+        <form method="post">
+            {% csrf_token %}
+            <span class="write_in"><input type="text" placeholder="예상질문을 입력해주세요." id="prediction" name="question"
+                    style="border:none;"></span>
+            <button type="submit" class="btn btn-outline-secondary">전송</button>
+        </form>
+    </div>
+    <!-- 이전에 보냈던 질문 목록 -->
+    <p id="info">
+        <전송한 질문 목록>
+    </p>
+    <div class="questionInfo">
+        <div class="list">
+            {% if questionSet %}
+            <table class="content">
+                {% for i in questionSet %}
+                <tr>
+                    <td width=500px>{{ i.question.question }}</td>
+                    <td><button type="button" class="btn btn-outline-secondary" onclick="Q_DeleteConfirm({{ i.question.id }})">삭제</button></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <!-- 이전에 보냈던 질문 목록이 없으면 -->
+        <p class="content">보낸 질문이 없습니다.</p>
+        {% endif %}
+    </div>
+</div>

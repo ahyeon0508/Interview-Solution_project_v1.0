@@ -1,3 +1,7 @@
+#introduce {
+    color: #000000;
+}
+
 /******************************************************************
   Template Name: Ashion
   Description: Ashion ecommerce template
@@ -83,7 +87,7 @@ h6 {
 p {
     font-size: 14px;
     font-family: 'Nanum Gothic', sans-serif;
-    color: #666666;
+    color: #000000;
     font-weight: 400;
     line-height: 24px;
     margin: 0 0 15px 0;
@@ -359,18 +363,6 @@ ol {
     -webkit-transform: scale(1);
     -ms-transform: scale(1);
     transform: scale(1);
-}
-
-.header__menu ul li:hover a:after {
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-}
-
-.header__menu ul li:hover .dropdown {
-    top: 27px;
-    opacity: 1;
-    visibility: visible;
 }
 
 .header__menu ul li:last-child {
@@ -2044,28 +2036,6 @@ ol {
     width: 335px;
     background: #e1e1e1;
     content: "";
-}
-
-.nav-item {
-    margin-right: 46px;
-}
-
-.nav-item:last-child {
-    margin-right: 0;
-}
-
-.nav-item .nav-link {
-    font-size: 18px;
-    color: #666666;
-    font-weight: 600;
-    border: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    padding: 0;
-}
-
-.nav-item .nav-link.active {
-    color: #111111;
 }
 
 .tab-content .tab-pane h6 {
@@ -3766,11 +3736,7 @@ ol {
     .product__details__button ul {
         float: none;
     }
-
-    .nav-item {
-        margin-right: 20px;
-    }
-
+    
     .blog__details__item__title {
         margin-right: 30px;
     }

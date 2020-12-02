@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- 내용 시작 -->
-<div class="container-fluid set-bg" data-setbg="../../static/img/10.jpg">
+<div class="container-fluid set-bg" data-setbg="../../static/img/새내기로.jpg">
     <div class="row">
         <div class="col-lg-6 p-0">
             <div class="categories__item categories__large__item">
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-4">
                 <div class="section-title">
-                    <h4>학생 관리</h4>
+                    <h4>학생 면접 관리</h4>
                 </div>
             </div>
         </div>
@@ -29,7 +29,9 @@
         <div class="container">
 
             <!--학생 card 반복 / herf에는 학생면접영상 페이지로 -->
-            <a herf="">
+            {% if report %}
+            {% for i in report %}
+            <a href="{% url 'website:teacherVideo' reportID=i.id %}">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -38,17 +40,21 @@
                                 <img src="../../static/img/3.jpg" alt="" class="img-rounded img-responsive" />
                             </div>
                             <div class="col-sm-6 col-md-8">
+                                <!--리포트 제목-->
+                                <p>{{i.title}}</p>
                                 <!--학생이름-->
-                                <h4>강동원</h4>
+                                <h4>{{i.student.username}}</h4>
                                 <!--학생학교, 반 번호-->
-                                <small>감자고등학교, 1학년 1반</small>
+                                <small>{{i.student.school}}, {{i.student.grade}} {{i.student.sClass}}반</small>
                                 <!--학생전화번호-->
-                                <p>010-1234-5678</p>
+                                <p>{{i.phone}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </a>
+            {% endfor %}
+            {% endif %}
 
         </div>
 

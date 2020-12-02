@@ -22,8 +22,9 @@ urlpatterns = [
     path('signoff/', views.signoff, name='signoff'),
     path('findID/<int:student>', views.findID, name='findID'),
     path('findPW/<int:student>', views.findPW, name='findPW'),
-    path('resultPW/<int:student>/<userID>/', views.resultPW, name='resultPW'),
+    path('resultPW/<int:student>/<userID>', views.resultPW, name='resultPW'),
     path('mypage/', views.mypage, name='mypage'),
+    path('secede/', views.secede, name='secede'),
     path('questionDB/',questionDB.db,name='questionDB'),
     path('student/interview/',views.inter_setting,name='interviewSetting'),
     path('student/interview/q1/<reportID>',views.interview_q1,name='interviewQ1'),
@@ -45,5 +46,11 @@ urlpatterns = [
     path('myVideo/detail/<int:reportID>', views.myVideoDetail, name='myVideoDetail'),
     path('classVideo/', views.classVideo, name='classVideo'),
     path('classVideo/detail/<int:reportID>', views.classVideoDetail, name='classVideoDetail'),
+    path('teacher/studentVideo/<int:reportID>', views.teacherVideo, name='teacherVideo'),
+    path('teacher/studentVideo/delete1/<int:reportID>', views.commentDelete1, name="commentDelete1"),
+    path('teacher/studentVideo/delete2/<int:reportID>', views.commentDelete2, name="commentDelete2"),
+    path('teacher/studentVideo/delete3/<int:reportID>', views.commentDelete3, name="commentDelete3"),
+    path('teacher/questionSend/<studentID>', views.questionSend, name='questionSend'),
+    path('teacher/questionSend/delete/<int:questionID>', views.questionSendDelete, name='questionSendDelete'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

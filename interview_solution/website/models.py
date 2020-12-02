@@ -54,11 +54,11 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name='아이디')  # 아이디
     username = models.CharField(max_length=10, null=True, blank=True, verbose_name='유저이름')
-    password = models.CharField(max_length=20, verbose_name='비밀번호')
+    password = models.CharField(max_length=100, verbose_name='비밀번호')
     phone = models.CharField(max_length=11, blank=True, null=True, verbose_name='연락처')
     school = models.CharField(max_length=20, null=True, blank=True, verbose_name='학교')
-    grade = models.CharField(max_length=10, null=True, blank=True, verbose_name='학년')
-    sClass = models.CharField(max_length=10, null=True, blank=True, verbose_name='반')
+    grade = models.IntegerField(null=True, blank=True, verbose_name='학년')
+    sClass = models.IntegerField(null=True, blank=True, verbose_name='반')
     teacher = models.ForeignKey(Teacher, null=True, blank=True, on_delete=models.CASCADE)
     is_activate = models.BooleanField(default=True)
 
@@ -81,7 +81,7 @@ class Question(models.Model):
         editable=False,
         verbose_name='pk'
     )
-    question = models.CharField(max_length=100, unique=True, null=True, blank=True, verbose_name='질문')
+    question = models.CharField(max_length=100, null=True, blank=True, verbose_name='질문')
     department = models.IntegerField(null=True, blank=True, verbose_name='학과') # 0 : 공통질문, -1 : 개인질문
 
     def __int__(self):
@@ -101,7 +101,7 @@ class StudentQuestion(models.Model):
     def __int__(self):
         return self.id
 
-class Report(models.Model):
+class Report(models.Model):  # 수정필요
     id = models.AutoField(
         primary_key=True,
         unique=True,
@@ -137,7 +137,7 @@ class Report(models.Model):
     comment2 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글2')
     comment3 = models.CharField(max_length=10000, blank=True, null=True, verbose_name='댓글3')
     pub_date = models.DateField(auto_now_add=True, verbose_name='날짜')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher,null=True, blank=True, on_delete=models.CASCADE)
     share = models.BooleanField(default=False, verbose_name='공유')
 
