@@ -738,7 +738,7 @@ def questionStar(request,questionID):
 
 @csrf_exempt
 def questionNonStar(request,questionID):
-    # Push the star button
+    # Push the nonstar button
     question = Question.objects.get(id=questionID)
     user = User.objects.get(userID=request.session.get('user'))
     myQuestion = StudentQuestion.objects.create(student=user,part=0,question=question)
@@ -810,3 +810,27 @@ def deletemyQuestion(request,questionID):
     question = get_object_or_404(StudentQuestion,pk=questionID)
     question.delete()
     return redirect(reverse('website:myQuestion'))
+
+def inter_start(request):
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
+    return render(request, 'inter_start.html', {'myQuestion': myQuestion})
+
+def inter_startPart(request,department):
+    question= Question.objects.filter(department=department)
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user')).filter(question__department=department)
+    if myQuestion.exists():
+        for i in myQuestion:
+            question = question.exclude(id=i.question.id)
+    return render(request, 'inter_start.html', {'question': question})
+
+def inter_Star(request, questionID):
+    # Push the star button
+    myQuestion = StudentQuestion.objects.filter(student__userID=request.session.get('user'), id=questionID)
+    myQuestion.delete()
+    return redirect(reverse('website:interviewStart'))
+
+def inter_NonStar(request, questionID):
+    question = Question.objects.get(id=questionID)
+    user = User.objects.get(userID=request.session.get('user'))
+    myQuestion = StudentQuestion.objects.create(student=user,part=0,question=question)
+    return redirect(reverse('website:interviewStart'))
