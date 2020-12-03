@@ -17,51 +17,40 @@
 
 <body>
     <!-- 상단 바 시작 -->
-    <nav id="Topbar" class="navbar navbar-expand navbar-light topbar header__menu">
+    <nav id="Topbar" class="navbar navbar-expand-md navbar-light">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a class="col-xl-1 col-lg-1 navbar-brand" href="{% url 'website:teacherHome' %}">
+            <a class="navbar-brand col-xl-1 col-lg-1" href="{% url 'website:teacherHome' %}">
                 <img src="{% static 'img/logo.png' %}" width="auto" height="30" class="d-inline-block align-top" alt="">
             </a>
-        </div>
-
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                {% if request.session.user %}
-                <!--로그인한 경우 href 유저정보 관리 페이지로!-->
-                <a class="nav-link dropdown-toggle" href="{% url 'website:mypage' %}" id="user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <!--USERID 부분에 유저 ID 표기!-->
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{request.session.user}} </span>
-
-                    {% if teacher.image %}
-                    <!--src 유저 이미지 표기!-->
-                    <img class="img-profile rounded-circle" src="#">
+            <ul class="navbar-nav ml-auto" style="margin-right: 35px;">
+                <div class="nav-item">
+                    {% if request.session.user %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'website:mypage' %}" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{request.session.user}}</span>
+                            {% if teacher.image %}
+                            <img class="img-profile rounded-circle" src="{{ user.image.url }}">
+                            {% else %}
+                            <img class="img-profile rounded-circle" width="30" height="30"
+                                src="{% static 'img/user.svg' %}">
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'website:mypage' %}">Mypage</a>
+                            <a class="dropdown-item" href="{% url 'website:signoff' %}">Logout</a>
+                            <!-- <div class="dropdown-divider"></div> -->
+                        </div>
+                    </li>
                     {% else %}
-                    <img class="img-profile rounded-circle" src="{% static 'img/user.svg' %}">
+                    <!-- 로그인 페이지로! -->
+                    <a class="nav-link" href="{% url 'website:studentSignin' %}" id="user" role="button">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
+                    </a>
                     {% endif %}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <!-- herf 유저정보 관리 페이지로!-->
-                    <a class="dropdown-item" href="{% url 'website:mypage' %}">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        MyPage
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <!--href 로그아웃으로!-->
-                    <a class="dropdown-item" href="{% url 'website:signoff' %}">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                    </a>
                 </div>
-                {% else %}
-                <!--herf 로그인 페이지로!-->
-                <a class="nav-link" href="{% url 'website:teacherSignin' %}" id="user" role="button">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
-                    <img class="img-profile rounded-circle" src="{% static 'img/user.svg' %}">
-                </a>
-                {% endif %}
-
-            </li>
-        </ul>
+            </ul>
+        </div>
     </nav>
     <!-- 상단 바 끝 -->
 
@@ -84,9 +73,15 @@
     <!-- 풋터 끝 -->
 
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
