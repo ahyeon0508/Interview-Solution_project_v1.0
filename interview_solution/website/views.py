@@ -248,7 +248,8 @@ def inter_setting(request):
     n = user_question.count()
     if n < 3:
         for i in range(n):
-            interview_list.append(user_question[i])
+            question = Question.objects.get(id=user_question[i]['question'])
+            interview_list.append(question)
         count = Question.objects.aggregate(count=Count('id'))['count']
         for i in range(n, 3):
             random_index = random.randint(0, count)
@@ -256,10 +257,11 @@ def inter_setting(request):
             interview_list.append(question.question)
     else:
         random_n = random.sample(range(0,n),3)
-        for i in range(3):
-            interview_list.append(user_question[random_n[i]])
+        for i in random_n:
+            question = Question.objects.get(id=user_question[i]['question'])
+            interview_list.append(question)
     pub_date = timezone.datetime.now()
-    report = Report.objects.create(student=student,teacher=student.teacher,pub_date=pub_date,question1=interview_list[0],question2=interview_list[1],question3=interview_list[2])
+    report = Report.objects.create(student=student,teacher=student.teacher,pub_date=pub_date,question1=interview_list[0].question,question2=interview_list[1].question,question3=interview_list[2].question)
     report.save()
     reportID = report.id
     return render(request, 'inter_setting.html',{'reportID':reportID})
