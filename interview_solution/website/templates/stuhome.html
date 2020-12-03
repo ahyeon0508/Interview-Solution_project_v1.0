@@ -19,9 +19,9 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 p-0">
                         {% if request.session.user %}
-                        <a class="categories__item set-bg" data-setbg="{% static 'img/분홍.png' %}" href="{% url 'website:myVideo' %}">
+                        <a class="categories__item set-bg" data-setbg="{% static 'img/stumyvideo.svg' %}" href="{% url 'website:myVideo' %}">
                             {% else %}
-                            <a class="categories__item set-bg" data-setbg="{% static 'img/분홍.png' %}" href="{% url 'website:studentSignin' %}">
+                            <a class="categories__item set-bg" data-setbg="{% static 'img/stumyvideo.svg' %}" href="{% url 'website:studentSignin' %}">
                                 {% endif %}
                                 <div class="categories__text">
                                     <h4>내 영상</h4>
@@ -31,9 +31,9 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 p-0">
                         {% if request.session.user %}
-                        <a class="categories__item set-bg" data-setbg="{% static 'img/연파랑.png' %}" href="{% url 'website:questionList' %}">
+                        <a class="categories__item set-bg" data-setbg="{% static 'img/stumyquest.svg' %}" href="{% url 'website:questionList' %}">
                             {% else %}
-                            <a class="categories__item set-bg" data-setbg="{% static 'img/연파랑.png' %}" href="{% url 'website:studentSignin' %}">
+                            <a class="categories__item set-bg" data-setbg="{% static 'img/stumyquest.svg' %}" href="{% url 'website:studentSignin' %}">
                                 {% endif %}
                                 <div class="categories__text">
                                     <h4>내 질문</h4>
@@ -42,7 +42,7 @@
                             </a>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 p-0">
-                        <a class="categories__item set-bg" data-setbg="{% static 'img/연분홍.png' %}" href="{% url 'website:questionList' %}">
+                        <a class="categories__item set-bg" data-setbg="{% static 'img/questlist.svg' %}" href="{% url 'website:questionList' %}">
                             <div class="categories__text">
                                 <h4>질문 리스트</h4>
                                 <p>40여개의 공통질문과 학과별 질문을 제공하는 기능</p>
