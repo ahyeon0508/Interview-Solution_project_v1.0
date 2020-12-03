@@ -18,7 +18,7 @@ h1{
 
 #notice{
     font-size: 18px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     font-family: 'Nanum Gothic', sans-serif;
 }
 
@@ -110,6 +110,7 @@ a{
 }
 
 a:hover{
+    color: #000000;
     text-decoration: none;
 }
 
@@ -145,4 +146,23 @@ a:hover{
     box-sizing: border-box;
     font-size: 15px;
     border-radius: 15px;
+}
+
+#title{
+    width: 60%;
+    text-align: center;
+    border: none;
+}
+
+#complete{
+    border-radius: 15px;
+}
+
+.title-form{
+    margin-bottom: 30px;
+}
+
+#title_notice{
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 14px;
 }

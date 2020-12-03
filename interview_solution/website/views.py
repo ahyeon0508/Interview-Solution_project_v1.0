@@ -530,6 +530,7 @@ def stt(audiofile):
 
     return script, text_count, speech_speed, adverb, repetition
 
+@csrf_exempt
 def wait(request, reportID):
     report = Report.objects.get(id=reportID)
     if report.audio1:
