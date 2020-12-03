@@ -539,6 +539,11 @@ def wait(request, reportID):
 
     report.save()
 
+    if request.method == "POST":
+        report.title = request.POST.get('title')
+        report.save()
+        return render(request, 'wait.html', {'report': report})
+
     return render(request, 'wait.html', {'report':report})
 
 @csrf_exempt
