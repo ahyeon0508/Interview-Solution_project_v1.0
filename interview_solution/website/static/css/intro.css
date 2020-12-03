@@ -1,15 +1,36 @@
-#introduce {
-    color: #000000;
+#intrologo {
+    width: 10%;
+    height: auto;
+    margin-top: 30px;
+    margin-left: 30px;
 }
 
-/******************************************************************
-  Template Name: Ashion
-  Description: Ashion ecommerce template
-  Author: Colorib
-  Author URI: https://colorlib.com/
-  Version: 1.0
-  Created: Colorib
-******************************************************************/
+#intro {
+    position: absolute;
+    top: 25%;
+    transform: translate(0%, -50%);
+    margin-left: 30px;
+}
+
+#studentbutton,
+#teacherbutton{
+    width: 100%;
+    height: 500px;
+    margin-bottom: 40px;
+}
+
+#studentbutton{
+    margin-top: 10px;
+}
+
+#teacherbutton{
+    margin-top: 50px;
+}
+
+#stuwrapper{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 
 /*------------------------------------------------------------------
 [Table of contents]
@@ -30,7 +51,8 @@
 10.  Footer Style
 -------------------------------------------------------------------*/
 
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+/*<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">*/
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 
 /*----------------------------------------*/
 
@@ -49,28 +71,29 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0;
+    margin-bottom: 10px;
     color: #111111;
     font-family: 'Nanum Gothic', sans-serif;
+    width: 100%;
 }
 
 h1 {
-    font-weight: 900;
+    font-weight: 800;
     font-size: 70px;
 }
 
 h2 {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 36px;
 }
 
 h3 {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 30px;
 }
 
 h4 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 24px;
 }
 
@@ -80,12 +103,12 @@ h5 {
 }
 
 h6 {
-    font-weight: 200;
+    font-weight: 400;
     font-size: 16px;
 }
 
 p {
-    font-size: 14px;
+    font-size: 20px;
     font-family: 'Nanum Gothic', sans-serif;
     color: #000000;
     font-weight: 400;
@@ -101,12 +124,6 @@ input:focus,
 select:focus,
 button:focus,
 textarea:focus {
-    outline: none;
-}
-
-a:hover,
-a:focus {
-    text-decoration: none;
     outline: none;
 }
 
@@ -1054,7 +1071,7 @@ ol {
     z-index: 1;
     min-height: 900px;
     position: relative;
-    background: url(../img/연회색.png) no-repeat center;
+    background: url() no-repeat center;
     background-size: cover;
 }
 
@@ -1069,10 +1086,12 @@ ol {
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center;
+    align-items:flex-start;
+    padding-top: 50px;
     padding-left: 30px;
     margin-bottom: 10px;
     margin-right: 10px;
+    padding-right: 30px;
 }
 
 .categories__item.categories__large__item {
@@ -1103,6 +1122,7 @@ ol {
     margin-bottom: 10px;
 }
 
+/*
 .categories__text a {
     font-size: 14px;
     color: #111111;
@@ -1122,6 +1142,7 @@ ol {
     background: #ca1515;
     content: "";
 }
+*/
 
 /*---------------------
   Product
@@ -3806,11 +3827,11 @@ ol {
     }
 }
 
-a{
+a {
     color: #000000;
     text-decoration: none;
 }
 
-a:hover{
+a:hover {
     text-decoration: none;
 }
