@@ -2,9 +2,12 @@
 {% load static %}
 {% block content %}
 <link href="{% static 'css/report.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'js/check.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 <div class="report-page">
+    <!-- check.js DeleteConfirm 함수에 href 넣기! -->
+    <button type="button" id="delete" class="btn btn-outline-secondary" onclick="DeleteConfirm({{ report.id }})">삭제</button>
     <h1>내 면접 리포트</h1>
     <div id="report_info">
         <p id="title">{{report.title}}</p>
@@ -23,7 +26,9 @@
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script1"><답변 내용> <br><br> {{report.script1}}</p>
+                <p id="script1">
+                    <답변 내용> <br><br> {{report.script1}}
+                </p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
@@ -38,7 +43,9 @@
             </div>
             <!-- 차트 -->
             <div class="chart" style="display: table; margin: 0 auto 10px auto;">
-                <p class="analysis"><답변 내용 분석></p>
+                <p class="analysis">
+                    <답변 내용 분석>
+                </p>
                 <div class="repetition" style="float:left; padding-right: 50px; ">
                     <canvas id="repetition1" width="250" height="250" float:left;></canvas>
                 </div>
@@ -68,7 +75,9 @@
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script2"><답변 내용> <br><br> {{report.script2}}</p>
+                <p id="script2">
+                    <답변 내용> <br><br> {{report.script2}}
+                </p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
@@ -83,7 +92,9 @@
             </div>
             <!-- 차트 -->
             <div class="chart" style="display: table; margin: 0 auto 10px auto;">
-                <p class="analysis"><답변 내용 분석></p>
+                <p class="analysis">
+                    <답변 내용 분석>
+                </p>
                 <div class="repetition" style="float:left; padding-right: 50px; ">
                     <canvas id="repetition2" width="250" height="250" float:left;></canvas>
                 </div>
@@ -114,7 +125,9 @@
             </video>
             <!-- 대본 -->
             <div class="stt">
-                <p id="script3"><답변 내용> <br><br> {{report.script3}}</p>
+                <p id="script3">
+                    <답변 내용> <br><br> {{report.script3}}
+                </p>
             </div>
             <!-- 말하기 속도 -->
             <div class="talk_speed">
@@ -129,7 +142,9 @@
             </div>
             <!-- 차트 -->
             <div class="chart" style="display: table; margin: 0 auto 10px auto;">
-                <p class="analysis"><답변 내용 분석></p>
+                <p class="analysis">
+                    <답변 내용 분석>
+                </p>
                 <div class="repetition" style="float:left; padding-right: 50px; ">
                     <canvas id="repetition3" width="250" height="250" float:left;></canvas>
                 </div>

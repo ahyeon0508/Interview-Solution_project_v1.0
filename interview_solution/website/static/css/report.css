@@ -93,3 +93,7 @@ h1{
     font-weight: bold;
     font-size: 19px;
 }
+
+#delete{
+    float: right;
+}
