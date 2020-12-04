@@ -166,11 +166,14 @@ def findID(request, student):
                 user = Teacher.objects.get(username=username, phone=phone)
             else:
                 user = User.objects.get(username=username, phone=phone)
-            return render(request, 'resultID.html', {'userID':user.userID})
+            if user:
+                return render(request, 'resultID.html', {'userID':user.userID, 'student':student})
+            else:
+                return render(request, 'findID.html', {'error': 'username or phone is incorrect', 'student':student})
         except:
-            return render(request, 'findID.html', {'error': 'username or phone is incorrect'})
+            return render(request, 'findID.html', {'error': 'username or phone is incorrect', 'student':student})
     else:
-        return render(request, 'findID.html')
+        return render(request, 'findID.html', {'student':student})
 
 @csrf_exempt
 def findPW(request, student):
@@ -181,10 +184,13 @@ def findPW(request, student):
 
         try:
             if student == 0:
-                Teacher.objects.get(username=username, userID=userID, phone=phone)
+                user = Teacher.objects.get(username=username, userID=userID, phone=phone)
             else:
-                User.objects.get(username=username, userID=userID, phone=phone)
-            return redirect(reverse('website:resultPW', args=[str(userID)]))
+                user = User.objects.get(username=username, userID=userID, phone=phone)
+            if user:
+                return redirect(reverse('website:resultPW', args=[int(student), str(userID)]))
+            else:
+                return render(request, 'findPW.html', {'error': 'username or phone is incorrect'})
         except:
             return render(request, 'findPW.html', {'error': 'username or phone is incorrect'})
     else:
@@ -198,12 +204,15 @@ def resultPW(request, student, userID):
         try:
             if password == passwordChk:
                 if student == 0:
-                    user = Teacher.objects.get(userID=userID)
-                    user.set_password(password)
+                    teacher = Teacher.objects.get(userID=userID)
+                    teacher.password = password
+                    teacher.save()
+                    return redirect(reverse('website:teacherSignin'))
                 else:
                     user = User.objects.get(userID=userID)
-                user.save()
-                return redirect(reverse('website:studentSignin'))
+                    user.set_password(password)
+                    user.save()
+                    return redirect(reverse('website:studentSignin'))
             else:
                 return render(request, 'resultPW.html', {'error': 'password incorrect'})
         except:
@@ -228,17 +237,38 @@ def mypage(request, student):
 
         if student == 1:
             if check_password(oldPW,
-                              user.password) is False or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
+                              user.password) is False:
                 return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
             else:
+                if question:
+                    user.question = question
+                if answer:
+                    user.answer = answer
+                if phone:
+                    user.phone = phone
+                if school:
+                    user.school = school
+                if grade:
+                    user.grade = grade
                 user.set_password(newPW)
                 user.save()
                 request.session['user'] = user.userID
                 return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
         else:
-            if oldPW != user.password or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
+            if oldPW != user.password:
                 return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
             else:
+                if question:
+                    user.question = question
+                if answer:
+                    user.answer = answer
+                if phone:
+                    user.phone = phone
+                if school:
+                    user.school = school
+                if grade:
+                    user.grade = grade
+                user.password = newPW
                 user.save()
                 request.session['user'] = user.userID
                 return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
