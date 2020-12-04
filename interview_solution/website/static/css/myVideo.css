@@ -16,10 +16,7 @@ h1{
 .content > p{
     font-family: 'Nanum Gothic', sans-serif;
     text-align: center;
-    border: 1px solid;
-    border-radius: 25px;
-    border-color: #C0C0C0;
-    padding: 30px 400px 30px 30px;
+    padding: 30px 200px 30px 30px;
     margin: 0 -40px 0 0px;
     font-size: 20px;
     float: left;
@@ -142,5 +139,6 @@ a{
 }
 
 a:hover{
+    color: #000000;
     text-decoration: none;
 }

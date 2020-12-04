@@ -139,7 +139,7 @@ def teacherSignin(request):
         request.session['user'] = None
         try:
             user = Teacher.objects.get(userID=userID)
-            if password == user.password:
+            if user.password == password:
                 request.session['user'] = user.userID
                 return redirect(reverse('website:teacherHome'))
             else:
@@ -199,9 +199,9 @@ def resultPW(request, student, userID):
             if password == passwordChk:
                 if student == 0:
                     user = Teacher.objects.get(userID=userID)
+                    user.set_password(password)
                 else:
                     user = User.objects.get(userID=userID)
-                user.set_password(password)
                 user.save()
                 return redirect(reverse('website:studentSignin'))
             else:
@@ -211,9 +211,13 @@ def resultPW(request, student, userID):
     else:
         return render(request, 'resultPW.html')
 
-def mypage(request):
+def mypage(request, student):
+    if student == 1:
+        user = get_object_or_404(User, userID=request.session.get('user'))
+    else:
+        user = get_object_or_404(Teacher, userID=request.session.get('user'))
+
     if request.method == "POST":
-        user = request.session.get('user')
         question = request.POST.get('findQuestion', '')
         answer = request.POST.get('findAnswer', '')
         oldPW = request.POST.get('password', '')
@@ -221,15 +225,24 @@ def mypage(request):
         phone = request.POST.get('phone', '')
         school = request.POST.get('schoolName', '')
         grade = request.POST.get('grade', '')
-        if check_password(oldPW, user.password) is False or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
-            return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
+
+        if student == 1:
+            if check_password(oldPW,
+                              user.password) is False or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
+                return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
+            else:
+                user.set_password(newPW)
+                user.save()
+                request.session['user'] = user.userID
+                return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
         else:
-            user.set_password(newPW)
-            user.save()
-            request.session['user'] = user.userID
-            return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
+            if oldPW != user.password or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
+                return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
+            else:
+                user.save()
+                request.session['user'] = user.userID
+                return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
     else:
-        user = User.objects.get(userID=request.session.get('user'))
         return render(request, 'mypage.html', {'user':user})
 
 def secede(request):
@@ -248,7 +261,8 @@ def inter_setting(request):
     n = user_question.count()
     if n < 3:
         for i in range(n):
-            interview_list.append(user_question[i])
+            question = Question.objects.get(id=user_question[i]['question'])
+            interview_list.append(question)
         count = Question.objects.aggregate(count=Count('id'))['count']
         for i in range(n, 3):
             random_index = random.randint(0, count)
@@ -256,10 +270,11 @@ def inter_setting(request):
             interview_list.append(question.question)
     else:
         random_n = random.sample(range(0,n),3)
-        for i in range(3):
-            interview_list.append(user_question[random_n[i]])
+        for i in random_n:
+            question = Question.objects.get(id=user_question[i]['question'])
+            interview_list.append(question)
     pub_date = timezone.datetime.now()
-    report = Report.objects.create(student=student,teacher=student.teacher,pub_date=pub_date,question1=interview_list[0],question2=interview_list[1],question3=interview_list[2])
+    report = Report.objects.create(student=student,teacher=student.teacher,pub_date=pub_date,question1=interview_list[0].question,question2=interview_list[1].question,question3=interview_list[2].question)
     report.save()
     reportID = report.id
     return render(request, 'inter_setting.html',{'reportID':reportID})
@@ -528,6 +543,7 @@ def stt(audiofile):
 
     return script, text_count, speech_speed, adverb, repetition
 
+@csrf_exempt
 def wait(request, reportID):
     report = Report.objects.get(id=reportID)
     if report.audio1:
@@ -538,6 +554,11 @@ def wait(request, reportID):
         report.script3, report.speed3, report.sCorrect1, report.adverb3, report.repetition3 = stt(report.audio3.path)
 
     report.save()
+
+    if request.method == "POST":
+        report.title = request.POST.get('title')
+        report.save()
+        return render(request, 'wait.html', {'report': report})
 
     return render(request, 'wait.html', {'report':report})
 
@@ -586,8 +607,12 @@ def myVideoAjax(request):
 @csrf_exempt
 def myVideoDetail(request, reportID):
     report = Report.objects.get(id=reportID)
-    print(report.student.userID)
     return render(request, 'report.html', {'report':report})
+
+def myVideoDelete(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+    report.delete()
+    return redirect(reverse('website:myVideo'))
 
 @csrf_exempt
 def classVideo(request):

@@ -57,7 +57,7 @@ h1{
 
 .talk_speed{
     font-family: 'Nanum Gothic', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     border: 1px solid gray;
     text-align: center;
     padding: 30px 15px 15px 15px;
@@ -92,4 +92,8 @@ h1{
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: bold;
     font-size: 19px;
+}
+
+#delete{
+    float: right;
 }

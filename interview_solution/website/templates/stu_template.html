@@ -45,7 +45,7 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'website:mypage' %}">Mypage</a>
+                        <a class="dropdown-item" href="{% url 'website:mypage' student=1 %}">Mypage</a>
                         <a class="dropdown-item" href="{% url 'website:signoff' %}">Logout</a>
                         <!-- <div class="dropdown-divider"></div> -->
                     </div>
