@@ -607,8 +607,12 @@ def myVideoAjax(request):
 @csrf_exempt
 def myVideoDetail(request, reportID):
     report = Report.objects.get(id=reportID)
-    print(report.student.userID)
     return render(request, 'report.html', {'report':report})
+
+def myVideoDelete(request, reportID):
+    report = get_object_or_404(Report, id=reportID)
+    report.delete()
+    return redirect(reverse('website:myVideo'))
 
 @csrf_exempt
 def classVideo(request):
