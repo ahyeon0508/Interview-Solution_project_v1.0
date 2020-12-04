@@ -1,4 +1,6 @@
+{% extends 'tea_template.html' %}
 {% load static %}
+{% block content %}
 <link href="{% static 'css/studentVideo.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <script type="text/javascript" src="{% static 'js/check.js' %}"></script>
@@ -229,3 +231,4 @@
         </div>
     </div>
 </div>
+{% endblock %}
