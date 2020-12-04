@@ -7,7 +7,7 @@ import jsonfield
 # Create your models here.
 class TeacherManager(BaseUserManager):
     def create_teacher(self, userID, username, password, phone, school, grade, sClass):
-        teacher = self.model(userID=userID, username=username, password=password, phone=phone, school=school,
+        teacher = self.model(userID=userID, password=password, username=username, phone=phone, school=school,
                              grade=grade, sClass=sClass)
         teacher.save(using=self._db)
         return teacher
@@ -15,7 +15,7 @@ class TeacherManager(BaseUserManager):
 class Teacher(models.Model):
     userID = models.CharField(primary_key=True, unique=True, max_length=10, verbose_name='아이디')  # 아이디
     username = models.CharField(max_length=10, null=True, blank=True, verbose_name='유저이름')
-    password = models.CharField(max_length=20, verbose_name='비밀번호')
+    password = models.CharField(max_length=100, verbose_name='비밀번호')
     phone = models.CharField(max_length=11, blank=True, null=True, verbose_name='연락처')
     school = models.CharField(max_length=15, null=True, blank=True, verbose_name='학교')
     grade = models.IntegerField(null=True, blank=True, verbose_name='학년')
