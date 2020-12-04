@@ -139,7 +139,7 @@ def teacherSignin(request):
         request.session['user'] = None
         try:
             user = Teacher.objects.get(userID=userID)
-            if password == user.password:
+            if user.password == password:
                 request.session['user'] = user.userID
                 return redirect(reverse('website:teacherHome'))
             else:
@@ -199,9 +199,9 @@ def resultPW(request, student, userID):
             if password == passwordChk:
                 if student == 0:
                     user = Teacher.objects.get(userID=userID)
+                    user.set_password(password)
                 else:
                     user = User.objects.get(userID=userID)
-                user.set_password(password)
                 user.save()
                 return redirect(reverse('website:studentSignin'))
             else:
@@ -211,9 +211,13 @@ def resultPW(request, student, userID):
     else:
         return render(request, 'resultPW.html')
 
-def mypage(request):
+def mypage(request, student):
+    if student == 1:
+        user = get_object_or_404(User, userID=request.session.get('user'))
+    else:
+        user = get_object_or_404(Teacher, userID=request.session.get('user'))
+
     if request.method == "POST":
-        user = request.session.get('user')
         question = request.POST.get('findQuestion', '')
         answer = request.POST.get('findAnswer', '')
         oldPW = request.POST.get('password', '')
@@ -221,15 +225,24 @@ def mypage(request):
         phone = request.POST.get('phone', '')
         school = request.POST.get('schoolName', '')
         grade = request.POST.get('grade', '')
-        if check_password(oldPW, user.password) is False or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
-            return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
+
+        if student == 1:
+            if check_password(oldPW,
+                              user.password) is False or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
+                return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
+            else:
+                user.set_password(newPW)
+                user.save()
+                request.session['user'] = user.userID
+                return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
         else:
-            user.set_password(newPW)
-            user.save()
-            request.session['user'] = user.userID
-            return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
+            if oldPW != user.password or phone != user.phone or question != user.question or answer != user.answer or school != user.school or grade != user.grade:
+                return render(request, 'mypage.html', {'error': '입력한 기존 정보가 잘못되었습니다.'})
+            else:
+                user.save()
+                request.session['user'] = user.userID
+                return render(request, 'mypage.html', {'notice': '수정이 완료되었습니다.'})
     else:
-        user = User.objects.get(userID=request.session.get('user'))
         return render(request, 'mypage.html', {'user':user})
 
 def secede(request):

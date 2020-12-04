@@ -26,7 +26,7 @@
                 <div class="nav-item">
                     {% if request.session.user %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{% url 'website:mypage' %}" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="{% url 'website:mypage' student=0 %}" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{request.session.user}}</span>
                             {% if teacher.image %}
@@ -37,7 +37,7 @@
                             {% endif %}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'website:mypage' %}">Mypage</a>
+                            <a class="dropdown-item" href="{% url 'website:mypage' student=0 %}">Mypage</a>
                             <a class="dropdown-item" href="{% url 'website:signoff' %}">Logout</a>
                             <!-- <div class="dropdown-divider"></div> -->
                         </div>
