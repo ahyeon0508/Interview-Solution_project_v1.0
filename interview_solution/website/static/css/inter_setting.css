@@ -35,3 +35,8 @@ input[type=checkbox]:checked + label {
   left:50%;
   transform:translate(-50%, -50%)
 }
+
+#notice{
+    font-family: 'Nanum Gothic', sans-serif;
+    margin-bottom: -15px
+}
