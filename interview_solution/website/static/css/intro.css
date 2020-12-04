@@ -1208,6 +1208,7 @@ ol {
     height: 360px;
     position: relative;
     overflow: hidden;
+    border:1px solid #eaeaea;
 }
 
 .product__item__pic .label {
