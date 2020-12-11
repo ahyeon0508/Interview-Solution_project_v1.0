@@ -47,6 +47,7 @@ urlpatterns = [
     path('myVideo/', views.myVideo, name='myVideo'),
     path('myVideo/ajax/', views.myVideoAjax, name='myVideoAjax'),
     path('myVideo/detail/<int:reportID>', views.myVideoDetail, name='myVideoDetail'),
+    path('myVideo/delete/<int:reportID>', views.myVideoDelete, name='myVideoDelete'),
     path('classVideo/', views.classVideo, name='classVideo'),
     path('classVideo/detail/<int:reportID>', views.classVideoDetail, name='classVideoDetail'),
     path('teacher/studentVideo/<int:reportID>', views.teacherVideo, name='teacherVideo'),

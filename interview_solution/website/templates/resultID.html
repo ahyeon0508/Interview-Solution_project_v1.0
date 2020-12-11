@@ -11,11 +11,19 @@
             </div>
             <div class="button">
                 <!-- href 뒤에 로그인url 삽입 -->
+                {% if student == 0 %}
+                <input type="submit" id="signin" onClick="location.href='{% url 'website:teacherSignin' %}'" value="로그인">
+                {% else %}
                 <input type="submit" id="signin" onClick="location.href='{% url 'website:studentSignin' %}'" value="로그인">
+                {% endif %}
                 <!-- href 뒤에 비밀번호찾기url 삽입 -->
-                <input type="submit" id="findPW" onClick="location.href='{% url 'website:findPW' %}'" value="비밀번호 찾기">
+                <input type="submit" id="findPW" onClick="location.href='{% url 'website:findPW' student=student %}'" value="비밀번호 찾기">
                 <!-- href 뒤에 홈url 삽입 -->
-                <input type="button" id="cancle" onClick="location.href=''" value="홈으로">
+                {% if student == 0 %}
+                <input type="button" id="cancle" onClick="location.href='{% url 'website:teacherHome' %}'" value="홈으로">
+                {% else %}
+                <input type="button" id="cancle" onClick="location.href='{% url 'website:studentHome' %}'" value="홈으로">
+                {% endif %}
             </div>
         </form>
     </div>
