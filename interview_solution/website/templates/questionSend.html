@@ -3,12 +3,12 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <script type="text/javascript" src="{% static 'js/check.js' %}"></script>
 
-<h1 id="title">예상질문 전송</h1>
+<h1 id="title">예상 질문 전송</h1>
 <div class="question-send-page">
     <div class="questionInput">
         <form method="post">
             {% csrf_token %}
-            <span class="write_in"><input type="text" placeholder="예상질문을 입력해주세요." id="prediction" name="question"
+            <span class="write_in"><input type="text" placeholder="예상 질문을 입력해주세요." id="prediction" name="question"
                     style="border:none;"></span>
             <button type="submit" class="btn btn-outline-secondary">전송</button>
         </form>

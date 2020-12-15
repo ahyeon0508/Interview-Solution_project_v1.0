@@ -38,9 +38,9 @@
 <div class="student-interview-page">
     <!-- ~에 해당 학생의 이름 출력하게 하기 ex) 이아현의 면접 영상-->
     <h1 id="info">{{ report.student.username }}의 면접 영상</h1>
-    <!-- ./questionSend.html 지우고 예상질문 보내기 페이지 url 넣기! -->
+    <!-- ./questionSend.html 지우고 예상 질문 보내기 페이지 url 넣기! -->
     <button id="q_send" class="btn btn-outline-secondary"
-        onclick="window.open('{% url 'website:questionSend' studentID=report.student.userID %}','예상질문 보내기','width=600,height=600,location=no,status=no,scrollbars=yes');">예상질문
+        onclick="window.open('{% url 'website:questionSend' studentID=report.student.userID %}','예상 질문 보내기','width=600,height=600,location=no,status=no,scrollbars=yes');">예상 질문
         전송</button>
     <br><br><br>
     <div class="info">
