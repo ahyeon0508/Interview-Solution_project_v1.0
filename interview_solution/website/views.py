@@ -579,9 +579,9 @@ def wait(request, reportID):
     if report.audio1:
         report.script1, report.speed1, report.sCorrect1, report.adverb1, report.repetition1 = stt(report.audio1.path)
     if report.audio2:
-        report.script2, report.speed2, report.sCorrect1, report.adverb2, report.repetition2 = stt(report.audio2.path)
+        report.script2, report.speed2, report.sCorrect2, report.adverb2, report.repetition2 = stt(report.audio2.path)
     if report.audio3:
-        report.script3, report.speed3, report.sCorrect1, report.adverb3, report.repetition3 = stt(report.audio3.path)
+        report.script3, report.speed3, report.sCorrect3, report.adverb3, report.repetition3 = stt(report.audio3.path)
 
     report.save()
 
@@ -619,8 +619,8 @@ def waitVideo3(request, reportID):
 @csrf_exempt
 def myVideo(request):
     try:
-        print(request.session.get('user'))
-        report = Report.objects.filter(student=request.session.get('user'))
+        student = get_object_or_404(User, userID=request.session.get('user'))
+        report = Report.objects.filter(student=student)
         return render(request, 'myVideo.html', {'video' : report})
     except:
         return redirect(reverse('website:studentHome'))
@@ -788,8 +788,7 @@ def questionStar(request,questionID):
     if myQuestion.exists():
         for i in myQuestion:
             question = question.exclude(id=i.question.id)
-    return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
-
+    return redirect(reverse('website:questionList'),kwargs={'question': question, 'myQuestion':myQuestion})
 
 @csrf_exempt
 def questionNonStar(request,questionID):
@@ -802,8 +801,9 @@ def questionNonStar(request,questionID):
     if myQuestion.exists():
         for i in myQuestion:
             question = question.exclude(id=i.question.id)
-    return render(request, 'questionList.html', {'question': question, 'myQuestion': myQuestion})
+    return redirect(reverse('website:questionList'),kwargs={'question': question, 'myQuestion':myQuestion})
 
+@csrf_exempt
 def questionListPart(request, q_department):
     if request.session.get('user'):
         if q_department == 1111:
