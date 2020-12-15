@@ -275,6 +275,7 @@ def mypage(request, student):
     else:
         return render(request, 'mypage.html', {'user':user})
 
+@csrf_exempt
 def secede(request):
     student = get_object_or_404(User, userID=request.session.get('user'))
     student.delete()
@@ -838,25 +839,25 @@ def myQuestion(request):
             except:
                 return render(request, 'myquestion.html', {'question':question, 'error':'해당 질문이 존재하지 않습니다.'})
             return render(request, 'myquestion.html', {'question':student_question})
-    question = StudentQuestion.objects.filter(student=request.session.get('user'))
+    question = StudentQuestion.objects.filter(student__userID=request.session.get('user'))
     return render(request, 'myquestion.html', {'question':question})
 
 # myQuestion - 담은 질문(part: 0)
 @csrf_exempt
 def myQuestion_contain(request):
-    question = StudentQuestion.objects.filter(student=request.session.get('user'),part=0)
+    question = StudentQuestion.objects.filter(student__userID=request.session.get('user'),part=0)
     return render(request, 'myquestion.html', {'question':question})
 
 # myQuestion - 작성한 질문 (part: 1)
 @csrf_exempt
 def myQuestion_write(request):
-    question = StudentQuestion.objects.filter(student=request.session.get('user'),part=1)
+    question = StudentQuestion.objects.filter(student__userID=request.session.get('user'),part=1)
     return render(request, 'myquestion.html', {'question':question})
 
 # myQuestion - 받은 질문 (part: 2)
 @csrf_exempt
 def myQuestion_get(request):
-    question = StudentQuestion.objects.filter(student=request.session.get('user'),part=2)
+    question = StudentQuestion.objects.filter(student__userID=request.session.get('user'), part=2)
     return render(request, 'myquestion.html', {'question':question})
 
 # myQuestion - Question Delete
