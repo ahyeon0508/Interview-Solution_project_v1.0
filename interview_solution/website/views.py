@@ -723,8 +723,7 @@ def questionSend(request, studentID):
         questionDB = Question.objects.create(question=question, department = -1)
         questionDB.save()
         user = get_object_or_404(User, userID=studentID)
-        sQuestionDB = StudentQuestion.objects.create(question=questionDB, student=user, teacher = teacher)
-        sQuestionDB.save()
+        sQuestionDB = StudentQuestion.objects.create(question=questionDB, student=user, teacher = teacher, part=2)        sQuestionDB.save()
         return render(request, 'questionSend.html', {'questionSet':studentQ})
 
     return render(request, 'questionSend.html', {'questionSet':studentQ})
