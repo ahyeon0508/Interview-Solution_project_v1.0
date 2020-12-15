@@ -52,8 +52,9 @@
                 </li>
                 {% else %}
                 <!-- 로그인 페이지로! -->
-                <a class="nav-link btn btn-outline-primary" href="{% url 'website:studentSignin' %}" id="user" role="button">Log in</a>
-                {% endif %}
+                <a class="nav-link" href="{% url 'website:studentSignin' %}" id="user" role="button">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Log in </span>
+                </a>                {% endif %}
                 </div>
             </ul>
         </div>
