@@ -38,12 +38,12 @@
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658975-4460d580-4faf-11eb-83ca-863a4e3b8742.png" alt="구조도" width="50%" height="50%"  />
-  [그림 1] 시스템 구조도<br>
+  <br>[그림 1] 시스템 구조도<br>
 </p><br><br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103659029-50e52e00-4faf-11eb-97f5-1b9c70062c9c.png" alt="ER diagram" width="50%" height="50%"  />
-  [그림 2] ER diagram<br>
+  <br>[그림 2] ER diagram<br>
 </p> 
  
 
@@ -51,57 +51,57 @@
   
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658978-44f96c00-4faf-11eb-99a2-fb4d30ea463f.png" alt="메인 화면" width="50%" height="50%"  />
-  [그림 3] 새내기路(로) 메인 화면 <br>
+  <br>[그림 3] 새내기路(로) 메인 화면 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658966-42971200-4faf-11eb-9082-89f0c1db12a3.png" alt="학생 메인 화면" width="50%" height="50%"  />
-  [그림 4] 학생 메인 화면 <br>
+  <br>[그림 4] 학생 메인 화면 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658974-43c83f00-4faf-11eb-8409-449dccc56a3e.png" alt="교사 메인 화면" width="50%" height="50%"  />
-  [그림 5] 교사 메인 화면 <br>
+  <br>[그림 5] 교사 메인 화면 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658976-4460d580-4faf-11eb-866f-2c52cdf1b513.png" alt="내 질문 리스트" width="50%" height="50%"  />
-  [그림 6] 내 질문 리스트 페이지 <br>
+  <br>[그림 6] 내 질문 리스트 페이지 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658988-462a9900-4faf-11eb-94dc-63c21da82554.png" alt="면접 질문 설정 화면" width="50%" height="50%"  />
-  [그림 7] 면접 질문 설정 페이지 <br>
+  <br>[그림 7] 면접 질문 설정 페이지 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658984-45920280-4faf-11eb-970f-9476ad90ff62.png" alt="면접 세팅 화면" width="50%" height="50%"  />
-  [그림 8] 면접 세팅 페이지 <br>
+  <br>[그림 8] 면접 세팅 페이지 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658987-462a9900-4faf-11eb-8cad-b6d1a20ed568.png" alt="면접 진행 화면" width="50%" height="50%"  />
-  [그림 9] 면접 진행 페이지 <br>
+  <br>[그림 9] 면접 진행 페이지 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658979-44f96c00-4faf-11eb-969a-6736f5b370f6.png" alt="면접 대기 화면" width="50%" height="50%"  />
-  [그림 10] 면접 대기 페이지 <br>
+  <br>[그림 10] 면접 대기 페이지 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658980-45920280-4faf-11eb-953f-f79c2515290d.png" alt="면접 리포트 화면" width="50%" height="50%"  />
-  [그림 11] 면접 리포트 페이지 <br>
+  <br>[그림 11] 면접 리포트 페이지 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658972-43c83f00-4faf-11eb-8383-1675e99fd0be.png" alt="면접 대기 화면" width="50%" height="50%"  />
-  [그림 12] 학생 면접 영상 페이지 <br>
+  <br>[그림 12] 학생 면접 영상 페이지 <br>
 </p> <br>
 
 <p align="center" style="color:gray">
   <img style="margin:50px 0 10px 0" src="https://user-images.githubusercontent.com/44939208/103658991-46c32f80-4faf-11eb-8c61-4e2d626aec78.png" alt="예상 질문 전송 화면" width="50%" height="50%"  />
-  [그림 13] 예상 질문 전송 페이지 <br>
+  <br>[그림 13] 예상 질문 전송 페이지 <br>
 </p> <br>
 
 
